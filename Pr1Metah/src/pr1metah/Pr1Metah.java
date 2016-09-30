@@ -24,8 +24,7 @@ public class Pr1Metah {
     static int matriz[][];
     static int x, y;
 
-    public static void leerFichero() {
-        String fich = "scpe1.txt";
+    public static void leerFichero(String fich) {
         if (!(new File(fich)).exists()) {
             System.out.print("Fichero no encontrado\n");
             return;
@@ -146,7 +145,7 @@ public class Pr1Metah {
     }
 
     public static void main(String[] args) {
-        leerFichero();
+        leerFichero("scpe1.txt");
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 System.out.print(matriz[i][j] + " ");
