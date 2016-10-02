@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  * @author Xenahort
  *
- * ------- Errores pendientes ------
+ * ------- Errores pendientes -------
  *
  */
 public class Pr1Metah {
