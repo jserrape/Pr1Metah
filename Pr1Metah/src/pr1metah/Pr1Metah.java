@@ -137,6 +137,10 @@ public class Pr1Metah {
             }
         }
     }
+    
+    public static void busquedaLocal (int solucionGreedy[], int tam){
+        
+    }
 
     public static void main(String[] args) {
         String errores = "";
