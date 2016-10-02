@@ -41,6 +41,24 @@ public class Pr1Metah {
         }
         System.out.print("\n\n\n\n");
     }
+    
+    public static int buscarMayorRatio(){
+    
+        int mayor=1;
+        for(int i=2;i<x;i++){
+            if(ratio[i]>=ratio[mayor]){
+                if(ratio[i]==ratio[mayor]){
+                    if(cubre[i]<cubre[mayor]){
+                        break;
+                    }
+                }
+                mayor=i;
+            }
+        }
+        System.out.println("Aquel con mayor ratio es el numero "+mayor);
+        return mayor;
+    }
+    
 
     public static void rellenarRatio(){
         ratio = new float[x];
@@ -125,10 +143,10 @@ public class Pr1Metah {
         String errores = "";
         try {
             
-            leerFichero("scpnrf1.txt");
+            leerFichero("scpe1.txt");
             rellenarRatio();
             mostrarMatrizYVector();
-            
+            int mayor=buscarMayorRatio();
             
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
