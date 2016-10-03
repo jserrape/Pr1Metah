@@ -25,17 +25,15 @@ public class Pr1Metah {
     static int x, y;
     static int solucion[];
 
-    public static boolean faltanPorCubir(){
-        for(int i=1;i<x;i++){
-            if(cubre[i]!=0){
+    public static boolean faltanPorCubir() {
+        for (int i = 1; i < x; i++) {
+            if (cubre[i] != 0) {
                 return true;
             }
         }
         return false;
     }
-    
-    
-    
+
     public static void mostrarSolucion() {
         System.out.println("Solucion:");
         for (int i = 1; i < x; i++) {
@@ -53,11 +51,11 @@ public class Pr1Metah {
         }
         System.out.println("\n Vector de cuantos cubre cada uno:");
         for (int i = 1; i < x; i++) {// MUESTRO a CUANTOS CUBRE
-            System.out.print(i+":"+cubre[i] + "\t");
+            System.out.print(i + ":" + cubre[i] + "\t");
         }
         System.out.println("\n Vector del ratio:");
         for (int i = 1; i < x; i++) { // MUESTRO EL RATIO
-            System.out.print(i+":"+ratio[i] + "\t");
+            System.out.print(i + ":" + ratio[i] + "\t");
         }
         System.out.print("\n");
     }
@@ -71,18 +69,19 @@ public class Pr1Metah {
                     if (cubre[i] < cubre[mayor]) {
                         break;
                     }
+                } else {
+                    mayor = i;
                 }
-                mayor = i;
             }
         }
         System.out.println("Aquel con mayor ratio es el numero " + mayor + "\n");
         solucion[mayor] = 1; //Establezco el que tiene mas ratio como solucion
 
         for (int i = 1; i < y; i++) {
-            if (matriz[i][mayor] == 1 && matriz[i][0]==0) {
+            if (matriz[i][mayor] == 1 && matriz[i][0] == 0) {
                 ++matriz[i][0]; //DEBERA SER SIEMPRE 1, EL ++ ES PARA IR VIENDO SI ME REPITO
-                for(int j=1;j<x;j++){
-                    if(matriz[i][j]==1){
+                for (int j = 1; j < x; j++) {
+                    if (matriz[i][j] == 1) {
                         --cubre[j];
                     }
                 }
@@ -156,7 +155,7 @@ public class Pr1Metah {
                     }
                 }
             }
-            
+
             solucion = new int[x];
             for (int i = 0; i < x; i++) {
                 solucion[i] = 0;
@@ -178,45 +177,39 @@ public class Pr1Metah {
         try {
 
             leerFichero("scpe1.txt");
-            
-            x=11;
-            y=21;
+
+            /*
+            x = 11;
+            y = 21;
             int cont;
-            for(int j=1;j<x;j++){
-                cont=0;
-                for(int i=1;i<y;i++){
-                    if(matriz[i][j]==1){
+            for (int j = 1; j < x; j++) {
+                cont = 0;
+                for (int i = 1; i < y; i++) {
+                    if (matriz[i][j] == 1) {
                         ++cont;
                     }
                 }
-                cubre[j]=cont;
-            }
-            
+                cubre[j] = cont;
+            }*/
+
             rellenarRatio();
             System.out.println("Estado inicial: ");
             mostrarMatrizYVector();
             mostrarSolucion();
-            
-            while(faltanPorCubir()){
+
+            while (faltanPorCubir()) {
                 System.out.println("\n\n\n");
                 buscarMayorRatio();
                 rellenarRatio();
                 mostrarMatrizYVector();
                 mostrarSolucion();
-                for(int i=1;i<x;i++){
-                    if(cubre[i]<0){
-                        System.out.println("HAY ALGUN PUTO FALLO REVISAR EL "+i);
+                for (int i = 1; i < x; i++) {
+                    if (cubre[i] < 0) {
+                        System.out.println("HAY ALGUN PUTO FALLO REVISAR EL " + i);
                         return;
                     }
                 }
             }
-            
-            
-
-            
-            
-            
-            
 
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
