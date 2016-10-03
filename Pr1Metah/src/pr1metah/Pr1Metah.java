@@ -25,6 +25,17 @@ public class Pr1Metah {
     static int x, y;
     static int solucion[];
 
+    public static boolean faltanPorCubir(){
+        for(int i=1;i<x;i++){
+            if(cubre[i]!=0){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    
     public static void mostrarSolucion() {
         System.out.println("Solucion:");
         for (int i = 1; i < x; i++) {
@@ -34,21 +45,21 @@ public class Pr1Metah {
     }
 
     public static void mostrarMatrizYVector() {
-        for (int i = 0; i < y; i++) {
+        for (int i = 0; i < y; i++) { // MUESTRO LA MATRIZ
             for (int j = 0; j < x; j++) {
-                System.out.print(matriz[i][j] + " ");
+                //System.out.print(matriz[i][j] + " ");
             }
-            System.out.print("\n");
+            //System.out.print("\n");
         }
-        System.out.print("\n\n\n\n");
-        for (int i = 0; i < x; i++) {
-            System.out.print(cubre[i] + "\t");
+        System.out.println("\n Vector de cuantos cubre cada uno:");
+        for (int i = 1; i < x; i++) {// MUESTRO a CUANTOS CUBRE
+            System.out.print(i+":"+cubre[i] + "\t");
         }
-        System.out.print("\n\n");
-        for (int i = 0; i < x; i++) {
-            System.out.print(ratio[i] + "\t");
+        System.out.println("\n Vector del ratio:");
+        for (int i = 1; i < x; i++) { // MUESTRO EL RATIO
+            System.out.print(i+":"+ratio[i] + "\t");
         }
-        System.out.print("\n\n\n\n");
+        System.out.print("\n");
     }
 
     public static void buscarMayorRatio() {
@@ -145,6 +156,11 @@ public class Pr1Metah {
                     }
                 }
             }
+            
+            solucion = new int[x];
+            for (int i = 0; i < x; i++) {
+                solucion[i] = 0;
+            }
         } catch (IOException | NumberFormatException e) {
         } finally {
             try {
@@ -163,16 +179,30 @@ public class Pr1Metah {
 
             leerFichero("scpe1.txt");
             rellenarRatio();
+            System.out.println("Estado inicial: ");
             mostrarMatrizYVector();
-            solucion = new int[x];
-            for (int i = 0; i < x; i++) {
-                solucion[i] = 0;
+            mostrarSolucion();
+            
+            while(faltanPorCubir()){
+                System.out.println("\n\n\n");
+                buscarMayorRatio();
+                rellenarRatio();
+                mostrarMatrizYVector();
+                mostrarSolucion();
+                for(int i=1;i<x;i++){
+                    if(cubre[i]<0){
+                        System.out.println("HAY ALGUN PUTO FALLO REVISAR EL "+i);
+                        return;
+                    }
+                }
             }
-            mostrarSolucion();
-            buscarMayorRatio();
-            mostrarSolucion();
+            
+            
 
-            mostrarMatrizYVector();
+            
+            
+            
+            
 
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
