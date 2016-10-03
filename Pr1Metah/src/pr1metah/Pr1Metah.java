@@ -107,7 +107,7 @@ public class Pr1Metah {
     }
 
     public static void busquedaLocal(int solucionGreedy[], int tam) {
-        //Operador vecinos y mirar los costes, ver pseudocodico del seminario 2
+        //Operador vecinos y mirar los costes, ver pseudocodico del seminario 2.
     }
 
     public static void main(String[] args) {
