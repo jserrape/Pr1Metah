@@ -101,7 +101,7 @@ public class Pr1Metah {
     }
 
     public static void busquedaLocal(int solucionGreedy[], int tam) {
-
+        //Operador para comparar con los vecinos
     }
 
     public static void main(String[] args) {
