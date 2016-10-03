@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
@@ -110,18 +111,44 @@ public class Pr1Metah {
     }
 
     public static int[] busquedaLocal(int solucionGreedy[], int tam) {
-        //Operador vecinos y mirar los costes, ver pseudocodico del seminario 2
-        int solucion[] = new int[tam]; //Haria falta usar tam + 1 ¿? (INICIALIZACION GREEDY)
-        solucion = calculaSolucionVecina(solucion, tam, SEMILLA1);
+        //MIRAR COMO HAY QUE INICIALIZAR CADA VECTOR PARA QUE NO PETE
+        int solucionActual[] = solucionGreedy;
+        int solucionVecina[] = solucionGreedy;; //Haria falta usar tam + 1 ¿? (INICIALIZACION GREEDY)
+        int mejorVecino[] = solucionGreedy;;
+        int solucionAnterior[] = solucionGreedy;;
+        int valorMV = 999999999;
+        boolean terminado = false;
+        
+        while(objetivo(solucionVecina, tam) >= objetivo(solucionAnterior, tam)) {
+            while( (objetivo(solucionVecina, tam) < valorMV) || terminado) {
+                
+            }
+        }
+        
         // Proceso de combinacion de las dos soluciones
-        return solucion;
+        return solucionVecina;
     }
     
-    public static int[] calculaSolucionVecina(int solucionInicial[], int tam, int semilla){
-       int solucionVecina[] = solucionInicial;
-       int pos = semilla % tam;
-       solucionVecina[pos] = (solucionVecina[pos] == 0) ? (1) : (0);
-       return solucionVecina;
+    public static void generaSolucionVecina(int solucion[], int tam, int semilla){
+       Random aleatorio = new Random(semilla);
+       int pos = aleatorio.nextInt() % tam;
+       while (pos != -1){
+           if (solucion[pos] == 0) {
+               ++pos;
+               pos = (pos % tam);
+           } else {
+               solucion[pos] = 0;
+               pos = -1;
+           }
+       }
+    }
+    
+    public static int objetivo(int solucion[], int tam) {
+        int suma = 0;
+        for (int i = 0; i < tam; i++) {
+            suma += solucion[i] * 1; // INCLUIR EL COSTE CUANDO ESTE LISTA LA MATRIZ
+        }
+        return suma;
     }
 
     public static void main(String[] args) {
