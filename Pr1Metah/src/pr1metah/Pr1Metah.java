@@ -16,18 +16,21 @@ import java.io.IOException;
  *
  * ------- Errores pendientes ------
  *
- * ------- Semillas --------
- * 77383426 -> 1º
- * 77368737 -> 2º
- * 34267738 -> 3º
- * 87377736 -> 4º
- * 34268737 -> 5º
  */
+
+
 public class Pr1Metah {
 
     static int cubre[];
     static int matriz[][];
     static int x, y;
+    
+    //Semillas
+    public static final int SEMILLA1 = 77383426;
+    public static final int SEMILLA2 = 77368737;
+    public static final int SEMILLA3 = 34267738;
+    public static final int SEMILLA4 = 87377736;
+    public static final int SEMILLA5 = 34268737;
 
     public static void leerFichero(String fich) throws FicheroNoEncontrado {
         if (!(new File(fich)).exists()) {
@@ -106,8 +109,19 @@ public class Pr1Metah {
         }
     }
 
-    public static void busquedaLocal(int solucionGreedy[], int tam) {
+    public static int[] busquedaLocal(int solucionGreedy[], int tam) {
         //Operador vecinos y mirar los costes, ver pseudocodico del seminario 2
+        int solucion[] = new int[tam]; //Haria falta usar tam + 1 ¿? (INICIALIZACION GREEDY)
+        solucion = calculaSolucionVecina(solucion, tam, SEMILLA1);
+        // Proceso de combinacion de las dos soluciones
+        return solucion;
+    }
+    
+    public static int[] calculaSolucionVecina(int solucionInicial[], int tam, int semilla){
+       int solucionVecina[] = solucionInicial;
+       int pos = semilla % tam;
+       solucionVecina[pos] = (solucionVecina[pos] == 0) ? (1) : (0);
+       return solucionVecina;
     }
 
     public static void main(String[] args) {
