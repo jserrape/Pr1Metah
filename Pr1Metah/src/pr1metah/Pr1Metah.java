@@ -24,6 +24,22 @@ public class Pr1Metah {
     static int matriz[][];
     static int x, y;
     static int solucion[];
+    static Pair cubreOrdenado[];
+
+    public static void eliminaRedundancias() {
+        for (int i = 0; i < x-1; i++) {
+            System.out.println(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre);
+        }
+        System.out.println("\n\n");
+        
+        MyQuickSort sorter = new MyQuickSort();
+        sorter.sort(cubreOrdenado);
+        
+        for (int i = 0; i < x-1; i++) {
+            System.out.println(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre);
+        }
+        System.out.println("\n\n");
+    }
 
     public static boolean faltanPorCubir() {
         for (int i = 1; i < x; i++) {
@@ -178,7 +194,7 @@ public class Pr1Metah {
 
             leerFichero("scpe1.txt");
 
-            /*
+            //<--------------
             x = 11;
             y = 21;
             int cont;
@@ -190,7 +206,13 @@ public class Pr1Metah {
                     }
                 }
                 cubre[j] = cont;
-            }*/
+            }
+            //------------->
+
+            cubreOrdenado = new Pair[x-1];
+            for (int i = 0; i < x-1; i++) {
+                cubreOrdenado[i] = new Pair(i+1, cubre[i+1]);
+            }
 
             rellenarRatio();
             System.out.println("Estado inicial: ");
@@ -210,11 +232,98 @@ public class Pr1Metah {
                     }
                 }
             }
+            eliminaRedundancias();
 
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
         }
         System.out.println(errores);
+    }
+
+    public static class Pair {
+
+        private int lugar;
+        private int cubre;
+
+        public Pair(int lugarr, int cubree) {
+            super();
+            this.lugar = lugarr;
+            this.cubre = cubree;
+        }
+
+        public int getFirst() {
+            return lugar;
+        }
+
+        public void setFirst(int first) {
+            this.lugar = first;
+        }
+
+        public int getSecond() {
+            return cubre;
+        }
+
+        public void setSecond(int second) {
+            this.cubre = second;
+        }
+    }
+
+    public static class MyQuickSort {
+
+        private Pair array[];
+        private int length;
+
+        public void sort(Pair[] inputArr) {
+            if (inputArr == null || inputArr.length == 0) {
+                return;
+            }
+            this.array = inputArr;
+            length = inputArr.length;
+            quickSort(0, length - 1);
+        }
+
+        private void quickSort(int lowerIndex, int higherIndex) {
+            int i = lowerIndex;
+            int j = higherIndex;
+            // calculate pivot number, I am taking pivot as middle index number
+            Pair pivot = array[lowerIndex + (higherIndex - lowerIndex) / 2];
+            // Divide into two arrays
+            while (i <= j) {
+                /**
+                 * In each iteration, we will identify a number from left side
+                 * which is greater then the pivot value, and also we will
+                 * identify a number from right side which is less then the
+                 * pivot value. Once the search is done, then we exchange both
+                 * numbers.
+                 */
+                while (array[i].cubre < pivot.cubre) {
+                    i++;
+                }
+                while (array[j].cubre > pivot.cubre) {
+                    j--;
+                }
+                if (i <= j) {
+                    exchangeNumbers(i, j);
+                    //move index to next position on both sides
+                    i++;
+                    j--;
+                }
+            }
+            // call quickSort() method recursively
+            if (lowerIndex < j) {
+                quickSort(lowerIndex, j);
+            }
+            if (i < higherIndex) {
+                quickSort(i, higherIndex);
+            }
+        }
+
+        private void exchangeNumbers(int i, int j) {
+            Pair temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+
     }
 
 }
