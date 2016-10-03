@@ -296,17 +296,17 @@ public class Pr1Metah {
                  * pivot value. Once the search is done, then we exchange both
                  * numbers.
                  */
-                while (array[i].cubre < pivot.cubre) {
-                    i++;
+                while (array[i].cubre > pivot.cubre) {
+                    ++i;
                 }
-                while (array[j].cubre > pivot.cubre) {
-                    j--;
+                while (array[j].cubre < pivot.cubre) {
+                    --j;
                 }
                 if (i <= j) {
                     exchangeNumbers(i, j);
                     //move index to next position on both sides
-                    i++;
-                    j--;
+                    ++i;
+                    --j;
                 }
             }
             // call quickSort() method recursively
