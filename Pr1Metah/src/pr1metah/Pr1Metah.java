@@ -45,11 +45,11 @@ public class Pr1Metah {
     }
 
     public static void mostrarMatrizYVector() {
-        for (int i = 0; i < y; i++) { // MUESTRO LA MATRIZ
+        for (int i = 1; i < y; i++) { // MUESTRO LA MATRIZ
             for (int j = 0; j < x; j++) {
-                //System.out.print(matriz[i][j] + " ");
+                System.out.print(matriz[i][j] + " ");
             }
-            //System.out.print("\n");
+            System.out.print("\n");
         }
         System.out.println("\n Vector de cuantos cubre cada uno:");
         for (int i = 1; i < x; i++) {// MUESTRO a CUANTOS CUBRE
@@ -79,7 +79,7 @@ public class Pr1Metah {
         solucion[mayor] = 1; //Establezco el que tiene mas ratio como solucion
 
         for (int i = 1; i < y; i++) {
-            if (matriz[i][mayor] == 1) {
+            if (matriz[i][mayor] == 1 && matriz[i][0]==0) {
                 ++matriz[i][0]; //DEBERA SER SIEMPRE 1, EL ++ ES PARA IR VIENDO SI ME REPITO
                 for(int j=1;j<x;j++){
                     if(matriz[i][j]==1){
@@ -130,7 +130,7 @@ public class Pr1Metah {
                     matriz[i][j] = 0;
                 }
             }
-            matriz[0][0] = -1;
+            matriz[0][0] = 0; //<---------PONER A -1
 
             int comisariasV = 1;
             while (x != comisariasV) {
@@ -178,6 +178,20 @@ public class Pr1Metah {
         try {
 
             leerFichero("scpe1.txt");
+            
+            x=11;
+            y=21;
+            int cont;
+            for(int j=1;j<x;j++){
+                cont=0;
+                for(int i=1;i<y;i++){
+                    if(matriz[i][j]==1){
+                        ++cont;
+                    }
+                }
+                cubre[j]=cont;
+            }
+            
             rellenarRatio();
             System.out.println("Estado inicial: ");
             mostrarMatrizYVector();
