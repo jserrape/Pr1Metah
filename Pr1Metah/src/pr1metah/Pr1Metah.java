@@ -23,6 +23,15 @@ public class Pr1Metah {
     static float ratio[];
     static int matriz[][];
     static int x, y;
+    static int solucion[];
+
+    public static void mostrarSolucion() {
+        System.out.println("Solucion:");
+        for (int i = 1; i < x; i++) {
+            System.out.print(i + ":" + solucion[i] + " ");
+        }
+        System.out.println("\n");
+    }
 
     public static void mostrarMatrizYVector() {
         for (int i = 0; i < y; i++) {
@@ -33,41 +42,52 @@ public class Pr1Metah {
         }
         System.out.print("\n\n\n\n");
         for (int i = 0; i < x; i++) {
-            System.out.print(cubre[i] + ".0 ");
+            System.out.print(cubre[i] + "\t");
         }
         System.out.print("\n\n");
         for (int i = 0; i < x; i++) {
-            System.out.print(ratio[i] + " ");
+            System.out.print(ratio[i] + "\t");
         }
         System.out.print("\n\n\n\n");
     }
-    
-    public static int buscarMayorRatio(){
-    
-        int mayor=1;
-        for(int i=2;i<x;i++){
-            if(ratio[i]>=ratio[mayor]){
-                if(ratio[i]==ratio[mayor]){
-                    if(cubre[i]<cubre[mayor]){
+
+    public static void buscarMayorRatio() {
+
+        int mayor = 1;
+        for (int i = 2; i < x; i++) {
+            if (ratio[i] >= ratio[mayor]) {
+                if (ratio[i] == ratio[mayor]) {
+                    if (cubre[i] < cubre[mayor]) {
                         break;
                     }
                 }
-                mayor=i;
+                mayor = i;
             }
         }
-        System.out.println("Aquel con mayor ratio es el numero "+mayor);
-        return mayor;
-    }
-    
+        System.out.println("Aquel con mayor ratio es el numero " + mayor + "\n");
+        solucion[mayor] = 1; //Establezco el que tiene mas ratio como solucion
 
-    public static void rellenarRatio(){
-        ratio = new float[x];
-        cubre[0]=0;
-        for (int i = 1; i < x; i++) {
-            ratio[i]=cubre[i]/matriz[0][i];
+        for (int i = 1; i < y; i++) {
+            if (matriz[i][mayor] == 1) {
+                ++matriz[i][0]; //DEBERA SER SIEMPRE 1, EL ++ ES PARA IR VIENDO SI ME REPITO
+                for(int j=1;j<x;j++){
+                    if(matriz[i][j]==1){
+                        --cubre[j];
+                    }
+                }
+            }
         }
-    } 
-    
+
+    }
+
+    public static void rellenarRatio() {
+        ratio = new float[x];
+        cubre[0] = 0;
+        for (int i = 1; i < x; i++) {
+            ratio[i] = cubre[i] / matriz[0][i];
+        }
+    }
+
     public static void leerFichero(String fich) throws FicheroNoEncontrado {
         if (!(new File(fich)).exists()) {
             throw new FicheroNoEncontrado("Fichero no encontrado \n");
@@ -95,14 +115,12 @@ public class Pr1Metah {
             }
 
             for (int i = 1; i < y; i++) {
-                for (int j = 1; j < x; j++) {
+                for (int j = 0; j < x; j++) {
                     matriz[i][j] = 0;
                 }
             }
+            matriz[0][0] = -1;
 
-            for (int j = 0; j < y; j++) {
-                matriz[j][0] = -1;
-            }
             int comisariasV = 1;
             while (x != comisariasV) {
                 texto = br.readLine();
@@ -142,12 +160,20 @@ public class Pr1Metah {
     public static void main(String[] args) {
         String errores = "";
         try {
-            
+
             leerFichero("scpe1.txt");
             rellenarRatio();
             mostrarMatrizYVector();
-            int mayor=buscarMayorRatio();
-            
+            solucion = new int[x];
+            for (int i = 0; i < x; i++) {
+                solucion[i] = 0;
+            }
+            mostrarSolucion();
+            buscarMayorRatio();
+            mostrarSolucion();
+
+            mostrarMatrizYVector();
+
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
         }
