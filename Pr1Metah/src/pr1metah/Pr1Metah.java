@@ -16,6 +16,12 @@ import java.io.IOException;
  *
  * ------- Errores pendientes ------
  *
+ * ------- Semillas --------
+ * 77383426 -> 1º
+ * 77368737 -> 2º
+ * 34267738 -> 3º
+ * 87377736 -> 4º
+ * 34268737 -> 5º
  */
 public class Pr1Metah {
 
@@ -101,7 +107,7 @@ public class Pr1Metah {
     }
 
     public static void busquedaLocal(int solucionGreedy[], int tam) {
-        //Operador para comparar con los vecinos, vamos a hacer algo ya crack
+        //Operador vecinos y mirar los costes, ver pseudocodico del seminario 2
     }
 
     public static void main(String[] args) {
