@@ -94,7 +94,7 @@ public class Pr1Metah {
     }
 
     public static void mostrarMatrizYVector() {
-        for (int i = 1; i < y; i++) { // MUESTRO LA MATRIZ
+        for (int i = 0; i < y; i++) { // MUESTRO LA MATRIZ
             for (int j = 0; j < x; j++) {
                 System.out.print(matriz[i][j] + " ");
             }
@@ -142,11 +142,11 @@ public class Pr1Metah {
     }
 
     public static void rellenarRatio() {
-        ratio = new float[x];
-        cubre[0] = 0;
         for (int i = 1; i < x; i++) {
-            ratio[i] = cubre[i] / matriz[0][i];
+            System.out.print(cubre[i]+"/"+matriz[0][i]+"  ");
+            ratio[i] = (float)cubre[i] / matriz[0][i];
         }
+        System.out.print("\n");
     }
 
     public static void leerFichero(String fich) throws FicheroNoEncontrado {
@@ -227,8 +227,11 @@ public class Pr1Metah {
         String errores = "";
         try {
 
-            leerFichero("scp41.txt");
-
+            System.out.println("Parte 1: leer el fichero");
+            leerFichero("scpnrf1.txt");
+            ratio = new float[x];
+            cubre[0] = 0;
+            
 
             /*
             //<--------------
@@ -245,18 +248,28 @@ public class Pr1Metah {
                 cubre[j] = cont;
             }
             //------------->
-            */
+            //*/
             
+            System.out.println("Parte 2: hacer una copia de a cuantos cubre cada uno");
             cubreOrdenado = new Pair[x - 1];
             for (int i = 0; i < x - 1; i++) {
                 cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
             }
+            System.out.println("Parte 2: acabada correctamente");
 
+            
+            System.out.println("Parte 3: rellenando el ratio");
             rellenarRatio();
+            System.out.println("Parte 3: acabada correctamente");
+            
             System.out.println("Estado inicial: ");
-            //mostrarMatrizYVector();
+            mostrarMatrizYVector();
             mostrarSolucion();
 
+            System.out.println("\n<--------------------------\n\n");
+            buscarMayorRatio();
+            
+            
             while (faltanPorCubir()) {
                 System.out.println("\n\n\n");
                 buscarMayorRatio();
@@ -266,6 +279,7 @@ public class Pr1Metah {
             }
             eliminaRedundancias();
             mostrarSolucion();
+            
 
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
