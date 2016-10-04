@@ -27,18 +27,53 @@ public class Pr1Metah {
     static Pair cubreOrdenado[];
 
     public static void eliminaRedundancias() {
-        for (int i = 0; i < x-1; i++) {
-            System.out.println(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre);
+        for (int i = 0; i < x - 1; i++) {
+            //System.out.println(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre);
         }
-        System.out.println("\n\n");
-        
+        //System.out.println("\n\n");
+
         MyQuickSort sorter = new MyQuickSort();
         sorter.sort(cubreOrdenado);
-        
-        for (int i = 0; i < x-1; i++) {
-            System.out.println(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre);
+
+        System.out.println("Ordenado segun a cuantos cubre:");
+        for (int i = 0; i < x - 1; i++) {
+            System.out.print(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre + " ");
         }
         System.out.println("\n\n");
+
+        int quito;
+        int i;
+        boolean columnaRedundante, sustituible;
+        for (int z = 0; z < x - 1; z++) {
+            if (solucion[cubreOrdenado[z].lugar] == 1) {
+                columnaRedundante = true;
+                quito = cubreOrdenado[z].lugar;
+                System.out.println("Voy a intentar eliminar el " + quito);
+
+                sustituible = false;
+                for (i = 1; i < y; i++) {
+                    if (matriz[i][quito] == 1) {
+                        sustituible = false;
+                        for (int j = 1; j < x; j++) {
+                            if (matriz[i][j] == 1 && solucion[j] == 1 && quito != j) {
+                                sustituible = true;
+                            }
+                        }
+                        if (!sustituible) {
+                            columnaRedundante = false;
+                        }
+                    }
+                }
+
+                if (columnaRedundante) {
+                    System.out.println("El " + quito + " sobra.");
+                    solucion[quito]=0;
+                } else {
+                    System.out.println("El " + quito + " no sobra.");
+                }
+
+            }
+        }
     }
 
     public static boolean faltanPorCubir() {
@@ -192,8 +227,10 @@ public class Pr1Metah {
         String errores = "";
         try {
 
-            leerFichero("scpe1.txt");
+            leerFichero("scp41.txt");
 
+
+            /*
             //<--------------
             x = 11;
             y = 21;
@@ -208,31 +245,27 @@ public class Pr1Metah {
                 cubre[j] = cont;
             }
             //------------->
-
-            cubreOrdenado = new Pair[x-1];
-            for (int i = 0; i < x-1; i++) {
-                cubreOrdenado[i] = new Pair(i+1, cubre[i+1]);
+            */
+            
+            cubreOrdenado = new Pair[x - 1];
+            for (int i = 0; i < x - 1; i++) {
+                cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
             }
 
             rellenarRatio();
             System.out.println("Estado inicial: ");
-            mostrarMatrizYVector();
+            //mostrarMatrizYVector();
             mostrarSolucion();
 
             while (faltanPorCubir()) {
                 System.out.println("\n\n\n");
                 buscarMayorRatio();
                 rellenarRatio();
-                mostrarMatrizYVector();
+                //mostrarMatrizYVector();
                 mostrarSolucion();
-                for (int i = 1; i < x; i++) {
-                    if (cubre[i] < 0) {
-                        System.out.println("HAY ALGUN PUTO FALLO REVISAR EL " + i);
-                        return;
-                    }
-                }
             }
             eliminaRedundancias();
+            mostrarSolucion();
 
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
