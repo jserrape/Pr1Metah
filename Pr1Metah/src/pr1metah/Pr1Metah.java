@@ -37,7 +37,7 @@ public class Pr1Metah {
 
         System.out.println("Ordenado segun a cuantos cubre:");
         for (int i = 0; i < x - 1; i++) {
-            System.out.print(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre + " ");
+            System.out.print(cubreOrdenado[i].getLugar() + ":" + cubreOrdenado[i].getCubre() + " ");
         }
         System.out.println("\n\n");
 
@@ -45,9 +45,9 @@ public class Pr1Metah {
         int i;
         boolean columnaRedundante, sustituible;
         for (int z = 0; z < x - 1; z++) {
-            if (solucion[cubreOrdenado[z].lugar] == 1) {
+            if (solucion[cubreOrdenado[z].getLugar()] == 1) {
                 columnaRedundante = true;
-                quito = cubreOrdenado[z].lugar;
+                quito = cubreOrdenado[z].getLugar();
                 System.out.println("Voy a intentar eliminar el " + quito);
 
                 sustituible = false;
@@ -226,55 +226,25 @@ public class Pr1Metah {
     public static void main(String[] args) {
         String errores = "";
         try {
-
-            System.out.println("Parte 1: leer el fichero");
-            leerFichero("scpnrf1.txt");
+            leerFichero("scpe1.txt");
             ratio = new float[x];
             cubre[0] = 0;
-            
 
-            /*
-            //<--------------
-            x = 11;
-            y = 21;
-            int cont;
-            for (int j = 1; j < x; j++) {
-                cont = 0;
-                for (int i = 1; i < y; i++) {
-                    if (matriz[i][j] == 1) {
-                        ++cont;
-                    }
-                }
-                cubre[j] = cont;
-            }
-            //------------->
-            //*/
-            
-            System.out.println("Parte 2: hacer una copia de a cuantos cubre cada uno");
             cubreOrdenado = new Pair[x - 1];
             for (int i = 0; i < x - 1; i++) {
                 cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
             }
-            System.out.println("Parte 2: acabada correctamente");
 
-            
-            System.out.println("Parte 3: rellenando el ratio");
             rellenarRatio();
-            System.out.println("Parte 3: acabada correctamente");
-            
-            System.out.println("Estado inicial: ");
+
             mostrarMatrizYVector();
             mostrarSolucion();
 
-            System.out.println("\n<--------------------------\n\n");
-            buscarMayorRatio();
-            
+            buscarMayorRatio(); 
             
             while (faltanPorCubir()) {
-                System.out.println("\n\n\n");
                 buscarMayorRatio();
                 rellenarRatio();
-                //mostrarMatrizYVector();
                 mostrarSolucion();
             }
             eliminaRedundancias();
@@ -287,90 +257,5 @@ public class Pr1Metah {
         System.out.println(errores);
     }
 
-    public static class Pair {
-
-        private int lugar;
-        private int cubre;
-
-        public Pair(int lugarr, int cubree) {
-            super();
-            this.lugar = lugarr;
-            this.cubre = cubree;
-        }
-
-        public int getFirst() {
-            return lugar;
-        }
-
-        public void setFirst(int first) {
-            this.lugar = first;
-        }
-
-        public int getSecond() {
-            return cubre;
-        }
-
-        public void setSecond(int second) {
-            this.cubre = second;
-        }
-    }
-
-    public static class MyQuickSort {
-
-        private Pair array[];
-        private int length;
-
-        public void sort(Pair[] inputArr) {
-            if (inputArr == null || inputArr.length == 0) {
-                return;
-            }
-            this.array = inputArr;
-            length = inputArr.length;
-            quickSort(0, length - 1);
-        }
-
-        private void quickSort(int lowerIndex, int higherIndex) {
-            int i = lowerIndex;
-            int j = higherIndex;
-            // calculate pivot number, I am taking pivot as middle index number
-            Pair pivot = array[lowerIndex + (higherIndex - lowerIndex) / 2];
-            // Divide into two arrays
-            while (i <= j) {
-                /**
-                 * In each iteration, we will identify a number from left side
-                 * which is greater then the pivot value, and also we will
-                 * identify a number from right side which is less then the
-                 * pivot value. Once the search is done, then we exchange both
-                 * numbers.
-                 */
-                while (array[i].cubre > pivot.cubre) {
-                    ++i;
-                }
-                while (array[j].cubre < pivot.cubre) {
-                    --j;
-                }
-                if (i <= j) {
-                    exchangeNumbers(i, j);
-                    //move index to next position on both sides
-                    ++i;
-                    --j;
-                }
-            }
-            // call quickSort() method recursively
-            if (lowerIndex < j) {
-                quickSort(lowerIndex, j);
-            }
-            if (i < higherIndex) {
-                quickSort(i, higherIndex);
-            }
-        }
-
-        private void exchangeNumbers(int i, int j) {
-            Pair temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-
-    }
 
 }
