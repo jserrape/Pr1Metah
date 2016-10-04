@@ -113,15 +113,19 @@ public class Pr1Metah {
     public static int[] busquedaLocal(int solucionGreedy[], int tam) {
         //MIRAR COMO HAY QUE INICIALIZAR CADA VECTOR PARA QUE NO PETE
         int solucionActual[] = solucionGreedy;
-        int solucionVecina[] = solucionGreedy;; //Haria falta usar tam + 1 ¿? (INICIALIZACION GREEDY)
-        int mejorVecino[] = solucionGreedy;;
-        int solucionAnterior[] = solucionGreedy;;
+        int solucionVecina[] = solucionGreedy; //Haria falta usar tam + 1 ¿? (INICIALIZACION GREEDY)
+        int mejorVecino[] = solucionGreedy;
+        int solucionAnterior[] = solucionGreedy;
         int valorMV = 999999999;
         boolean terminado = false;
         
         while(objetivo(solucionVecina, tam) >= objetivo(solucionAnterior, tam)) {
-            while( (objetivo(solucionVecina, tam) < valorMV) || terminado) {
-                
+            generaSolucionVecina(solucionVecina,tam,SEMILLA1);
+            while( (objetivo(solucionVecina, tam) < valorMV) || terminado) { //Terminado -> Se han generado todas las posibles soluciones ¿?
+                solucionAnterior = solucionActual;
+                if (objetivo(solucionVecina,tam) < objetivo(solucionActual,tam)) {
+                    solucionActual = solucionVecina;
+                }             
             }
         }
         
