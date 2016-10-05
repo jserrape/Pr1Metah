@@ -16,7 +16,7 @@ import java.util.Random;
  * @author Xenahort
  *
  * ------- Errores pendientes ------
- *
+ *  Ver si hay algun problema con la busqueda local (indices) empeazar los bucles en 1
  */
 public class Pr1Metah {
 
@@ -272,20 +272,31 @@ public class Pr1Metah {
        }
        //Se genera un vector con todos los candidatos que cubren alguna zona de las que me quedan por cubrir al eliminar esa ( sin incluirla )
        int vecino[] = new int[y]; //Usando el vector cubre se puede hacer ¿?
-       for (int i = 0; i < y; i++){
-           
+       int zonas[] = new int[y];
+       
+       for (int i = 1; i < y; i++) {
+           zonas[i] = 0;
        }
-       for (int i = 0; i < y; i++){
+       
+       //ACABAR
+       
+       
+       for (int i = 1; i < y; i++){
+           if (i != pos) {
+               
+           }
+       }
+       for (int i = 1; i < y; i++){
            if (solucion[i] == 0 && vecino[i] == 1){
                solucion[i] = 1;
            }
        }
-       //llamar a la funcion para eliminar los 
+       // JUANCA METE EL ELIMINAR REDUNCIAS
     }
     
     public static int calculaIteraciones(int solucion[]) {
         int cont = 0;
-        for (int i = 0; i < y; i++){
+        for (int i = 1; i < y; i++){
             if (solucion[i] == 1){
                 ++cont;
             }
@@ -295,7 +306,7 @@ public class Pr1Metah {
     
     public static int objetivo(int solucion[]) {
         int suma = 0;
-        for (int i = 0; i < y; i++) {
+        for (int i = 1; i < y; i++) {
             suma += solucion[i] * matriz[0][i]; 
         }
         return suma;
