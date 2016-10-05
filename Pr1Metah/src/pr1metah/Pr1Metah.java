@@ -231,47 +231,72 @@ public class Pr1Metah {
         }
     }
     
-    public static int[] busquedaLocal(int solucionGreedy[], int tam) {
-        //MIRAR COMO HAY QUE INICIALIZAR CADA VECTOR PARA QUE NO PETE
-        int solucionActual[] = solucionGreedy;
-        int solucionVecina[] = solucionGreedy; //Haria falta usar tam + 1 ¿? (INICIALIZACION GREEDY)
-        int mejorVecino[] = solucionGreedy;
-        int solucionAnterior[] = solucionGreedy;
-        int valorMV = 999999999;
-        boolean terminado = false;
+    public static int[] busquedaLocal() {
+        int solucionActual[] = solucion; // Inicializacion del Greedy
+        int solucionVecina[] = solucion;
+        int solucionAnterior[] = solucion;
+        int valorMV = -1;
         
-        while(objetivo(solucionVecina, tam) >= objetivo(solucionAnterior, tam)) {
-            generaSolucionVecina(solucionVecina,tam,SEMILLA1);
-            while( (objetivo(solucionVecina, tam) < valorMV) || terminado) { //Terminado -> Se han generado todas las posibles soluciones ¿?
-                solucionAnterior = solucionActual;
-                if (objetivo(solucionVecina,tam) < objetivo(solucionActual,tam)) {
-                    solucionActual = solucionVecina;
-                }             
+        int terminado = calculaIteraciones(solucion);
+        
+        //Revisar bien los bucles, mierda de pseudocodigo
+        while(objetivo(solucionVecina) <= objetivo(solucionAnterior)) {  
+            while( (objetivo(solucionVecina) > valorMV) || terminado != 0) { //Falta mirar el tema de la factorizacion
+                generaSolucionVecina(solucionVecina, SEMILLA1);            
+                if (solucion != solucionVecina) {
+                    terminado = calculaIteraciones(solucionVecina);
+                } else {
+                    --terminado;
+                }
             }
+            solucionAnterior = solucionActual;
+                if (objetivo(solucionVecina) < objetivo(solucionActual)) {
+                    solucionActual = solucionVecina;
+                }   
         }
-        
-        // Proceso de combinacion de las dos soluciones
-        return solucionVecina;
-    }
+        return solucionActual;
+    }   
     
-    public static void generaSolucionVecina(int solucion[], int tam, int semilla){
+    public static void generaSolucionVecina(int solucion[], int semilla){
        Random aleatorio = new Random(semilla);
-       int pos = aleatorio.nextInt() % tam;
-       while (pos != -1){
+       int pos = aleatorio.nextInt() % y;
+       boolean parada = true;
+       while (parada){
            if (solucion[pos] == 0) {
                ++pos;
-               pos = (pos % tam);
+               pos = (pos % y);
            } else {
                solucion[pos] = 0;
-               pos = -1;
+               parada = false;
            }
        }
+       //Se genera un vector con todos los candidatos que cubren alguna zona de las que me quedan por cubrir al eliminar esa ( sin incluirla )
+       int vecino[] = new int[y]; //Usando el vector cubre se puede hacer ¿?
+       for (int i = 0; i < y; i++){
+           
+       }
+       for (int i = 0; i < y; i++){
+           if (solucion[i] == 0 && vecino[i] == 1){
+               solucion[i] = 1;
+           }
+       }
+       //llamar a la funcion para eliminar los 
     }
     
-    public static int objetivo(int solucion[], int tam) {
+    public static int calculaIteraciones(int solucion[]) {
+        int cont = 0;
+        for (int i = 0; i < y; i++){
+            if (solucion[i] == 1){
+                ++cont;
+            }
+        }
+        return cont;
+    }
+    
+    public static int objetivo(int solucion[]) {
         int suma = 0;
-        for (int i = 0; i < tam; i++) {
-            suma += solucion[i] * 1; // INCLUIR EL COSTE CUANDO ESTE LISTA LA MATRIZ
+        for (int i = 0; i < y; i++) {
+            suma += solucion[i] * matriz[0][i]; 
         }
         return suma;
     }
