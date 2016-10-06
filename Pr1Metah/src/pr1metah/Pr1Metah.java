@@ -221,7 +221,7 @@ public class Pr1Metah {
         }
     }
     
-    public static int[] busquedaLocal() {
+    public static void busquedaLocal() {
         int solucionActual[] = solucion; // Inicializacion del Greedy
         int solucionVecina[] = solucion;
         int solucionAnterior[] = solucion;
@@ -234,7 +234,7 @@ public class Pr1Metah {
         while(objetivo(solucionVecina) <= objetivo(solucionAnterior)) {  
             while( (objetivo(solucionVecina) > valorMV) || terminado != 0) { //Falta mirar el tema de la factorizacion
                 generaSolucionVecina(solucionVecina, SEMILLA1);            
-                if (!Arrays.equals(solucion, solucionVecina)) { //Cuidao eh
+                if (!Arrays.equals(solucionAnterior, solucionVecina)) { //Cuidao eh
                     terminado = calculaIteraciones(solucionVecina);
                     valor = objetivo(solucionVecina);
                     if (valor < valorMV) {
@@ -249,24 +249,28 @@ public class Pr1Metah {
                     solucionActual = solucionVecina;
                 }   
         }
-        return solucionActual;
+        solucion = solucionActual;
     }   
     
-    public static void generaSolucionVecina(int solucion[], int semilla){
+    public static void generaSolucionVecina(int solucionVecina[], int semilla){
        Random aleatorio = new Random(semilla);
-       int pos = aleatorio.nextInt() % y;
+       int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
        boolean parada = true;
        while (parada) {
-           if (solucion[pos] == 0) {
+           if (pos == 0) {
+               pos++;
+           }
+           if (solucionVecina[pos] == 0) {
                ++pos;
-               pos = (pos % y);
+               pos = (pos % (y - 1));
            } else {
-               solucion[pos] = 0;
+               solucionVecina[pos] = 0;
                parada = false;
            }
        }
+       
        //Se genera un vector con todos los candidatos que cubren alguna zona de las que me quedan por cubrir al eliminar esa ( sin incluirla )
-       int vecino[] = new int[y]; //Usando el vector cubre se puede hacer ¿?
+       int vecino[] = new int[y]; 
        int zonas[] = new int[x];
        int s = 1;
        int zonasPendientes = 0;
@@ -281,15 +285,16 @@ public class Pr1Metah {
     //Se rellena el vector de zonas, las posiciones que quedan con 0, son las que faltan por cubrir
         for (int k = 1; k < y; k++) {
             for (int j = 1; j < x; j++) {
-                if(matriz[j][k] != 0 && zonas[j] == 0 && solucion[k] == 1) {
+                if(matriz[j][k] != 0 && zonas[j] == 0 && solucionVecina[k] == 1) {
                        zonas[j] = 1;
                        ++zonasPendientes;
                 }
             }
         }
-        zonasPendientes = x - zonasPendientes - 1; //Ver si hay que restar 1
+        zonasPendientes = x - zonasPendientes; //Ver si hay que restar 1
+        System.out.printf("Hay estas %s \n", zonasPendientes);
        
-        for (int k = 1; (k < y && zonasPendientes != 0); k++) {
+        for (int k = 1; (k < y && zonasPendientes > 0); k++) {
             for (int j = 1; j < x; j++) {
                 if (k != pos) {
                     if ((matriz[j][k] == 1) && (zonas[j] == 0)) { //La zona esta sin cubrir
@@ -302,29 +307,30 @@ public class Pr1Metah {
         }
        
         for (int i = 1; i < y; i++) {
-            if (solucion[i] == 0 && vecino[i] == 1) {
+            if (solucionVecina[i] == 0 && vecino[i] == 1) {
                 if (i != pos) {
-                   solucion[i] = 1;
+                   solucionVecina[i] = 1;
                 }
             }
-        }      
-       // JUANCA METE EL ELIMINAR REDUNCIAS
+        }
+        solucion = solucionVecina;
+        eliminaRedundancias(); // Y ya?
     }
     
-    public static int calculaIteraciones(int solucion[]) {
+    public static int calculaIteraciones(int solucionVecina[]) {
         int cont = 0;
         for (int i = 1; i < y; i++){
-            if (solucion[i] == 1){
+            if (solucionVecina[i] == 1){
                 ++cont;
             }
         }
         return cont;
     }
     
-    public static int objetivo(int solucion[]) {
+    public static int objetivo(int solucionVecina[]) {
         int suma = 0;
         for (int i = 1; i < y; i++) {
-            suma += solucion[i] * matriz[0][i]; 
+            suma += solucionVecina[i] * matriz[0][i]; 
         }
         return suma;
     }
@@ -334,8 +340,6 @@ public class Pr1Metah {
         String errores = "";
         try {
             leerFichero("scpe1.txt");
-            x=11;
-            y=21;
             ratio = new float[x];
             cubre[0] = 0;
 
@@ -361,6 +365,10 @@ public class Pr1Metah {
             eliminaRedundancias();
             mostrarSolucion();
             
+            System.out.println("-------------------------------- EMPIEZA BUSQUEDA LOCAL");
+            busquedaLocal();
+            eliminaRedundancias();
+            mostrarSolucion();
 
         } catch (FicheroNoEncontrado error) {
             errores = error.getMessage();
