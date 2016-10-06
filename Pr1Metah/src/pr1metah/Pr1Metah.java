@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -244,7 +245,7 @@ public class Pr1Metah {
         while(objetivo(solucionVecina) <= objetivo(solucionAnterior)) {  
             while( (objetivo(solucionVecina) > valorMV) || terminado != 0) { //Falta mirar el tema de la factorizacion
                 generaSolucionVecina(solucionVecina, SEMILLA1);            
-                if (solucion != solucionVecina) {
+                if (!Arrays.equals(solucion, solucionVecina)) {
                     terminado = calculaIteraciones(solucionVecina);
                     valor = objetivo(solucionVecina);
                     if (valor < valorMV) {
