@@ -24,7 +24,7 @@ public class Pr1Metah {
     static int cubre[];
     static float ratio[];
     static int matriz[][];
-    static int x, y;
+    static int y, x;
     static int solucion[];
     static Pair cubreOrdenado[];
     
@@ -42,17 +42,17 @@ public class Pr1Metah {
         int quito;
         int i;
         boolean columnaRedundante, sustituible;
-        for (int z = 0; z < x - 1; z++) {
+        for (int z = 0; z < y - 1; z++) {
             if (solucion[cubreOrdenado[z].getLugar()] == 1) {
                 columnaRedundante = true;
                 quito = cubreOrdenado[z].getLugar();
                 System.out.println("Voy a intentar eliminar el " + quito);
 
                 sustituible = false;
-                for (i = 1; i < y; i++) {
+                for (i = 1; i < x; i++) {
                     if (matriz[i][quito] == 1) {
                         sustituible = false;
-                        for (int j = 1; j < x; j++) {
+                        for (int j = 1; j < y; j++) {
                             if (matriz[i][j] == 1 && solucion[j] == 1 && quito != j) {
                                 sustituible = true;
                             }
@@ -75,7 +75,7 @@ public class Pr1Metah {
     }
 
     public static boolean faltanPorCubir() {
-        for (int i = 1; i < x; i++) {
+        for (int i = 1; i < y; i++) {
             if (cubre[i] != 0) {
                 return true;
             }
@@ -85,25 +85,25 @@ public class Pr1Metah {
 
     public static void mostrarSolucion() {
         System.out.println("Solucion:");
-        for (int i = 1; i < x; i++) {
+        for (int i = 1; i < y; i++) {
             System.out.print(i + ":" + solucion[i] + " ");
         }
         System.out.println("\n");
     }
 
     public static void mostrarMatrizYVector() {
-        for (int i = 0; i < y; i++) { // MUESTRO LA MATRIZ
-            for (int j = 0; j < x; j++) {
+        for (int i = 0; i < x; i++) { // MUESTRO LA MATRIZ
+            for (int j = 0; j < y; j++) {
                 System.out.print(matriz[i][j] + " ");
             }
             System.out.print("\n");
         }
         System.out.println("\n Vector de cuantos cubre cada uno:");
-        for (int i = 1; i < x; i++) {// MUESTRO a CUANTOS CUBRE
+        for (int i = 1; i < y; i++) {// MUESTRO a CUANTOS CUBRE
             System.out.print(i + ":" + cubre[i] + "\t");
         }
         System.out.println("\n Vector del ratio:");
-        for (int i = 1; i < x; i++) { // MUESTRO EL RATIO
+        for (int i = 1; i < y; i++) { // MUESTRO EL RATIO
             System.out.print(i + ":" + ratio[i] + "\t");
         }
         System.out.print("\n");
@@ -112,7 +112,7 @@ public class Pr1Metah {
     public static void buscarMayorRatio() {
 
         int mayor = 1;
-        for (int i = 2; i < x; i++) {
+        for (int i = 2; i < y; i++) {
             if (ratio[i] >= ratio[mayor]) {
                 if (ratio[i] == ratio[mayor]) {
                     if (cubre[i] < cubre[mayor]) {
@@ -126,10 +126,10 @@ public class Pr1Metah {
         System.out.println("Aquel con mayor ratio es el numero " + mayor + "\n");
         solucion[mayor] = 1; //Establezco el que tiene mas ratio como solucion
 
-        for (int i = 1; i < y; i++) {
+        for (int i = 1; i < x; i++) {
             if (matriz[i][mayor] == 1 && matriz[i][0] == 0) {
                 ++matriz[i][0]; //DEBERA SER SIEMPRE 1, EL ++ ES PARA IR VIENDO SI ME REPITO
-                for (int j = 1; j < x; j++) {
+                for (int j = 1; j < y; j++) {
                     if (matriz[i][j] == 1) {
                         --cubre[j];
                     }
@@ -140,7 +140,7 @@ public class Pr1Metah {
     }
 
     public static void rellenarRatio() {
-        for (int i = 1; i < x; i++) {
+        for (int i = 1; i < y; i++) {
             System.out.print(cubre[i]+"/"+matriz[0][i]+"  ");
             ratio[i] = (float)cubre[i] / matriz[0][i];
         }
@@ -163,25 +163,25 @@ public class Pr1Metah {
             System.out.print("Fichero abierto correctamente\n");
             texto = br.readLine();
             datos = texto.split(" ");
-            y = Integer.parseInt(datos[1]) + 1;
-            x = Integer.parseInt(datos[2]) + 1;
+            x = Integer.parseInt(datos[1]) + 1;
+            y = Integer.parseInt(datos[2]) + 1;
 
-            matriz = new int[y][x];
-            cubre = new int[x];
+            matriz = new int[x][y];
+            cubre = new int[y];
 
-            for (int i = 0; i < x; i++) {
+            for (int i = 0; i < y; i++) {
                 cubre[i] = 0;
             }
 
-            for (int i = 1; i < y; i++) {
-                for (int j = 0; j < x; j++) {
+            for (int i = 1; i < x; i++) {
+                for (int j = 0; j < y; j++) {
                     matriz[i][j] = 0;
                 }
             }
             matriz[0][0] = 0; //<---------PONER A -1
 
             int comisariasV = 1;
-            while (x != comisariasV) {
+            while (y != comisariasV) {
                 texto = br.readLine();
                 datos = texto.split(" ");
                 for (int i = 1; i < datos.length; i++) {
@@ -190,7 +190,7 @@ public class Pr1Metah {
                 }
             }
             int cont;
-            for (int i = 1; i < y; i++) {
+            for (int i = 1; i < x; i++) {
                 texto = br.readLine();
                 datos = texto.split(" ");
                 cont = Integer.parseInt(datos[1]);
@@ -205,8 +205,8 @@ public class Pr1Metah {
                 }
             }
 
-            solucion = new int[x];
-            for (int i = 0; i < x; i++) {
+            solucion = new int[y];
+            for (int i = 0; i < y; i++) {
                 solucion[i] = 0;
             }
         } catch (IOException | NumberFormatException e) {
@@ -226,8 +226,7 @@ public class Pr1Metah {
         int solucionVecina[] = solucion;
         int solucionAnterior[] = solucion;
         int valorMV = -1;
-        int valor;
-        
+        int valor; 
         int terminado = calculaIteraciones(solucion);
         
         //Revisar bien los bucles, mierda de pseudocodigo
@@ -253,6 +252,7 @@ public class Pr1Metah {
     }   
     
     public static void generaSolucionVecina(int solucionVecina[], int semilla){
+        
        Random aleatorio = new Random(semilla);
        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
        boolean parada = true;
@@ -340,11 +340,11 @@ public class Pr1Metah {
         String errores = "";
         try {
             leerFichero("scpe1.txt");
-            ratio = new float[x];
+            ratio = new float[y];
             cubre[0] = 0;
 
-            cubreOrdenado = new Pair[x - 1];
-            for (int i = 0; i < x - 1; i++) {
+            cubreOrdenado = new Pair[y - 1];
+            for (int i = 0; i < y - 1; i++) {
                 cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
             }
                     MyQuickSort sorter = new MyQuickSort();
