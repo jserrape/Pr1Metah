@@ -236,6 +236,7 @@ public class Pr1Metah {
         int solucionVecina[] = solucion;
         int solucionAnterior[] = solucion;
         int valorMV = -1;
+        int valor;
         
         int terminado = calculaIteraciones(solucion);
         
@@ -245,6 +246,10 @@ public class Pr1Metah {
                 generaSolucionVecina(solucionVecina, SEMILLA1);            
                 if (solucion != solucionVecina) {
                     terminado = calculaIteraciones(solucionVecina);
+                    valor = objetivo(solucionVecina);
+                    if (valor < valorMV) {
+                        valorMV = valor;
+                    }
                 } else {
                     --terminado;
                 }
@@ -261,7 +266,7 @@ public class Pr1Metah {
        Random aleatorio = new Random(semilla);
        int pos = aleatorio.nextInt() % y;
        boolean parada = true;
-       while (parada){
+       while (parada) {
            if (solucion[pos] == 0) {
                ++pos;
                pos = (pos % y);
@@ -272,25 +277,39 @@ public class Pr1Metah {
        }
        //Se genera un vector con todos los candidatos que cubren alguna zona de las que me quedan por cubrir al eliminar esa ( sin incluirla )
        int vecino[] = new int[y]; //Usando el vector cubre se puede hacer ¿?
-       int zonas[] = new int[y];
+       int zonas[] = new int[x];
+       int s = 1;
        
        for (int i = 1; i < y; i++) {
-           zonas[i] = 0;
-       }
-       
-       //ACABAR
-       
-       
-       for (int i = 1; i < y; i++){
-           if (i != pos) {
-               
+           vecino[i] = 0;
+           if (i < x) {
+               zonas[i] = 0;
            }
        }
-       for (int i = 1; i < y; i++){
-           if (solucion[i] == 0 && vecino[i] == 1){
-               solucion[i] = 1;
+    //Se rellena el vector de zonas, las posiciones que quedan con 0, son las que faltan por cubrir
+        for (int k = 1; k < y; k++) {
+            for (int j = 1; j < x; j++) {
+                if(matriz[j][k] != 0) {
+                       zonas[j]++;
+                }
+            }
+        }
+       
+       for (int k = 1; k < y; k++) {
+           for (int j = 1; j < x; j++) {
+               if ((matriz[j][k] == 1) && (zonas[j] == 0)) { //La zona esta sin cubrir
+                   vecino[k] = 1;
+               }
            }
        }
+       
+       for (int i = 1; i < y; i++) {
+           if (solucion[i] == 0 && vecino[i] == 1) {
+               if (i != pos) {
+                   solucion[i] = 1;
+               }
+           }
+       }      
        // JUANCA METE EL ELIMINAR REDUNCIAS
     }
     
