@@ -36,19 +36,8 @@ public class Pr1Metah {
 
 
     public static void eliminaRedundancias() {
-        for (int i = 0; i < x - 1; i++) {
-            //System.out.println(cubreOrdenado[i].lugar + ":" + cubreOrdenado[i].cubre);
-        }
-        //System.out.println("\n\n");
 
-        MyQuickSort sorter = new MyQuickSort();
-        sorter.sort(cubreOrdenado);
 
-        System.out.println("Ordenado segun a cuantos cubre:");
-        for (int i = 0; i < x - 1; i++) {
-            System.out.print(cubreOrdenado[i].getLugar() + ":" + cubreOrdenado[i].getCubre() + " ");
-        }
-        System.out.println("\n\n");
 
         int quito;
         int i;
@@ -292,17 +281,13 @@ public class Pr1Metah {
     //Se rellena el vector de zonas, las posiciones que quedan con 0, son las que faltan por cubrir
         for (int k = 1; k < y; k++) {
             for (int j = 1; j < x; j++) {
-                if(matriz[j][k] != 0 && zonas[j] == 0) {
+                if(matriz[j][k] != 0 && zonas[j] == 0 && solucion[k] == 1) {
                        zonas[j] = 1;
+                       ++zonasPendientes;
                 }
             }
         }
-        
-        for (int i = 1; i < x; i++) {
-            if (zonas[x] == 0) {
-                ++zonasPendientes;
-            }
-        }
+        zonasPendientes = x - zonasPendientes - 1; //Ver si hay que restar 1
        
         for (int k = 1; (k < y && zonasPendientes != 0); k++) {
             for (int j = 1; j < x; j++) {
@@ -349,6 +334,8 @@ public class Pr1Metah {
         String errores = "";
         try {
             leerFichero("scpe1.txt");
+            x=11;
+            y=21;
             ratio = new float[x];
             cubre[0] = 0;
 
@@ -356,6 +343,8 @@ public class Pr1Metah {
             for (int i = 0; i < x - 1; i++) {
                 cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
             }
+                    MyQuickSort sorter = new MyQuickSort();
+        sorter.sort(cubreOrdenado);
 
             rellenarRatio();
 
