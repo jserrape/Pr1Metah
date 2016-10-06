@@ -279,6 +279,7 @@ public class Pr1Metah {
        int vecino[] = new int[y]; //Usando el vector cubre se puede hacer ¿?
        int zonas[] = new int[x];
        int s = 1;
+       int zonasPendientes = 0;
        
        for (int i = 1; i < y; i++) {
            vecino[i] = 0;
@@ -289,27 +290,37 @@ public class Pr1Metah {
     //Se rellena el vector de zonas, las posiciones que quedan con 0, son las que faltan por cubrir
         for (int k = 1; k < y; k++) {
             for (int j = 1; j < x; j++) {
-                if(matriz[j][k] != 0) {
-                       zonas[j]++;
+                if(matriz[j][k] != 0 && zonas[j] == 0) {
+                       zonas[j] = 1;
+                }
+            }
+        }
+        
+        for (int i = 1; i < x; i++) {
+            if (zonas[x] == 0) {
+                ++zonasPendientes;
+            }
+        }
+       
+        for (int k = 1; (k < y && zonasPendientes != 0); k++) {
+            for (int j = 1; j < x; j++) {
+                if (k != pos) {
+                    if ((matriz[j][k] == 1) && (zonas[j] == 0)) { //La zona esta sin cubrir
+                        vecino[k] = 1; //Ver si se puede evitar esta asignacion continuamente
+                        zonas[j] = 1;
+                        --zonasPendientes;
+                    }
                 }
             }
         }
        
-       for (int k = 1; k < y; k++) {
-           for (int j = 1; j < x; j++) {
-               if ((matriz[j][k] == 1) && (zonas[j] == 0)) { //La zona esta sin cubrir
-                   vecino[k] = 1;
-               }
-           }
-       }
-       
-       for (int i = 1; i < y; i++) {
-           if (solucion[i] == 0 && vecino[i] == 1) {
-               if (i != pos) {
+        for (int i = 1; i < y; i++) {
+            if (solucion[i] == 0 && vecino[i] == 1) {
+                if (i != pos) {
                    solucion[i] = 1;
-               }
-           }
-       }      
+                }
+            }
+        }      
        // JUANCA METE EL ELIMINAR REDUNCIAS
     }
     
