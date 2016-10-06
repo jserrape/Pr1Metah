@@ -288,6 +288,7 @@ public class Pr1Metah {
                zonas[i] = 0;
            }
        }
+        
     //Se rellena el vector de zonas, las posiciones que quedan con 0, son las que faltan por cubrir
         for (int k = 1; k < y; k++) {
             for (int j = 1; j < x; j++) {
