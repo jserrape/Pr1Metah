@@ -245,7 +245,7 @@ public class Pr1Metah {
         while(objetivo(solucionVecina) <= objetivo(solucionAnterior)) {  
             while( (objetivo(solucionVecina) > valorMV) || terminado != 0) { //Falta mirar el tema de la factorizacion
                 generaSolucionVecina(solucionVecina, SEMILLA1);            
-                if (!Arrays.equals(solucion, solucionVecina)) { //Cuidao
+                if (!Arrays.equals(solucion, solucionVecina)) { //Cuidao eh
                     terminado = calculaIteraciones(solucionVecina);
                     valor = objetivo(solucionVecina);
                     if (valor < valorMV) {
