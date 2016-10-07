@@ -230,9 +230,9 @@ public class Pr1Metah {
         int terminado = calculaIteraciones(solucion);
         
         //Revisar bien los bucles, mierda de pseudocodigo
-        while(objetivo(solucionVecina) <= objetivo(solucionAnterior)) {  
-            while( (objetivo(solucionVecina) > valorMV) || terminado != 0) { //Falta mirar el tema de la factorizacion
-                generaSolucionVecina(solucionVecina, SEMILLA1);            
+        while(objetivo(solucionVecina) < objetivo(solucionAnterior)) {  
+            while( (objetivo(solucionVecina) > valorMV) && terminado > 0) { //Falta mirar el tema de la factorizacion
+                generaSolucionVecina(solucionVecina, SEMILLA2); // se queda colgado por la condicion del while            
                 if (!Arrays.equals(solucionAnterior, solucionVecina)) { //Cuidao eh
                     terminado = calculaIteraciones(solucionVecina);
                     valor = objetivo(solucionVecina);
@@ -252,7 +252,7 @@ public class Pr1Metah {
     }   
     
     public static void generaSolucionVecina(int solucionVecina[], int semilla){
-        
+       System.out.printf("--------------------------------------------------------------------------------- \n");
        Random aleatorio = new Random(semilla);
        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
        boolean parada = true;
@@ -292,7 +292,7 @@ public class Pr1Metah {
             }
         }
         zonasPendientes = x - zonasPendientes; //Ver si hay que restar 1
-        System.out.printf("Hay estas %s \n", zonasPendientes);
+        //System.out.printf("Hay estas %s \n", zonasPendientes);
        
         for (int k = 1; (k < y && zonasPendientes > 0); k++) {
             for (int j = 1; j < x; j++) {
@@ -363,11 +363,16 @@ public class Pr1Metah {
                 mostrarSolucion();
             }
             eliminaRedundancias();
+            int sumar = objetivo(solucion);
+            
+            System.out.printf("Coste de la solucion %s \n", sumar);
             mostrarSolucion();
             
             System.out.println("-------------------------------- EMPIEZA BUSQUEDA LOCAL");
             busquedaLocal();
-            eliminaRedundancias();
+            sumar = objetivo(solucion);
+            System.out.printf("Coste de la solucion %s \n", sumar);
+            
             mostrarSolucion();
 
         } catch (FicheroNoEncontrado error) {
