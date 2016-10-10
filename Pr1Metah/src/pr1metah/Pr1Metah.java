@@ -44,7 +44,7 @@ public class Pr1Metah {
 
             matriz = new int[y][x];
             cubre = new int[x];
-            
+
             for (int i = 0; i < x; i++) {
                 cubre[i] = 0;
             }
@@ -90,12 +90,13 @@ public class Pr1Metah {
         }
     }
 
-
     public static void main(String[] args) throws FicheroNoEncontrado {
-        leerFichero("scpe1.txt");
+        Panel pa = new Panel();
+        pa.setVisible(true);
+        leerFichero("scpnrf1.txt");
         Greedy greedy = new Greedy();
-        int solucion[]=greedy.greedySearch(x, y, matriz, cubre);
-        
+        int solucion[] = greedy.greedySearch(x, y, matriz, cubre);
+
         Tabu tabu = new Tabu();
         tabu.tabuSearch(x, y, matriz, solucion);
     }

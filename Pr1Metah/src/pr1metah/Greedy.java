@@ -83,20 +83,25 @@ public class Greedy {
         }
     }
 
-    public static void mostrarSolucion(int x,int solucion[]) {
+    public static void mostrarSolucion(int x, int solucion[],int mat[][]) {
         System.out.println("Solucion:");
+        int coste=0;
         for (int i = 1; i < x; i++) {
             if (solucion[i] == 1) {
                 System.out.print(i + ":" + solucion[i] + " ");
+                coste+=mat[0][i];
             }
         }
-        System.out.println("\n");
+        System.out.print("Coste: "+coste+"\n");
+        
+        
     }
 
     public int[] greedySearch(int x, int y, int mat[][], int cubre[]) {
         System.out.println("\n\nComienzo la busqueda greedy:");
         System.out.println("   x=" + x);
         System.out.println("   y=" + y);
+
 
         int solucion[] = new int[x];
         for (int i = 0; i < x; i++) {
@@ -117,8 +122,8 @@ public class Greedy {
             rellenarRatio(x, mat, cubre, ratio);
         }
         eliminaRedundancias(x, y, cubreOrdenado, solucion, mat);
-        mostrarSolucion(x,solucion);
-        
+        mostrarSolucion(x, solucion,mat);
+
         return solucion;
     }
 
