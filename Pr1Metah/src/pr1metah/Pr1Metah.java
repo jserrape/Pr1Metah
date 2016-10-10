@@ -38,8 +38,6 @@ public class Pr1Metah {
 
     public static void eliminaRedundancias() {
 
-
-
         int quito;
         int i;
         boolean columnaRedundante, sustituible;
@@ -236,7 +234,7 @@ public class Pr1Metah {
             terminado = calculaIteraciones(solucionActual);
             mejorVecino = 999;
             do {
-                generaSolucionVecina(solucionActual, solucionVecina, SEMILLA3);
+                generaSolucionVecina(solucionActual, solucionVecina, SEMILLA3); //FALLO
                 if (costeVecina < mejorVecino) {
                     mejorVecino = costeVecina;
                 }
@@ -341,7 +339,7 @@ public class Pr1Metah {
         String errores = "";
         try {
             //leerFichero("scpe1.txt");
-            leerFichero("scpnrf1.txt");
+            leerFichero("scp41.txt");
             ratio = new float[y];
             cubre[0] = 0;
 
