@@ -27,6 +27,7 @@ public class Pr1Metah {
     static int y, x;
     static int solucion[];
     static Pair cubreOrdenado[];
+    static int base, anterior, factorizado, actual, costeVecina;
     
     public static final int SEMILLA1 = 77383426;
     public static final int SEMILLA2 = 77368737;
@@ -46,7 +47,7 @@ public class Pr1Metah {
             if (solucion[cubreOrdenado[z].getLugar()] == 1) {
                 columnaRedundante = true;
                 quito = cubreOrdenado[z].getLugar();
-                System.out.println("Voy a intentar eliminar el " + quito);
+                //System.out.println("Voy a intentar eliminar el " + quito);
 
                 sustituible = false;
                 for (i = 1; i < x; i++) {
@@ -64,10 +65,10 @@ public class Pr1Metah {
                 }
 
                 if (columnaRedundante) {
-                    System.out.println("El " + quito + " sobra.");
+                    //System.out.println("El " + quito + " sobra.");
                     solucion[quito]=0;
                 } else {
-                    System.out.println("El " + quito + " no sobra.");
+                    //System.out.println("El " + quito + " no sobra.");
                 }
 
             }
@@ -86,7 +87,9 @@ public class Pr1Metah {
     public static void mostrarSolucion() {
         System.out.println("Solucion:");
         for (int i = 1; i < y; i++) {
-            System.out.print(i + ":" + solucion[i] + " ");
+            if (solucion[i] == 1){
+                System.out.print(i + ":" + solucion[i] + " ");
+            }
         }
         System.out.println("\n");
     }
@@ -225,36 +228,38 @@ public class Pr1Metah {
         int solucionActual[] = solucion; // Inicializacion del Greedy
         int solucionVecina[] = solucion;
         int solucionAnterior[] = solucion;
+        base = objetivo(solucion);
+        actual = base;
         int valorMV = -1;
-        int valor; 
-        int terminado = calculaIteraciones(solucion);
+        anterior = 99999999;
+        int valor = -1; 
+        costeVecina = 1;
+        int terminado;
         
         //Revisar bien los bucles, mierda de pseudocodigo
-        while(objetivo(solucionVecina) < objetivo(solucionAnterior)) {  
-            while( (objetivo(solucionVecina) > valorMV) && terminado > 0) { //Falta mirar el tema de la factorizacion
-                generaSolucionVecina(solucionVecina, SEMILLA2); // se queda colgado por la condicion del while            
-                if (!Arrays.equals(solucionAnterior, solucionVecina)) { //Cuidao eh
-                    terminado = calculaIteraciones(solucionVecina);
-                    valor = objetivo(solucionVecina);
-                    if (valor < valorMV) {
-                        valorMV = valor;
-                    }
-                } else {
-                    --terminado;
-                }
-            }
-            solucionAnterior = solucionActual;
-                if (objetivo(solucionVecina) < objetivo(solucionActual)) {
+        while(costeVecina < anterior) {  //objetivo(solucionVecina) < objetivo(solucionAnterior)
+            if (costeVecina < anterior) { //En este instante anterior y actual coinciden
                     solucionActual = solucionVecina;
-                }   
+            }
+            terminado = calculaIteraciones(solucionActual);
+            while( (costeVecina > valorMV) && terminado > 0) { 
+                generaSolucionVecina(solucionActual, solucionVecina, SEMILLA1); // se queda colgado por la condicion del while            
+                --terminado;
+                if (costeVecina < valorMV) {
+                    valorMV = costeVecina;
+                }
+            }  
+            solucionAnterior = solucionActual;
+            anterior = objetivo(solucionAnterior);
         }
         solucion = solucionActual;
     }   
     
-    public static void generaSolucionVecina(int solucionVecina[], int semilla){
+    public static void generaSolucionVecina(int solucionActual[], int solucionVecina[], int semilla){
        System.out.printf("--------------------------------------------------------------------------------- \n");
        Random aleatorio = new Random(semilla);
        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
+       solucionVecina = solucionActual;
        boolean parada = true;
        while (parada) {
            if (pos == 0) {
@@ -313,6 +318,7 @@ public class Pr1Metah {
                 }
             }
         }
+        costeVecina = objetivo(solucionVecina);
         solucion = solucionVecina;
         eliminaRedundancias(); // Y ya?
     }
