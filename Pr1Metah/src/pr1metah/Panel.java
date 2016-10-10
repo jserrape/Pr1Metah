@@ -14,20 +14,20 @@ import javax.swing.table.DefaultTableModel;
 public class Panel extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
-    
+
     /**
      * Creates new form Panel
      */
     public Panel() {
         initComponents();
-        setSize(863, 285); 
-        setLocationRelativeTo(null); 
+        setSize(863, 285);
+        setLocationRelativeTo(null);
         setTitle("Estadisticas");
-        
+
         //String[] Datos = new String[10];
-        String[] Datos={"Ejec 1","Ejec 2","Ejec 3","Ejec 4","Ejec 5","Mejor","Peor","Media","Desv."};
+        String[] Datos = {"Ejec 1", "Ejec 2", "Ejec 3", "Ejec 4", "Ejec 5", "Mejor", "Peor", "Media", "Desv."};
         String[] d = new String[3];
-        d[1]=d[2]="";
+        d[1] = d[2] = "";
         modelo = new DefaultTableModel();
         modelo.addColumn("");
         modelo.addColumn("Z");
@@ -41,13 +41,11 @@ public class Panel extends javax.swing.JFrame {
         modelo.addColumn("Z");
         modelo.addColumn("Tiempo");
         this.jTable1.setModel(modelo);
-        
-        for(int i=0;i<9;i++){
-            d[0]=Datos[i];
+
+        for (int i = 0; i < 9; i++) {
+            d[0] = Datos[i];
             modelo.addRow(d);
         }
-        
-        
 
     }
 
@@ -70,10 +68,7 @@ public class Panel extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
@@ -155,6 +150,25 @@ public class Panel extends javax.swing.JFrame {
             }
         });
     }
+
+    //String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
+    public void insertaDatos(String fich, int coste, long tiempo, int i) {
+        if (fich == "scpe1.txt") {
+            System.out.println(tiempo+"   <------");
+            modelo.setValueAt(coste, i, 1);
+            modelo.setValueAt(tiempo, i, 2);
+        } else if (fich == "scp41.txt") {
+            modelo.setValueAt(coste, i, 3);
+            modelo.setValueAt(tiempo, i, 4);
+        } else if (fich == "scpd1.txt") {
+            modelo.setValueAt(coste, i, 5);
+            modelo.setValueAt(tiempo, i, 6);
+        } else if (fich == "scpnrf1.txt") {
+            modelo.setValueAt(coste, i, 7);
+            modelo.setValueAt(tiempo, i, 8);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

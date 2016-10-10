@@ -93,12 +93,22 @@ public class Pr1Metah {
     public static void main(String[] args) throws FicheroNoEncontrado {
         Panel pa = new Panel();
         pa.setVisible(true);
-        leerFichero("scpnrf1.txt");
-        Greedy greedy = new Greedy();
-        int solucion[] = greedy.greedySearch(x, y, matriz, cubre);
 
+        Greedy greedy = new Greedy();
         Tabu tabu = new Tabu();
-        tabu.tabuSearch(x, y, matriz, solucion);
+
+        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
+        int n = 4;
+
+        for (int z = 0; z < 5; z++) {
+            for (int i = 0; i < n; i++) {
+                leerFichero(ficheros[i]);
+
+                int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], z);
+                tabu.tabuSearch(x, y, matriz, solucion);
+            }
+        }
+
     }
 
 }

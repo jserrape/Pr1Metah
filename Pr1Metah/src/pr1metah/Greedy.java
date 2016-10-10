@@ -83,26 +83,28 @@ public class Greedy {
         }
     }
 
-    public static void mostrarSolucion(int x, int solucion[],int mat[][]) {
+    public static int mostrarSolucion(int x, int solucion[], int mat[][]) {
         System.out.println("Solucion:");
-        int coste=0;
+        int coste = 0;
         for (int i = 1; i < x; i++) {
             if (solucion[i] == 1) {
                 System.out.print(i + ":" + solucion[i] + " ");
-                coste+=mat[0][i];
+                coste += mat[0][i];
             }
         }
-        System.out.print("Coste: "+coste+"\n");
-        
-        
+        System.out.print("Coste: " + coste + "\n");
+
+        return coste;
     }
 
-    public int[] greedySearch(int x, int y, int mat[][], int cubre[]) {
+    public int[] greedySearch(int x, int y, int mat[][], int cubre[], Panel pa, String fich, int ej) {
         System.out.println("\n\nComienzo la busqueda greedy:");
         System.out.println("   x=" + x);
         System.out.println("   y=" + y);
 
-
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+        
         int solucion[] = new int[x];
         for (int i = 0; i < x; i++) {
             solucion[i] = 0;
@@ -122,8 +124,12 @@ public class Greedy {
             rellenarRatio(x, mat, cubre, ratio);
         }
         eliminaRedundancias(x, y, cubreOrdenado, solucion, mat);
-        mostrarSolucion(x, solucion,mat);
+        int coste = mostrarSolucion(x, solucion, mat);
 
+        time_end = System.currentTimeMillis();
+        long t=( time_end - time_start );
+        System.out.println("the task has taken "+ t +" milliseconds");
+        pa.insertaDatos(fich, coste, t, ej);
         return solucion;
     }
 
