@@ -27,8 +27,8 @@ public class Pr1Metah {
     static int y, x;
     static int solucion[];
     static Pair cubreOrdenado[];
-    static int base, anterior, factorizado, actual, costeVecina;
-    static boolean terminado;
+    static int base, anterior, factorizado, costeActual, costeVecina;
+    static int terminado;
     
     public static final int SEMILLA1 = 77383426;
     public static final int SEMILLA2 = 77368737;
@@ -229,23 +229,23 @@ public class Pr1Metah {
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         int solucionVecina[] = solucion.clone();
         int solucionAnterior[];
-        base = objetivo(solucion);
-        actual = base;
-        int valorMV = -1;
-        anterior = -1;
-        costeVecina = 1;
+        costeActual = objetivo(solucionActual);
+        int valorMV = 1000;
+        anterior = 3000;
+        costeVecina = 2000;
         
         //Revisar bien los bucles, mierda de pseudocodigo
         while(costeVecina < anterior) {  //objetivo(solucionVecina) < objetivo(solucionAnterior)
             if (costeVecina < anterior) { //En este instante anterior y actual coinciden
                     solucionActual = solucionVecina.clone();
             }
-            terminado = true;
-            while( (costeVecina > valorMV) && terminado) { 
+            terminado = calculaIteraciones(solucionActual);
+            while( (costeVecina >= valorMV) && terminado != 0) { 
                 generaSolucionVecina(solucionActual, solucionVecina, SEMILLA1); // se queda colgado por la condicion del while            
                 if (costeVecina < valorMV) {
                     valorMV = costeVecina;
                 }
+                --terminado;
             }  
             solucionAnterior = solucionActual.clone();
             anterior = objetivo(solucionAnterior);
@@ -269,14 +269,13 @@ public class Pr1Metah {
            } else {
                solucionVecina[pos] = 0;
                parada = false;
-               terminado = false;
+               //terminado = false;
            }
        }
        
        //Se genera un vector con todos los candidatos que cubren alguna zona de las que me quedan por cubrir al eliminar esa ( sin incluirla )
        int vecino[] = new int[y]; 
        int zonas[] = new int[x];
-       int s = 1;
        int zonasPendientes = 0;
        
        for (int i = 1; i < y; i++) {
@@ -296,7 +295,7 @@ public class Pr1Metah {
             }
         }
         zonasPendientes = x - zonasPendientes; //Ver si hay que restar 1
-        //System.out.printf("Hay estas %s \n", zonasPendientes);
+        System.out.printf("Hay estas %s \n", zonasPendientes);
        
         for (int k = 1; (k < y && zonasPendientes > 0); k++) {
             for (int j = 1; j < x; j++) {
@@ -318,8 +317,8 @@ public class Pr1Metah {
             }
         }
         costeVecina = objetivo(solucionVecina);
-        solucion = solucionVecina;
-        eliminaRedundancias(); // Y ya?
+        solucion = solucionVecina.clone();
+        eliminaRedundancias();
     }
     
     public static int calculaIteraciones(int solucionVecina[]) {
@@ -344,7 +343,7 @@ public class Pr1Metah {
     public static void main(String[] args) {
         String errores = "";
         try {
-            leerFichero("scpe1.txt");
+            leerFichero("scpnrf1.txt");
             ratio = new float[y];
             cubre[0] = 0;
 
@@ -356,8 +355,8 @@ public class Pr1Metah {
         sorter.sort(cubreOrdenado);
 
             rellenarRatio();
-
-            mostrarMatrizYVector();
+            
+            //mostrarMatrizYVector();
             mostrarSolucion();
 
             buscarMayorRatio(); 
