@@ -28,6 +28,7 @@ public class Pr1Metah {
     static int solucion[];
     static Pair cubreOrdenado[];
     static int base, anterior, factorizado, actual, costeVecina;
+    static boolean terminado;
     
     public static final int SEMILLA1 = 77383426;
     public static final int SEMILLA2 = 77368737;
@@ -225,41 +226,38 @@ public class Pr1Metah {
     }
     
     public static void busquedaLocal() {
-        int solucionActual[] = solucion; // Inicializacion del Greedy
-        int solucionVecina[] = solucion;
-        int solucionAnterior[] = solucion;
+        int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
+        int solucionVecina[] = solucion.clone();
+        int solucionAnterior[];
         base = objetivo(solucion);
         actual = base;
         int valorMV = -1;
-        anterior = 99999999;
-        int valor = -1; 
+        anterior = -1;
         costeVecina = 1;
-        int terminado;
         
         //Revisar bien los bucles, mierda de pseudocodigo
         while(costeVecina < anterior) {  //objetivo(solucionVecina) < objetivo(solucionAnterior)
             if (costeVecina < anterior) { //En este instante anterior y actual coinciden
-                    solucionActual = solucionVecina;
+                    solucionActual = solucionVecina.clone();
             }
-            terminado = calculaIteraciones(solucionActual);
-            while( (costeVecina > valorMV) && terminado > 0) { 
+            terminado = true;
+            while( (costeVecina > valorMV) && terminado) { 
                 generaSolucionVecina(solucionActual, solucionVecina, SEMILLA1); // se queda colgado por la condicion del while            
-                --terminado;
                 if (costeVecina < valorMV) {
                     valorMV = costeVecina;
                 }
             }  
-            solucionAnterior = solucionActual;
+            solucionAnterior = solucionActual.clone();
             anterior = objetivo(solucionAnterior);
         }
-        solucion = solucionActual;
+        solucion = solucionActual.clone();
     }   
     
     public static void generaSolucionVecina(int solucionActual[], int solucionVecina[], int semilla){
        System.out.printf("--------------------------------------------------------------------------------- \n");
        Random aleatorio = new Random(semilla);
        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
-       solucionVecina = solucionActual;
+       solucionVecina = solucionActual.clone();
        boolean parada = true;
        while (parada) {
            if (pos == 0) {
@@ -271,6 +269,7 @@ public class Pr1Metah {
            } else {
                solucionVecina[pos] = 0;
                parada = false;
+               terminado = false;
            }
        }
        
