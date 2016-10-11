@@ -26,7 +26,7 @@ public class Pr1Metah {
     static int y, x;
     static int solucion[];
     static Pair cubreOrdenado[];
-    static int anterior, costeActual, costeVecina, mejorVecino;
+    static int anterior, costeActual, costeVecina, costeMejorVecino;
     static int terminado;
     
     public static final int SEMILLA1 = 77383426;
@@ -225,21 +225,23 @@ public class Pr1Metah {
     public static void busquedaLocal() {
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         int solucionVecina[] = solucion.clone();
+        int mejorVecino[] = solucion.clone();
         //int solucionAnterior[];
         
         do {
-            if (costeVecina < anterior) { 
-                    solucionActual = solucionVecina.clone();
+            if (costeMejorVecino < anterior) { 
+                    solucionActual = mejorVecino.clone();
             }
             terminado = calculaIteraciones(solucionActual);
-            mejorVecino = 999;
+            costeMejorVecino = 999;
             do {
                 generaSolucionVecina(solucionActual, solucionVecina, SEMILLA3); //FALLO
-                if (costeVecina < mejorVecino) {
-                    mejorVecino = costeVecina;
+                if (costeVecina < costeMejorVecino) {
+                    mejorVecino = solucionVecina.clone();
+                    costeMejorVecino = costeVecina;
                 }
                 --terminado;
-            } while ((costeVecina >= mejorVecino) && terminado != 0);
+            } while ((costeVecina >= costeMejorVecino) && terminado != 0);
             //solucionAnterior = solucionActual.clone();
             anterior = objetivo(solucionActual);
         } while (costeVecina < anterior);
@@ -339,7 +341,7 @@ public class Pr1Metah {
         String errores = "";
         try {
             //leerFichero("scpe1.txt");
-            leerFichero("scp41.txt");
+            leerFichero("scpd1.txt");
             ratio = new float[y];
             cubre[0] = 0;
 
