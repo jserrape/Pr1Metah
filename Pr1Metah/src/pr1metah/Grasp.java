@@ -31,6 +31,7 @@ public class Grasp {
         alpha = (float) 0.6;
         System.out.println("   alpha=" + alpha);
 
+        mostrarMatriz(x,y,mat);
         greedyRandomized(x, y, mat.clone());
     }
 
