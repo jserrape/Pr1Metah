@@ -54,7 +54,7 @@ public class Greedy {
         return false;
     }
 
-    public void eliminaRedundancias(int x, int y, int solucion[], int matriz[][]) {
+    public void eliminaRedundancias(int x, int y, int solucion[], int matriz[][], int factorizacion) {
         MyQuickSort sorter = new MyQuickSort();
         sorter.sort(cubreOrdenado);
         int quito;
@@ -80,6 +80,7 @@ public class Greedy {
                 }
                 if (columnaRedundante) {
                     solucion[quito] = 0;
+                    factorizacion = factorizacion - matriz[0][quito];
                 }
             }
         }
@@ -125,7 +126,7 @@ public class Greedy {
             buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
             rellenarRatio(x, mat, cubre, ratio);
         }
-        eliminaRedundancias(x, y, solucion, mat);
+        eliminaRedundancias(x, y, solucion, mat, 0);
         int coste = mostrarSolucion(x, solucion, mat);
 
         time_end = System.currentTimeMillis();
