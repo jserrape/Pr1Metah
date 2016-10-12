@@ -235,13 +235,13 @@ public class Pr1Metah {
             terminado = calculaIteraciones(solucionActual);
             costeMejorVecino = 999;
             do {
-                generaSolucionVecina(solucionActual, solucionVecina, SEMILLA3); //FALLO
+                generaSolucionVecina(solucionActual, solucionVecina, SEMILLA3); 
                 if (costeVecina < costeMejorVecino) {
                     mejorVecino = solucionVecina.clone();
                     costeMejorVecino = costeVecina;
                 }
                 --terminado;
-            } while ((costeVecina >= costeMejorVecino) && terminado != 0);
+            } while ((costeVecina >= costeMejorVecino) && terminado != 0); //Era un >=
             //solucionAnterior = solucionActual.clone();
             anterior = objetivo(solucionActual);
         } while (costeVecina < anterior);
@@ -341,7 +341,7 @@ public class Pr1Metah {
         String errores = "";
         try {
             //leerFichero("scpe1.txt");
-            leerFichero("scpd1.txt");
+            leerFichero("scp41.txt");
             ratio = new float[y];
             cubre[0] = 0;
 
