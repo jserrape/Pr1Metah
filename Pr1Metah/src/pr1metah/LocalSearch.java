@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class LocalSearch {
 
-    static int anterior, costeActual, costeVecina, costeMejorVecino;
+    static int anterior, costeVecina, costeActual;
     static int terminado;
     
     public static final int SEMILLA1 = 77383426;
@@ -26,25 +26,23 @@ public class LocalSearch {
         
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         int solucionVecina[] = solucion.clone();
-        int mejorVecino[] = solucion.clone();
-
-
+        int solucionAnterior[];
+        //Se deberia de generar el aleatorio aqui ¿? !!!!!!!!!!!!!
+        //Si con el aleatorio caigo por el final y no hay 1 que hacemos !!!!!!!!!!
+        //Bucles bien hechos? !!!!!!!!!!!
+        
         do {
-            if (costeMejorVecino < anterior) {
-                solucionActual = mejorVecino.clone();
-            }
             terminado = calculaIteraciones(solucionActual, y);
-            costeMejorVecino = 999;
             do {
                 generaSolucionVecina(solucionActual, solucionVecina, matriz, x, y, greedy, SEMILLA3);
-                if (costeVecina < costeMejorVecino) {
-                    mejorVecino = solucionVecina.clone();
-                    costeMejorVecino = costeVecina;
-                }
                 --terminado;
-            } while ((costeVecina >= costeMejorVecino) && terminado != 0); 
-            //solucionAnterior = solucionActual.clone();
-            anterior = objetivo(solucionActual, y, matriz);
+            } while ((costeVecina >= costeActual) && terminado != 0); 
+            solucionAnterior = solucionActual.clone();
+            anterior = costeActual;
+            if (costeActual < anterior) {
+                solucionActual = solucionVecina.clone();
+                costeActual = costeVecina;
+            }
         } while (costeVecina < anterior);
         
         return solucionActual;
