@@ -154,7 +154,6 @@ public class Panel extends javax.swing.JFrame {
     //String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
     public void insertaDatos(String fich, int coste, long tiempo, int i) {
         if (fich == "scpe1.txt") {
-            System.out.println(tiempo+"   <------");
             modelo.setValueAt(coste, i, 1);
             modelo.setValueAt(tiempo, i, 2);
         } else if (fich == "scp41.txt") {

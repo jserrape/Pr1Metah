@@ -95,19 +95,18 @@ public class Pr1Metah {
         pa.setVisible(true);
 
         Greedy greedy = new Greedy();
-        Tabu tabu = new Tabu();
+        Grasp tabu = new Grasp();
 
         String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
         int n = 4;
 
-        for (int z = 0; z < 5; z++) {
-            for (int i = 0; i < n; i++) {
-                leerFichero(ficheros[i]);
+        greedy = new Greedy();
+        leerFichero(ficheros[0]);
+        //int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[0], 0);
 
-                int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], z);
-                tabu.tabuSearch(x, y, matriz, solucion);
-            }
-        }
+        x=11;
+        y=21;
+        tabu.graspSearch(x, y, matriz);
 
     }
 
