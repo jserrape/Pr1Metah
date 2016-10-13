@@ -36,7 +36,7 @@ public class Pr1Metah {
             br = new BufferedReader(fr);
             String texto;
             String[] datos;
-            System.out.print("Fichero abierto correctamente\n");
+            //System.out.print("Fichero abierto correctamente\n");
             texto = br.readLine();
             datos = texto.split(" ");
             y = Integer.parseInt(datos[1]) + 1;
@@ -83,7 +83,7 @@ public class Pr1Metah {
             try {
                 if (null != fr) {
                     fr.close();
-                    System.out.print("Fichero cerrado correctamente\n");
+                    //System.out.print("Fichero cerrado correctamente\n");
                 }
             } catch (Exception e2) {
             }
@@ -103,7 +103,8 @@ public class Pr1Metah {
         greedy = new Greedy();
         for (int i = 0; i < n; i++) {
             leerFichero(ficheros[i]);
-            //int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], 0);
+            greedy.greedySearch(x, y, matriz, cubre);
+            
             grasp.graspSearch(x, y, matriz);
         }
 

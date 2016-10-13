@@ -25,6 +25,9 @@ public class Grasp {
         alpha = (float) 0.7;
         System.out.println("   alpha=" + alpha);
 
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+        
         //mostrarMatriz(x, y, mat);
         for (int z = 1; z < 1000; z++) {
             copiaMatriz(x,y,mat,matcopia);
@@ -40,6 +43,9 @@ public class Grasp {
             }
         }
         System.out.println("Grasp, resultado de coste: " + mejorCoste);
+        time_end = System.currentTimeMillis();
+        long t=( time_end - time_start );
+        System.out.println("the task has taken "+ t +" milliseconds");
 
     }
 

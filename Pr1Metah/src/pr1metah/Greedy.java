@@ -10,6 +10,8 @@ package pr1metah;
  * @author alumno
  */
 public class Greedy {
+    
+    public Pair cubreOrdenado[];
 
     public void rellenarRatio(int x, int matriz[][], int cubre[], float ratio[]) {
         for (int i = 1; i < x; i++) {
@@ -52,7 +54,7 @@ public class Greedy {
         return false;
     }
 
-    public static void eliminaRedundancias(int x, int y, Pair cubreOrdenado[], int solucion[], int matriz[][]) {
+    public void eliminaRedundancias(int x, int y, int solucion[], int matriz[][], int factorizacion) {
         MyQuickSort sorter = new MyQuickSort();
         sorter.sort(cubreOrdenado);
         int quito;
@@ -78,6 +80,7 @@ public class Greedy {
                 }
                 if (columnaRedundante) {
                     solucion[quito] = 0;
+                    factorizacion = factorizacion - matriz[0][quito];
                 }
             }
         }
@@ -92,12 +95,12 @@ public class Greedy {
                 coste += mat[0][i];
             }
         }
-        System.out.print("Coste: " + coste + "\n");
+        System.out.print("\nCoste: " + coste + "\n");
 
         return coste;
     }
 
-    public int[] greedySearch(int x, int y, int mat[][], int cubre[], Panel pa, String fich, int ej) {
+    public int[] greedySearch(int x, int y, int mat[][], int cubre[]) {
         System.out.println("\n\nComienzo la busqueda greedy:");
         System.out.println("   x=" + x);
         System.out.println("   y=" + y);
@@ -111,7 +114,7 @@ public class Greedy {
         }
         float ratio[] = new float[x];
         cubre[0] = 0;
-        Pair cubreOrdenado[] = new Pair[x - 1];
+        cubreOrdenado = new Pair[x - 1];
         for (int i = 0; i < x - 1; i++) {
             cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
         }
@@ -123,14 +126,12 @@ public class Greedy {
             buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
             rellenarRatio(x, mat, cubre, ratio);
         }
-        mostrarSolucion(x, solucion, mat);
-        eliminaRedundancias(x, y, cubreOrdenado, solucion, mat);
+        eliminaRedundancias(x, y, solucion, mat, 0);
         int coste = mostrarSolucion(x, solucion, mat);
 
         time_end = System.currentTimeMillis();
         long t=( time_end - time_start );
         System.out.println("the task has taken "+ t +" milliseconds");
-        pa.insertaDatos(fich, coste, t, ej);
         return solucion;
     }
 

@@ -13,7 +13,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Panel extends javax.swing.JFrame {
 
-    DefaultTableModel modelo;
+    DefaultTableModel modelo1;
+    DefaultTableModel modelo2;
+    DefaultTableModel modelo3;
+    DefaultTableModel modelo4;
 
     /**
      * Creates new form Panel
@@ -24,29 +27,76 @@ public class Panel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Estadisticas");
 
+       
         //String[] Datos = new String[10];
         String[] Datos = {"Ejec 1", "Ejec 2", "Ejec 3", "Ejec 4", "Ejec 5", "Mejor", "Peor", "Media", "Desv."};
         String[] d = new String[3];
         d[1] = d[2] = "";
-        modelo = new DefaultTableModel();
-        modelo.addColumn("");
-        modelo.addColumn("Z");
-        modelo.addColumn("Tiempo");
-        modelo.addColumn("Z");
-        modelo.addColumn("Tiempo");
-        modelo.addColumn("Z");
-        modelo.addColumn("Tiempo");
-        modelo.addColumn("Z");
-        modelo.addColumn("Tiempo");
-        modelo.addColumn("Z");
-        modelo.addColumn("Tiempo");
-        this.jTable1.setModel(modelo);
+        modelo1 = new DefaultTableModel();
+        modelo1.addColumn("");
+        modelo1.addColumn("Z");
+        modelo1.addColumn("Tiempo");
+        modelo1.addColumn("Z");
+        modelo1.addColumn("Tiempo");
+        modelo1.addColumn("Z");
+        modelo1.addColumn("Tiempo");
+        modelo1.addColumn("Z");
+        modelo1.addColumn("Tiempo");
+        modelo1.addColumn("Z");
+        modelo1.addColumn("Tiempo");
+        this.tabla1.setModel(modelo1);
+        
+        modelo2 = new DefaultTableModel();
+        modelo2.addColumn("");
+        modelo2.addColumn("Z");
+        modelo2.addColumn("Tiempo");
+        modelo2.addColumn("Z");
+        modelo2.addColumn("Tiempo");
+        modelo2.addColumn("Z");
+        modelo2.addColumn("Tiempo");
+        modelo2.addColumn("Z");
+        modelo2.addColumn("Tiempo");
+        modelo2.addColumn("Z");
+        modelo2.addColumn("Tiempo");
+        this.tabla2.setModel(modelo2);
+        
+        modelo3 = new DefaultTableModel();
+        modelo3.addColumn("");
+        modelo3.addColumn("Z");
+        modelo3.addColumn("Tiempo");
+        modelo3.addColumn("Z");
+        modelo3.addColumn("Tiempo");
+        modelo3.addColumn("Z");
+        modelo3.addColumn("Tiempo");
+        modelo3.addColumn("Z");
+        modelo3.addColumn("Tiempo");
+        modelo3.addColumn("Z");
+        modelo3.addColumn("Tiempo");
+        this.tabla3.setModel(modelo3);
+        
+        modelo4 = new DefaultTableModel();
+        modelo4.addColumn("");
+        modelo4.addColumn("Z");
+        modelo4.addColumn("Tiempo");
+        modelo4.addColumn("Z");
+        modelo4.addColumn("Tiempo");
+        modelo4.addColumn("Z");
+        modelo4.addColumn("Tiempo");
+        modelo4.addColumn("Z");
+        modelo4.addColumn("Tiempo");
+        modelo4.addColumn("Z");
+        modelo4.addColumn("Tiempo");
+        this.tabla4.setModel(modelo4);
+
 
         for (int i = 0; i < 9; i++) {
             d[0] = Datos[i];
-            modelo.addRow(d);
+            modelo1.addRow(d);
+            modelo2.addRow(d);
+            modelo3.addRow(d);
+            modelo4.addRow(d);
         }
-
+        
     }
 
     /**
@@ -58,63 +108,172 @@ public class Panel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelPrincipal = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tabla1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla2 = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabla3 = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tabla4 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(2147483647, 214748));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla1);
 
-        jButton1.setText("Salir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(147, Short.MAX_VALUE))
+        );
+
+        PanelPrincipal.addTab("Greedy", jPanel1);
+
+        tabla2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
             }
-        });
+        ));
+        jScrollPane2.setViewportView(tabla2);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(147, Short.MAX_VALUE))
+        );
+
+        PanelPrincipal.addTab("Busqueda L.", jPanel2);
+
+        tabla3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tabla3);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(147, Short.MAX_VALUE))
+        );
+
+        PanelPrincipal.addTab("Busqueda T.", jPanel3);
+
+        tabla4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tabla4);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(147, Short.MAX_VALUE))
+        );
+
+        PanelPrincipal.addTab("Grasp", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(364, 364, 364)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(PanelPrincipal)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(PanelPrincipal)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,24 +313,34 @@ public class Panel extends javax.swing.JFrame {
     //String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
     public void insertaDatos(String fich, int coste, long tiempo, int i) {
         if (fich == "scpe1.txt") {
-            modelo.setValueAt(coste, i, 1);
-            modelo.setValueAt(tiempo, i, 2);
+            modelo1.setValueAt(coste, i, 1);
+            modelo1.setValueAt(tiempo, i, 2);
         } else if (fich == "scp41.txt") {
-            modelo.setValueAt(coste, i, 3);
-            modelo.setValueAt(tiempo, i, 4);
+            modelo1.setValueAt(coste, i, 3);
+            modelo1.setValueAt(tiempo, i, 4);
         } else if (fich == "scpd1.txt") {
-            modelo.setValueAt(coste, i, 5);
-            modelo.setValueAt(tiempo, i, 6);
+            modelo1.setValueAt(coste, i, 5);
+            modelo1.setValueAt(tiempo, i, 6);
         } else if (fich == "scpnrf1.txt") {
-            modelo.setValueAt(coste, i, 7);
-            modelo.setValueAt(tiempo, i, 8);
+            modelo1.setValueAt(coste, i, 7);
+            modelo1.setValueAt(tiempo, i, 8);
         }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTabbedPane PanelPrincipal;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable tabla1;
+    private javax.swing.JTable tabla2;
+    private javax.swing.JTable tabla3;
+    private javax.swing.JTable tabla4;
     // End of variables declaration//GEN-END:variables
 }
