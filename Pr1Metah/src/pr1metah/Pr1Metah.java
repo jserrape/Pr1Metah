@@ -97,18 +97,18 @@ public class Pr1Metah {
         Greedy greedy = new Greedy();
         Grasp grasp = new Grasp();
 
-        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"}; 
-        int n = 4;
+        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"};
+        int n = 5;
 
         greedy = new Greedy();
-        leerFichero(ficheros[4]);
-        //int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[0], 0);
+        for (int i = 0; i < n; i++) {
+            leerFichero(ficheros[i]);
+            int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], 0);
+        }
 
-        
         //x=11;
         //y=21;
-        grasp.graspSearch(x, y, matriz);
-
+        //grasp.graspSearch(x, y, matriz);
     }
 
 }

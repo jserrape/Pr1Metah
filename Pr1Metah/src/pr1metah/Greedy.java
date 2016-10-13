@@ -78,6 +78,7 @@ public class Greedy {
                 }
                 if (columnaRedundante) {
                     solucion[quito] = 0;
+                    System.out.println("BORROOOOOOOOOOOOOOOOOOOOOOOOO <-------------------------------------------------");
                 }
             }
         }
