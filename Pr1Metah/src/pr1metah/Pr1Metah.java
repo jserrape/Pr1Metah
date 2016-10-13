@@ -23,6 +23,12 @@ public class Pr1Metah {
     static int cubre[];
     static int matriz[][];
     static int x, y;
+    
+    public static final int SEMILLA1 = 77383426;
+    public static final int SEMILLA2 = 77368737;
+    public static final int SEMILLA3 = 34267738;
+    public static final int SEMILLA4 = 87377736;
+    public static final int SEMILLA5 = 34268737;
 
     public static void leerFichero(String fich) throws FicheroNoEncontrado {
         if (!(new File(fich)).exists()) {
@@ -99,12 +105,12 @@ public class Pr1Metah {
         Tabu tabu = new Tabu();
         LocalSearch localSearch = new LocalSearch();
 
-        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"}; //El ultimo fichero esta dañado
+        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"}; 
         int n = 4;
 
         leerFichero(ficheros[4]);
         int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[4], 0);
-        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, greedy);
+        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, greedy, 77383426);
         
         int coste = 0;
         for (int i = 1; i < x; i++){
@@ -112,9 +118,7 @@ public class Pr1Metah {
                 coste += matriz[0][i];
             }
         }
-        System.out.printf("Coste total de la busqueda local: %s \n", coste);
-        
-        
+        System.out.printf("Coste total de la busqueda local: %s \n", coste);  
         tabu.tabuSearch(x, y, matriz, solucion);
 
     }

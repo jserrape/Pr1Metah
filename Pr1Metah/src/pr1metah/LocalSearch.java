@@ -13,45 +13,44 @@ import java.util.Random;
  */
 public class LocalSearch {
 
-    static int anterior, costeVecina, costeActual, factorizacion;
+    static int anterior, costeVecina, costeActual;
     static int terminado;
     static Random aleatorio;
+    static int maxIteraciones;
+
     
-    public static final int SEMILLA1 = 77383426;
-    public static final int SEMILLA2 = 77368737;
-    public static final int SEMILLA3 = 34267738;
-    public static final int SEMILLA4 = 87377736;
-    public static final int SEMILLA5 = 34268737;
-    
-    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Greedy greedy) {
+    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Greedy greedy, int semilla) {
         
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         int solucionVecina[] = solucion.clone();
         int solucionAnterior[];
         costeActual = objetivo(solucionActual, y, matriz);
-        int pos;
+        maxIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
+        aleatorio = new Random();
+        aleatorio.setSeed(semilla);
         
         do {
             terminado = calculaIteraciones(solucionActual, y);
-            aleatorio = new Random(SEMILLA3);
-            pos = Math.abs((aleatorio.nextInt() % (y - 1)));
             do {
-                generaSolucionVecina(solucionActual, solucionVecina, matriz, x, y, greedy, pos);
+                generaSolucionVecina(solucionActual, solucionVecina, matriz, x, y, greedy);
                 --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0); 
+            } while ((costeVecina >= costeActual) && terminado != 0 && maxIteraciones < 10000); //Objetivo mejor vecino ¿?
             solucionAnterior = solucionActual.clone();
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
                 costeActual = costeVecina;
             }
-        } while (costeVecina < anterior);
+        } while (costeVecina < anterior && maxIteraciones < 10000);
         
         return solucionActual;
     }
 
-    public void generaSolucionVecina(int solucionActual[], int solucionVecina[], int matriz[][], int x, int y, Greedy greedy, int pos) {
+    public void generaSolucionVecina(int solucionActual[], int solucionVecina[], int matriz[][], int x, int y, Greedy greedy) {
+        
+        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
         solucionVecina = solucionActual.clone();
+        ++maxIteraciones; //1 factorizacion, por lo que se incrementa el contador
         boolean parada = true;
         while (parada) {
             if (pos == 0) {
@@ -62,7 +61,7 @@ public class LocalSearch {
                 pos = (pos % (y - 1));
             } else {
                 solucionVecina[pos] = 0;
-                factorizacion = costeActual - matriz[0][pos];
+                costeVecina = costeActual - matriz[0][pos];
                 parada = false;
             }
         }
@@ -105,13 +104,11 @@ public class LocalSearch {
             if (solucionVecina[i] == 0 && vecino[i] == 1) {
                 if (i != pos) {
                     solucionVecina[i] = 1;
-                    factorizacion += matriz[0][i];
+                    costeVecina += matriz[0][i];
                 }
             }
         }
-
-        greedy.eliminaRedundancias(y, x, solucionVecina, matriz, factorizacion);
-        costeVecina = factorizacion;
+        greedy.eliminaRedundancias(y, x, solucionVecina, matriz, costeVecina);
     }
 
     public static int calculaIteraciones(int solucionVecina[], int tam) {
