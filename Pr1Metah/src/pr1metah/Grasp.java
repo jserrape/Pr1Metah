@@ -17,6 +17,7 @@ public class Grasp {
 
     public void graspSearch(int x, int y, int mat[][]) {
         int solAux[], mejorSol[] = new int[x];
+        int matcopia[][] = new int[y][x];
         int mejorCoste = 9999999, cosAux;
         System.out.println("\n\nComienzo la busqueda Grasp:");
         System.out.println("   x=" + x);
@@ -25,20 +26,33 @@ public class Grasp {
         System.out.println("   alpha=" + alpha);
 
         //mostrarMatriz(x, y, mat);
-
-        for (int i = 1; i < 3; i++) {
-            solAux = greedyRandomized(x, y, mat.clone());
+        for (int z = 1; z < 30000; z++) {
+            copiaMatriz(x,y,mat,matcopia);
+            solAux = greedyRandomized(x, y, matcopia);
             //Busqueda local a solAux aqui
             cosAux = costeSol(x, solAux, mat);
-            System.out.println("Coste vuelta "+i+": "+cosAux);
-            System.out.println(cosAux +" < "+ mejorCoste);
+            System.out.println("Coste vuelta " + z + ": " + cosAux);
+            System.out.println(cosAux + " < " + mejorCoste);
             if (cosAux < mejorCoste) {
+                System.out.println("¡MEJORA!");
                 mejorCoste = cosAux;
                 mejorSol = solAux.clone();
             }
         }
         System.out.println("Grasp, resultado de coste: " + mejorCoste);
 
+    }
+
+    public void copiaMatriz(int x, int y, int origen[][], int destino[][]) {
+        for (int i = 1; i < y; i++) {
+            for (int j = 1; j < x; j++) {
+                if (origen[i][j] == 1) {
+                    destino[i][j] = 1;
+                } else {
+                    destino[i][j] = 0;
+                }
+            }
+        }
     }
 
     public int costeSol(int x, int sol[], int mat[][]) {
@@ -104,7 +118,7 @@ public class Grasp {
     }
 
     public int[] greedyRandomized(int x, int y, int mat[][]) {
-        mostrarMatriz(x, y, mat);
+        //mostrarMatriz(x, y, mat);
         int cubre[] = new int[x];
         int sol[] = new int[x];
         int lrc[] = new int[x];
@@ -152,8 +166,6 @@ public class Grasp {
             //System.out.print(sol[i] + " ");
         }
         //System.out.println();
-        int cosAux = costeSol(x, sol, mat);
-        System.out.println("Resultado del greedy: "+cosAux);
         return sol;
     }
 }

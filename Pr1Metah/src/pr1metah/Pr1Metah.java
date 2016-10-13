@@ -105,8 +105,8 @@ public class Pr1Metah {
         //int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[0], 0);
 
         
-        x=11;
-        y=21;
+        //x=11;
+        //y=21;
         grasp.graspSearch(x, y, matriz);
 
     }
