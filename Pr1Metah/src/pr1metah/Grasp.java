@@ -26,15 +26,15 @@ public class Grasp {
         System.out.println("   alpha=" + alpha);
 
         //mostrarMatriz(x, y, mat);
-        for (int z = 1; z < 30000; z++) {
+        for (int z = 1; z < 1000; z++) {
             copiaMatriz(x,y,mat,matcopia);
             solAux = greedyRandomized(x, y, matcopia);
             //Busqueda local a solAux aqui
             cosAux = costeSol(x, solAux, mat);
-            System.out.println("Coste vuelta " + z + ": " + cosAux);
-            System.out.println(cosAux + " < " + mejorCoste);
+            //System.out.println("Coste vuelta " + z + ": " + cosAux);
+            //System.out.println(cosAux + " < " + mejorCoste);
             if (cosAux < mejorCoste) {
-                System.out.println("¡MEJORA!");
+                //System.out.println("¡MEJORA!");
                 mejorCoste = cosAux;
                 mejorSol = solAux.clone();
             }
@@ -131,11 +131,6 @@ public class Grasp {
 
         NObjNoCub = actualizaCubre(x, y, mat, cubre);
         while (faltaPorCubir(x, cubre)) {
-            //System.out.println("   sol:");
-            for (int i = 1; i < x; i++) {
-                //System.out.print(sol[i] + " ");
-            }
-            //System.out.print("\n");
             umbral = (float) alpha * NObjNoCub;
             //System.out.println("   umbral:" + umbral);
             tam = 0;

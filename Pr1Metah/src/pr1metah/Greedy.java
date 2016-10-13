@@ -78,7 +78,6 @@ public class Greedy {
                 }
                 if (columnaRedundante) {
                     solucion[quito] = 0;
-                    System.out.println("BORROOOOOOOOOOOOOOOOOOOOOOOOO <-------------------------------------------------");
                 }
             }
         }
@@ -124,6 +123,7 @@ public class Greedy {
             buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
             rellenarRatio(x, mat, cubre, ratio);
         }
+        mostrarSolucion(x, solucion, mat);
         eliminaRedundancias(x, y, cubreOrdenado, solucion, mat);
         int coste = mostrarSolucion(x, solucion, mat);
 
