@@ -99,11 +99,11 @@ public class Pr1Metah {
         Tabu tabu = new Tabu();
         LocalSearch localSearch = new LocalSearch();
 
-        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
+        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"}; //El ultimo fichero esta dañado
         int n = 4;
 
-        leerFichero(ficheros[2]);
-        int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[2], 0);
+        leerFichero(ficheros[4]);
+        int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[4], 0);
         int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, greedy);
         
         int coste = 0;
