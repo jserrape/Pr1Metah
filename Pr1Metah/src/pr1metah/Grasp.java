@@ -27,7 +27,7 @@ public class Grasp {
         //mostrarMatriz(x, y, mat);
 
         for (int i = 1; i < 3; i++) {
-            solAux = greedyRandomized(x, y, mat);
+            solAux = greedyRandomized(x, y, mat.clone());
             //Busqueda local a solAux aqui
             cosAux = costeSol(x, solAux, mat);
             System.out.println("Coste vuelta "+i+": "+cosAux);
@@ -54,9 +54,9 @@ public class Grasp {
     public void mostrarMatriz(int x, int y, int mat[][]) {
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                //System.out.print(mat[i][j] + " ");
+                System.out.print(mat[i][j] + " ");
             }
-            //System.out.print("\n");
+            System.out.print("\n");
         }
     }
 
@@ -104,6 +104,7 @@ public class Grasp {
     }
 
     public int[] greedyRandomized(int x, int y, int mat[][]) {
+        mostrarMatriz(x, y, mat);
         int cubre[] = new int[x];
         int sol[] = new int[x];
         int lrc[] = new int[x];
