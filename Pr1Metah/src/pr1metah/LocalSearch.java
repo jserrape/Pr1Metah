@@ -15,6 +15,7 @@ public class LocalSearch {
 
     static int anterior, costeVecina, costeActual, factorizacion;
     static int terminado;
+    static Random aleatorio;
     
     public static final int SEMILLA1 = 77383426;
     public static final int SEMILLA2 = 77368737;
@@ -28,14 +29,14 @@ public class LocalSearch {
         int solucionVecina[] = solucion.clone();
         int solucionAnterior[];
         costeActual = objetivo(solucionActual, y, matriz);
-        //Se deberia de generar el aleatorio aqui ¿? !!!!!!!!!!!!!
-        //Si con el aleatorio caigo por el final y no hay 1 que hacemos !!!!!!!!!!
-        //Bucles bien hechos? !!!!!!!!!!!
+        int pos;
         
         do {
             terminado = calculaIteraciones(solucionActual, y);
+            aleatorio = new Random(SEMILLA3);
+            pos = Math.abs((aleatorio.nextInt() % (y - 1)));
             do {
-                generaSolucionVecina(solucionActual, solucionVecina, matriz, x, y, greedy, SEMILLA3);
+                generaSolucionVecina(solucionActual, solucionVecina, matriz, x, y, greedy, pos);
                 --terminado;
             } while ((costeVecina >= costeActual) && terminado != 0); 
             solucionAnterior = solucionActual.clone();
@@ -49,14 +50,12 @@ public class LocalSearch {
         return solucionActual;
     }
 
-    public void generaSolucionVecina(int solucionActual[], int solucionVecina[], int matriz[][], int x, int y, Greedy greedy, int semilla) {
+    public void generaSolucionVecina(int solucionActual[], int solucionVecina[], int matriz[][], int x, int y, Greedy greedy, int pos) {
         solucionVecina = solucionActual.clone();
-        Random aleatorio = new Random(semilla);
-        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
         boolean parada = true;
         while (parada) {
             if (pos == 0) {
-                pos++;
+                ++pos;
             }
             if (solucionVecina[pos] == 0) {
                 ++pos;
@@ -89,9 +88,7 @@ public class LocalSearch {
                 }
             }
         }
-        zonasPendientes = x - zonasPendientes - 1; //Ver si hay que restar 1
-        //System.out.printf("Hay estas %s \n", zonasPendientes);
-
+        zonasPendientes = x - zonasPendientes - 1; 
         for (int k = 1; (k < y && zonasPendientes > 0); k++) {
             for (int j = 1; j < x; j++) {
                 if (k != pos) {
