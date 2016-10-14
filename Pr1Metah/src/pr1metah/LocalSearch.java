@@ -13,17 +13,17 @@ import java.util.Random;
  */
 public class LocalSearch {
 
-    static int anterior, costeVecina, costeActual;
+
     static int terminado;
     static Random aleatorio;
     static int maxIteraciones;
+    static int solucionVecina[];
 
-    
-    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Greedy greedy, int semilla) {
-        
+
+    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Greedy greedy, Pair pair[], int semilla) {
+        int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
-        int solucionVecina[] = solucion.clone();
-        int solucionAnterior[];
+        //int solucionAnterior[];
         costeActual = objetivo(solucionActual, y, matriz);
         maxIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
@@ -31,11 +31,11 @@ public class LocalSearch {
         
         do {
             terminado = calculaIteraciones(solucionActual, y);
-            do {
-                generaSolucionVecina(solucionActual, solucionVecina, matriz, x, y, greedy);
+            do {    
+                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, greedy, pair);
                 --terminado;
             } while ((costeVecina >= costeActual) && terminado != 0 && maxIteraciones < 10000); //Objetivo mejor vecino ¿?
-            solucionAnterior = solucionActual.clone();
+            //solucionAnterior = solucionActual.clone();
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
@@ -43,11 +43,13 @@ public class LocalSearch {
             }
         } while (costeVecina < anterior && maxIteraciones < 10000);
         
+        System.out.printf("Se han dado %s iteraciones \n", maxIteraciones);
         return solucionActual;
     }
 
-    public void generaSolucionVecina(int solucionActual[], int solucionVecina[], int matriz[][], int x, int y, Greedy greedy) {
+    public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, Greedy greedy, Pair pair[]) {
         
+        int costeVecina = 0;
         int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
         solucionVecina = solucionActual.clone();
         ++maxIteraciones; //1 factorizacion, por lo que se incrementa el contador
@@ -108,7 +110,42 @@ public class LocalSearch {
                 }
             }
         }
-        greedy.eliminaRedundancias(y, x, solucionVecina, matriz, costeVecina);
+        costeVecina = eliminaRedundancias(y, x, matriz, pair, costeVecina);
+        return costeVecina;
+    }
+    
+    public int eliminaRedundancias(int x, int y, int matriz[][], Pair cubreOrdenado[], int costeVecina) {
+        int factorizacion = costeVecina;
+        MyQuickSort sorter = new MyQuickSort();
+        sorter.sort(cubreOrdenado);
+        int quito;
+        int i;
+        boolean columnaRedundante, sustituible;
+        for (int z = 0; z < x - 1; z++) {
+            if (solucionVecina[cubreOrdenado[z].getLugar()] == 1) {
+                columnaRedundante = true;
+                quito = cubreOrdenado[z].getLugar();
+                sustituible = false;
+                for (i = 1; i < y; i++) {
+                    if (matriz[i][quito] == 1) {
+                        sustituible = false;
+                        for (int j = 1; j < x; j++) {
+                            if (matriz[i][j] == 1 && solucionVecina[j] == 1 && quito != j) {
+                                sustituible = true;
+                            }
+                        }
+                        if (!sustituible) {
+                            columnaRedundante = false;
+                        }
+                    }
+                }
+                if (columnaRedundante) {
+                    solucionVecina[quito] = 0;
+                    factorizacion = factorizacion - matriz[0][quito];
+                }
+            }
+        }
+        return factorizacion;
     }
 
     public static int calculaIteraciones(int solucionVecina[], int tam) {

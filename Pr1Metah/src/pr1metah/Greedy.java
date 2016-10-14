@@ -115,6 +115,7 @@ public class Greedy {
         float ratio[] = new float[x];
         cubre[0] = 0;
         cubreOrdenado = new Pair[x - 1];
+        
         for (int i = 0; i < x - 1; i++) {
             cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
         }
@@ -134,6 +135,10 @@ public class Greedy {
         System.out.println("the task has taken "+ t +" milliseconds");
         pa.insertaDatos(fich, coste, t, ej);
         return solucion;
+    }
+    
+    public Pair[] copiaVector() {
+        return cubreOrdenado;
     }
 
 }

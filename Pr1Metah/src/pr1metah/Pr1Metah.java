@@ -110,8 +110,38 @@ public class Pr1Metah {
 
         leerFichero(ficheros[4]);
         int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[4], 0);
-        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, greedy, 77383426);
+        Pair pair[] = greedy.copiaVector();
+   
+        for (int i = 1; i < x; i++) {
+            solucion[i] = 1;
+        }
         
+        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, greedy, pair, 77383426);
+        
+        /*
+        int vecino[] = new int[x];
+        int zonas[] = new int[y];
+        int zonasPendientes = 0;
+
+        for (int i = 1; i < x; i++) {
+            vecino[i] = 0;
+            if (i < y) {
+                zonas[i] = 0;
+            }
+        }
+
+        //Se rellena el vector de zonas, las posiciones que quedan con 0, son las que faltan por cubrir
+        for (int k = 1; k < x; k++) {
+            for (int j = 1; j < y; j++) {
+                if (matriz[j][k] == 1 && zonas[j] == 0 && solucionBL[k] == 1) {
+                    zonas[j] = 1;
+                    ++zonasPendientes;
+                }
+            }
+        }
+        zonasPendientes = y - zonasPendientes - 1; 
+        System.out.printf("Hay %s zonas sin cubrir \n", zonasPendientes);
+        */
         int coste = 0;
         for (int i = 1; i < x; i++){
             if (solucionBL[i] == 1) {
