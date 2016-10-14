@@ -13,14 +13,14 @@ import java.util.Random;
  */
 public class LocalSearch {
 
-
     static int terminado;
     static Random aleatorio;
     static int numIteraciones;
     static int solucionVecina[];
 
-
     public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         //int solucionAnterior[];
@@ -28,10 +28,10 @@ public class LocalSearch {
         numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
         aleatorio.setSeed(semilla);
-        
+
         do {
             terminado = calculaIteraciones(solucionActual, y);
-            do {    
+            do {
                 costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
                 --terminado;
             } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones); //Objetivo mejor vecino ¿?
@@ -42,11 +42,16 @@ public class LocalSearch {
                 costeActual = costeVecina;
             }
         } while (costeVecina < anterior && numIteraciones < maxIteraciones);
+
+        mostrarSolucion(y,solucionActual,matriz);
+        time_end = System.currentTimeMillis();
+        long t = (time_end - time_start);
+        System.out.println("Busqueda Local: the task has taken " + t + " milliseconds");
         return solucionActual;
     }
 
     public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, Pair pair[]) {
-        
+
         int costeVecina = 0;
         int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
         solucionVecina = solucionActual.clone();
@@ -87,7 +92,7 @@ public class LocalSearch {
                 }
             }
         }
-        zonasPendientes = x - zonasPendientes - 1; 
+        zonasPendientes = x - zonasPendientes - 1;
         for (int k = 1; (k < y && zonasPendientes > 0); k++) {
             for (int j = 1; j < x; j++) {
                 if (k != pos) {
@@ -111,7 +116,7 @@ public class LocalSearch {
         costeVecina = eliminaRedundancias(y, x, matriz, pair, costeVecina);
         return costeVecina;
     }
-    
+
     public int eliminaRedundancias(int x, int y, int matriz[][], Pair cubreOrdenado[], int costeVecina) {
         int factorizacion = costeVecina;
         MyQuickSort sorter = new MyQuickSort();
@@ -156,20 +161,33 @@ public class LocalSearch {
         return cont;
     }
 
-    public static int objetivo(int solucionVecina[], int tam, int matriz [][]) {
+    public static int objetivo(int solucionVecina[], int tam, int matriz[][]) {
         int suma = 0;
         for (int i = 1; i < tam; i++) {
             suma += solucionVecina[i] * matriz[0][i];
         }
         return suma;
     }
-    
+
     public int getIteraciones() {
         return numIteraciones;
     }
-    
+
     public int getIteracionesGrasp() {
         return numIteraciones - 1;
     }
 
+    public static int mostrarSolucion(int x, int solucion[], int mat[][]) {
+        System.out.println("Solucion Busqueda local:");
+        int coste = 0;
+        for (int i = 1; i < x; i++) {
+            if (solucion[i] == 1) {
+                System.out.print(i + ":" + solucion[i] + " ");
+                coste += mat[0][i];
+            }
+        }
+        System.out.print("Coste: " + coste + "\n");
+
+        return coste;
+    }
 }

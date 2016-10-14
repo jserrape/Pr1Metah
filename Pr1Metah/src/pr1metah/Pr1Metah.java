@@ -106,10 +106,13 @@ public class Pr1Metah {
         LocalSearch localSearch = new LocalSearch();
 
         String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"}; 
-        int n = 4;
+        int n = 5;
 
-        leerFichero(ficheros[4]);
-        int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[4], 0);
+        leerFichero(ficheros[0]);
+        //GREEDY
+        int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[0], 0);
+        System.out.println("\n\n\n");
+        //BUSQUEDA LOCAL
         Pair pair[] = greedy.copiaVector();
         int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, pair, 10000, SEMILLA5);
         int coste = 0;
@@ -119,7 +122,8 @@ public class Pr1Metah {
             }
         }
         System.out.printf("Coste total de la busqueda local: %s \n", coste);  
-        tabu.tabuSearch(x, y, matriz, solucion);
+        System.out.println("\n\n\n");
+        //GRASP
 
     }
 

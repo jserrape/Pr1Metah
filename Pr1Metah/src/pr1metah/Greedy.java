@@ -87,7 +87,7 @@ public class Greedy {
     }
 
     public static int mostrarSolucion(int x, int solucion[], int mat[][]) {
-        System.out.println("Solucion:");
+        System.out.println("Solucion Greedy:");
         int coste = 0;
         for (int i = 1; i < x; i++) {
             if (solucion[i] == 1) {
@@ -132,7 +132,7 @@ public class Greedy {
 
         time_end = System.currentTimeMillis();
         long t=( time_end - time_start );
-        System.out.println("the task has taken "+ t +" milliseconds");
+        System.out.println("Greedy: the task has taken "+ t +" milliseconds");
         //pa.insertaDatos(fich, coste, t, ej);
         return solucion;
     }
