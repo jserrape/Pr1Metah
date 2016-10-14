@@ -16,16 +16,16 @@ public class LocalSearch {
 
     static int terminado;
     static Random aleatorio;
-    static int maxIteraciones;
+    static int numIteraciones;
     static int solucionVecina[];
 
 
-    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla) {
+    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         //int solucionAnterior[];
         costeActual = objetivo(solucionActual, y, matriz);
-        maxIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
+        numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
         aleatorio.setSeed(semilla);
         
@@ -34,16 +34,14 @@ public class LocalSearch {
             do {    
                 costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
                 --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0 && maxIteraciones < 10000); //Objetivo mejor vecino ¿?
+            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones); //Objetivo mejor vecino ¿?
             //solucionAnterior = solucionActual.clone();
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
                 costeActual = costeVecina;
             }
-        } while (costeVecina < anterior && maxIteraciones < 10000);
-        
-        System.out.printf("Se han dado %s iteraciones \n", maxIteraciones);
+        } while (costeVecina < anterior && numIteraciones < maxIteraciones);
         return solucionActual;
     }
 
@@ -52,7 +50,7 @@ public class LocalSearch {
         int costeVecina = 0;
         int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
         solucionVecina = solucionActual.clone();
-        ++maxIteraciones; //1 factorizacion, por lo que se incrementa el contador
+        ++numIteraciones; //1 factorizacion, por lo que se incrementa el contador
         boolean parada = true;
         while (parada) {
             if (pos == 0) {
@@ -164,6 +162,14 @@ public class LocalSearch {
             suma += solucionVecina[i] * matriz[0][i];
         }
         return suma;
+    }
+    
+    public int getIteraciones() {
+        return numIteraciones;
+    }
+    
+    public int getIteracionesGrasp() {
+        return numIteraciones - 1;
     }
 
 }

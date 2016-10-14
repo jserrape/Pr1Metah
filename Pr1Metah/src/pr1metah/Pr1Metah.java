@@ -111,7 +111,7 @@ public class Pr1Metah {
         leerFichero(ficheros[4]);
         int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[4], 0);
         Pair pair[] = greedy.copiaVector();
-        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, pair, SEMILLA1);
+        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, pair, 10000, SEMILLA5);
         int coste = 0;
         for (int i = 1; i < x; i++){
             if (solucionBL[i] == 1) {
