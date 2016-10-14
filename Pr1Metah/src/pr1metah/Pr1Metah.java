@@ -95,6 +95,9 @@ public class Pr1Metah {
         pa.setVisible(true);
 
         Greedy greedy = new Greedy();
+        LocalSearch localSearch = new LocalSearch();
+        
+        
         Grasp grasp = new Grasp();
 
         String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"};
@@ -103,12 +106,12 @@ public class Pr1Metah {
         greedy = new Greedy();
         for (int i = 0; i < n; i++) {
             leerFichero(ficheros[i]);
-            for (int j = 0; i < 5; j++) {
-                greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], j);
-            }
+                greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], 0);
+                grasp.graspSearch(x, y, matriz);
+                System.out.println("\n\n\n");
         }
 
-        grasp.graspSearch(x, y, matriz);
+        //grasp.graspSearch(x, y, matriz);
 
         //x=11;
         //y=21;
