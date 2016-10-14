@@ -14,8 +14,7 @@ import java.io.IOException;
  *
  * @author Xenahort
  *
- * ------- Errores pendientes ------
- *  HAY QUE PONERLE EL RANDOM AL GREEDY
+ * ------- Errores pendientes ------ HAY QUE PONERLE EL RANDOM AL GREEDY
  *
  */
 public class Pr1Metah {
@@ -116,7 +115,7 @@ public class Pr1Metah {
         System.out.println("Coste grasp:    " + calculaCoste(x, solGrasp, mat));
     }
 
-    public static void main(String[] args) throws FicheroNoEncontrado {
+    public static void main(String[] args) throws FicheroNoEncontrado, InterruptedException {
         Panel pa = new Panel();
         pa.setVisible(true);
 
@@ -131,18 +130,22 @@ public class Pr1Metah {
         int n = 5;
 
         for (int i = 0; i < n; i++) {
+            for(int ejecucion=0;ejecucion<5;ejecucion++){
             leerFichero(ficheros[i]);
             //GREEDY
-            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], 0);
-
+            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], ejecucion);
+            //Thread.sleep(1000);
             //BUSQUEDA LOCAL
             Pair pair[] = greedy.copiaVector();
-            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, SEMILLA5);
+            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, SEMILLA5, pa, ficheros[i], ejecucion);
 
             //TABU
+            
+            
             //GRASP
-            solGrasp = grasp.graspSearch(x, y, matriz, SEMILLA5);
-            solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
+            solGrasp = grasp.graspSearch(x, y, matriz, SEMILLA5, pa, ficheros[i], ejecucion);
+            //solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
+            }
         }
     }
 

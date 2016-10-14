@@ -18,7 +18,47 @@ public class LocalSearch {
     static int numIteraciones;
     static int solucionVecina[];
 
-    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
+    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla, Panel pa, String fich, int ej) {
+        int anterior, costeVecina, costeActual;
+        int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
+        //int solucionAnterior[];
+        costeActual = objetivo(solucionActual, y, matriz);
+        numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
+        aleatorio = new Random();
+        aleatorio.setSeed(semilla);
+
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+
+        do {
+            terminado = calculaIteraciones(solucionActual, y);
+            do {
+                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
+                --terminado;
+            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones); //Objetivo mejor vecino ¿?
+            //solucionAnterior = solucionActual.clone();
+            anterior = costeActual;
+            if (costeVecina < costeActual) {
+                solucionActual = solucionVecina.clone();
+                costeActual = costeVecina;
+            }
+        } while (costeVecina < anterior && numIteraciones < maxIteraciones);
+
+        time_end = System.currentTimeMillis();
+
+        int coste = calculaSolucion(y, solucionActual, matriz);
+
+        pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 2);
+
+        return solucionActual;
+    }
+
+    
+    
+    
+    
+    
+    public int[] busquedaLocalGrasp(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         //int solucionAnterior[];
@@ -171,17 +211,13 @@ public class LocalSearch {
         return numIteraciones - 1;
     }
 
-    public static int mostrarSolucion(int x, int solucion[], int mat[][]) {
-        System.out.println("Solucion Busqueda local:");
+    public static int calculaSolucion(int x, int solucion[], int mat[][]) {
         int coste = 0;
         for (int i = 1; i < x; i++) {
             if (solucion[i] == 1) {
-                System.out.print(i + ":" + solucion[i] + " ");
                 coste += mat[0][i];
             }
         }
-        System.out.print("Coste: " + coste + "\n");
-
         return coste;
     }
 }

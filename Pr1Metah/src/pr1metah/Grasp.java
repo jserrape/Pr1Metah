@@ -15,13 +15,15 @@ public class Grasp {
 
     float alpha;
 
-    public int[] graspSearch(int x, int y, int mat[][], int SEMILLA5) {
+    public int[] graspSearch(int x, int y, int mat[][], int SEMILLA5, Panel pa, String fich, int ej) {
         int solAux[], mejorSol[] = new int[x];
         int matcopia[][] = new int[y][x];
-        int mejorCoste = 9999999, cosAux;
+        int mejorCoste = 99999999, cosAux;
         LocalSearch localSearch;
         alpha = (float) 0.7;
 
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
 
         Pair cubreOrdenado[] = new Pair[x - 1];
         for (int i = 0; i < x - 1; i++) {
@@ -42,15 +44,32 @@ public class Grasp {
             copiaMatriz(x, y, mat, matcopia);
             solAux = greedyRandomized(x, y, matcopia);
             localSearch = new LocalSearch();
-            solAux = localSearch.busquedaLocal(solAux, mat, y, x, cubreOrdenado, 400, SEMILLA5);
-            z+=localSearch.getIteracionesGrasp();
+            solAux = localSearch.busquedaLocalGrasp(solAux, mat, y, x, cubreOrdenado, 400, SEMILLA5);
+            z += localSearch.getIteracionesGrasp();
             cosAux = costeSol(x, solAux, mat);
             if (cosAux < mejorCoste) {
                 mejorCoste = cosAux;
                 mejorSol = solAux.clone();
             }
         }
+
+        time_end = System.currentTimeMillis();
+
+        int coste = calculaSolucion(x, mejorSol, mat);
+
+        pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 4);
+
         return mejorSol;
+    }
+
+    public static int calculaSolucion(int x, int solucion[], int mat[][]) {
+        int coste = 0;
+        for (int i = 1; i < x; i++) {
+            if (solucion[i] == 1) {
+                coste += mat[0][i];
+            }
+        }
+        return coste;
     }
 
     public void copiaMatriz(int x, int y, int origen[][], int destino[][]) {

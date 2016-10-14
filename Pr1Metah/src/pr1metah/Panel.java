@@ -309,7 +309,7 @@ public class Panel extends javax.swing.JFrame {
 
     //String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
     public void insertaDatos(String fich, int coste, long tiempo, int i, int alg) {
-        if (null != fich) switch (fich) {
+        switch (fich) {
             case "scpe1.txt":
                 switch (alg) {
                     case 1:
@@ -367,7 +367,7 @@ public class Panel extends javax.swing.JFrame {
                         modelo4.setValueAt(tiempo, i, 6);
                         break;
                 }   break;
-            case "scpa1.txt":
+            case "scpnrf1.txt":
                 switch (alg) {
                     case 1:
                         modelo1.setValueAt(coste, i, 7);
@@ -386,8 +386,25 @@ public class Panel extends javax.swing.JFrame {
                         modelo4.setValueAt(tiempo, i, 8);
                         break;
                 }   break;
-            default:
-                break;
+            case "scpa1.txt":
+                switch (alg) {
+                    case 1:
+                        modelo1.setValueAt(coste, i, 9);
+                        modelo1.setValueAt(tiempo, i, 10);
+                        break;
+                    case 2:
+                        modelo2.setValueAt(coste, i, 9);
+                        modelo2.setValueAt(tiempo, i, 10);
+                        break;
+                    case 3:
+                        modelo3.setValueAt(coste, i, 9);
+                        modelo3.setValueAt(tiempo, i, 10);
+                        break;
+                    case 4:
+                        modelo4.setValueAt(coste, i, 9);
+                        modelo4.setValueAt(tiempo, i, 10);
+                        break;
+                }   break;
         }
     }
 
