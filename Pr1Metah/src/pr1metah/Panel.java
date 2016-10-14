@@ -23,11 +23,10 @@ public class Panel extends javax.swing.JFrame {
      */
     public Panel() {
         initComponents();
-        setSize(863, 285);
+        //setSize(863, 295);
         setLocationRelativeTo(null);
         setTitle("Estadisticas");
 
-       
         //String[] Datos = new String[10];
         String[] Datos = {"Ejec 1", "Ejec 2", "Ejec 3", "Ejec 4", "Ejec 5", "Mejor", "Peor", "Media", "Desv."};
         String[] d = new String[3];
@@ -45,7 +44,7 @@ public class Panel extends javax.swing.JFrame {
         modelo1.addColumn("Z");
         modelo1.addColumn("Tiempo");
         this.tabla1.setModel(modelo1);
-        
+
         modelo2 = new DefaultTableModel();
         modelo2.addColumn("");
         modelo2.addColumn("Z");
@@ -59,7 +58,7 @@ public class Panel extends javax.swing.JFrame {
         modelo2.addColumn("Z");
         modelo2.addColumn("Tiempo");
         this.tabla2.setModel(modelo2);
-        
+
         modelo3 = new DefaultTableModel();
         modelo3.addColumn("");
         modelo3.addColumn("Z");
@@ -73,7 +72,7 @@ public class Panel extends javax.swing.JFrame {
         modelo3.addColumn("Z");
         modelo3.addColumn("Tiempo");
         this.tabla3.setModel(modelo3);
-        
+
         modelo4 = new DefaultTableModel();
         modelo4.addColumn("");
         modelo4.addColumn("Z");
@@ -88,7 +87,6 @@ public class Panel extends javax.swing.JFrame {
         modelo4.addColumn("Tiempo");
         this.tabla4.setModel(modelo4);
 
-
         for (int i = 0; i < 9; i++) {
             d[0] = Datos[i];
             modelo1.addRow(d);
@@ -96,7 +94,7 @@ public class Panel extends javax.swing.JFrame {
             modelo3.addRow(d);
             modelo4.addRow(d);
         }
-        
+
     }
 
     /**
@@ -151,9 +149,9 @@ public class Panel extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         PanelPrincipal.addTab("Greedy", jPanel1);
@@ -185,7 +183,7 @@ public class Panel extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         PanelPrincipal.addTab("Busqueda L.", jPanel2);
@@ -217,7 +215,7 @@ public class Panel extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         PanelPrincipal.addTab("Busqueda T.", jPanel3);
@@ -249,7 +247,7 @@ public class Panel extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         PanelPrincipal.addTab("Grasp", jPanel4);
@@ -267,8 +265,7 @@ public class Panel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PanelPrincipal)
-                .addContainerGap())
+                .addComponent(PanelPrincipal))
         );
 
         pack();
@@ -311,19 +308,86 @@ public class Panel extends javax.swing.JFrame {
     }
 
     //String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpnrh4.txt"}; //El ultimo fichero esta dañado
-    public void insertaDatos(String fich, int coste, long tiempo, int i) {
-        if (fich == "scpe1.txt") {
-            modelo1.setValueAt(coste, i, 1);
-            modelo1.setValueAt(tiempo, i, 2);
-        } else if (fich == "scp41.txt") {
-            modelo1.setValueAt(coste, i, 3);
-            modelo1.setValueAt(tiempo, i, 4);
-        } else if (fich == "scpd1.txt") {
-            modelo1.setValueAt(coste, i, 5);
-            modelo1.setValueAt(tiempo, i, 6);
-        } else if (fich == "scpnrf1.txt") {
-            modelo1.setValueAt(coste, i, 7);
-            modelo1.setValueAt(tiempo, i, 8);
+    public void insertaDatos(String fich, int coste, long tiempo, int i, int alg) {
+        if (null != fich) switch (fich) {
+            case "scpe1.txt":
+                switch (alg) {
+                    case 1:
+                        modelo1.setValueAt(coste, i, 1);
+                        modelo1.setValueAt(tiempo, i, 2);
+                        break;
+                    case 2:
+                        modelo2.setValueAt(coste, i, 1);
+                        modelo2.setValueAt(tiempo, i, 2);
+                        break;
+                    case 3:
+                        modelo3.setValueAt(coste, i, 1);
+                        modelo3.setValueAt(tiempo, i, 2);
+                        break;
+                    case 4:
+                        modelo4.setValueAt(coste, i, 1);
+                        modelo4.setValueAt(tiempo, i, 2);
+                        break;
+                }   break;
+            case "scp41.txt":
+                switch (alg) {
+                    case 1:
+                        modelo1.setValueAt(coste, i, 3);
+                        modelo1.setValueAt(tiempo, i, 4);
+                        break;
+                    case 2:
+                        modelo2.setValueAt(coste, i, 3);
+                        modelo2.setValueAt(tiempo, i, 4);
+                        break;
+                    case 3:
+                        modelo3.setValueAt(coste, i, 3);
+                        modelo3.setValueAt(tiempo, i, 4);
+                        break;
+                    case 4:
+                        modelo4.setValueAt(coste, i, 3);
+                        modelo4.setValueAt(tiempo, i, 4);
+                        break;
+                }   break;
+            case "scpd1.txt":
+                switch (alg) {
+                    case 1:
+                        modelo1.setValueAt(coste, i, 5);
+                        modelo1.setValueAt(tiempo, i, 6);
+                        break;
+                    case 2:
+                        modelo2.setValueAt(coste, i, 5);
+                        modelo2.setValueAt(tiempo, i, 6);
+                        break;
+                    case 3:
+                        modelo3.setValueAt(coste, i, 5);
+                        modelo3.setValueAt(tiempo, i, 6);
+                        break;
+                    case 4:
+                        modelo4.setValueAt(coste, i, 5);
+                        modelo4.setValueAt(tiempo, i, 6);
+                        break;
+                }   break;
+            case "scpa1.txt":
+                switch (alg) {
+                    case 1:
+                        modelo1.setValueAt(coste, i, 7);
+                        modelo1.setValueAt(tiempo, i, 8);
+                        break;
+                    case 2:
+                        modelo2.setValueAt(coste, i, 7);
+                        modelo2.setValueAt(tiempo, i, 8);
+                        break;
+                    case 3:
+                        modelo3.setValueAt(coste, i, 7);
+                        modelo3.setValueAt(tiempo, i, 8);
+                        break;
+                    case 4:
+                        modelo4.setValueAt(coste, i, 7);
+                        modelo4.setValueAt(tiempo, i, 8);
+                        break;
+                }   break;
+            default:
+                break;
         }
     }
 
