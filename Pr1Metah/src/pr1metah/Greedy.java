@@ -135,5 +135,9 @@ public class Greedy {
         pa.insertaDatos(fich, coste, t, ej,1);
         return solucion;
     }
+    
+    public Pair[] copiaPair() {
+        return cubreOrdenado;
+    }
 
 }
