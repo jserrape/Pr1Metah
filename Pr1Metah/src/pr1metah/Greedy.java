@@ -133,7 +133,7 @@ public class Greedy {
         time_end = System.currentTimeMillis();
         long t=( time_end - time_start );
         System.out.println("the task has taken "+ t +" milliseconds");
-        pa.insertaDatos(fich, coste, t, ej);
+        //pa.insertaDatos(fich, coste, t, ej);
         return solucion;
     }
     
