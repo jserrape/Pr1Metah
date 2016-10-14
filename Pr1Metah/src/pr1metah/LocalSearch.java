@@ -19,8 +19,6 @@ public class LocalSearch {
     static int solucionVecina[];
 
     public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
-        long time_start, time_end;
-        time_start = System.currentTimeMillis();
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         //int solucionAnterior[];
@@ -43,10 +41,6 @@ public class LocalSearch {
             }
         } while (costeVecina < anterior && numIteraciones < maxIteraciones);
 
-        mostrarSolucion(y,solucionActual,matriz);
-        time_end = System.currentTimeMillis();
-        long t = (time_end - time_start);
-        System.out.println("Busqueda Local: the task has taken " + t + " milliseconds");
         return solucionActual;
     }
 

@@ -35,4 +35,8 @@ package pr1metah;
         public void setCubre(int second) {
             this.cubre = second;
         }
+        
+        public void incrementaCubre(){
+            cubre=cubre+1;
+        }
     }

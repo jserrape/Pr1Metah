@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author Xenahort
  *
  * ------- Errores pendientes ------
- * 
+ *  HAY QUE PONERLE EL RANDOM AL GREEDY
  *
  */
 public class Pr1Metah {
@@ -23,7 +23,7 @@ public class Pr1Metah {
     static int cubre[];
     static int matriz[][];
     static int x, y;
-    
+
     public static final int SEMILLA1 = 77383426;
     public static final int SEMILLA2 = 77368737;
     public static final int SEMILLA3 = 34267738;
@@ -43,7 +43,7 @@ public class Pr1Metah {
             br = new BufferedReader(fr);
             String texto;
             String[] datos;
-            System.out.print("Fichero abierto correctamente\n");
+            //System.out.print("Fichero abierto correctamente\n");
             texto = br.readLine();
             datos = texto.split(" ");
             y = Integer.parseInt(datos[1]) + 1;
@@ -90,41 +90,60 @@ public class Pr1Metah {
             try {
                 if (null != fr) {
                     fr.close();
-                    System.out.print("Fichero cerrado correctamente\n");
+                    //System.out.print("Fichero cerrado correctamente\n");
                 }
             } catch (Exception e2) {
             }
         }
     }
 
+    public static int calculaCoste(int x, int sol[], int mat[][]) {
+        int coste = 0;
+        for (int i = 1; i < x; i++) {
+            if (sol[i] == 1) {
+                coste += mat[0][i];
+            }
+        }
+        return coste;
+    }
+
+    public static void solucionesConsola(int fich, int x, int solGreedy[], int solLocal[], int solGrasp[], int mat[][]) {
+        System.out.println("------------------------");
+        System.out.println("      FICHERO Nº" + fich);
+        System.out.println("------------------------");
+        System.out.println("Coste greedy:   " + calculaCoste(x, solGreedy, mat));
+        System.out.println("Coste B. Local: " + calculaCoste(x, solLocal, mat));
+        System.out.println("Coste grasp:    " + calculaCoste(x, solGrasp, mat));
+    }
+
     public static void main(String[] args) throws FicheroNoEncontrado {
         Panel pa = new Panel();
         pa.setVisible(true);
 
+        int solGreedy[], solLocal[], solTabu[], solGrasp[];
+
         Greedy greedy = new Greedy();
         Tabu tabu = new Tabu();
         LocalSearch localSearch = new LocalSearch();
+        Grasp grasp = new Grasp();
 
-        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"}; 
+        String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"};
         int n = 5;
 
-        leerFichero(ficheros[0]);
-        //GREEDY
-        int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[0], 0);
-        System.out.println("\n\n\n");
-        //BUSQUEDA LOCAL
-        Pair pair[] = greedy.copiaVector();
-        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, pair, 10000, SEMILLA5);
-        int coste = 0;
-        for (int i = 1; i < x; i++){
-            if (solucionBL[i] == 1) {
-                coste += matriz[0][i];
-            }
-        }
-        System.out.printf("Coste total de la busqueda local: %s \n", coste);  
-        System.out.println("\n\n\n");
-        //GRASP
+        for (int i = 0; i < n; i++) {
+            leerFichero(ficheros[i]);
+            //GREEDY
+            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], 0);
 
+            //BUSQUEDA LOCAL
+            Pair pair[] = greedy.copiaVector();
+            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, SEMILLA5);
+
+            //TABU
+            //GRASP
+            solGrasp = grasp.graspSearch(x, y, matriz, SEMILLA5);
+            solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
+        }
     }
 
 }

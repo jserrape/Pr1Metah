@@ -15,41 +15,42 @@ public class Grasp {
 
     float alpha;
 
-    public void graspSearch(int x, int y, int mat[][],int SEMILLA5) {
+    public int[] graspSearch(int x, int y, int mat[][], int SEMILLA5) {
         int solAux[], mejorSol[] = new int[x];
         int matcopia[][] = new int[y][x];
         int mejorCoste = 9999999, cosAux;
         LocalSearch localSearch;
-        System.out.println("\n\nComienzo la busqueda Grasp:");
-        System.out.println("   x=" + x);
-        System.out.println("   y=" + y);
         alpha = (float) 0.7;
-        System.out.println("   alpha=" + alpha);
 
-        long time_start, time_end;
-        time_start = System.currentTimeMillis();
-        
-        for (int z = 1; z < 1000; z++) {
-            copiaMatriz(x,y,mat,matcopia);
+
+        Pair cubreOrdenado[] = new Pair[x - 1];
+        for (int i = 0; i < x - 1; i++) {
+            cubreOrdenado[i] = new Pair(i + 1, 0);
+        }
+        for (int j = 1; j < x; j++) {
+            for (int i = 1; i < y; i++) {
+                if (mat[i][j] == 1) {
+                    cubreOrdenado[j - 1].incrementaCubre();
+                }
+            }
+        }
+        MyQuickSort sorter = new MyQuickSort();
+        sorter.sort(cubreOrdenado);
+
+        int z = 0;
+        while (z < 1000) {
+            copiaMatriz(x, y, mat, matcopia);
             solAux = greedyRandomized(x, y, matcopia);
             localSearch = new LocalSearch();
-            
-            
-            solAux=localSearch.busquedaLocal(solAux, mat, y, x, pair, 400, SEMILLA5);
-            
-            
-            
+            solAux = localSearch.busquedaLocal(solAux, mat, y, x, cubreOrdenado, 400, SEMILLA5);
+            z+=localSearch.getIteracionesGrasp();
             cosAux = costeSol(x, solAux, mat);
             if (cosAux < mejorCoste) {
                 mejorCoste = cosAux;
                 mejorSol = solAux.clone();
             }
         }
-        System.out.println("Grasp, resultado de coste: " + mejorCoste);
-        time_end = System.currentTimeMillis();
-        long t=( time_end - time_start );
-        System.out.println("the task has taken "+ t +" milliseconds");
-
+        return mejorSol;
     }
 
     public void copiaMatriz(int x, int y, int origen[][], int destino[][]) {
