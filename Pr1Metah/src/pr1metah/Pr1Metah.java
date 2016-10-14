@@ -116,7 +116,7 @@ public class Pr1Metah {
             solucion[i] = 1;
         }
         
-        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, greedy, pair, 77383426);
+        int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, pair, 77383426);
         
         /*
         int vecino[] = new int[x];

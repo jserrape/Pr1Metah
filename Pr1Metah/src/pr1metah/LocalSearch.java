@@ -20,7 +20,7 @@ public class LocalSearch {
     static int solucionVecina[];
 
 
-    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Greedy greedy, Pair pair[], int semilla) {
+    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla) {
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         //int solucionAnterior[];
@@ -32,7 +32,7 @@ public class LocalSearch {
         do {
             terminado = calculaIteraciones(solucionActual, y);
             do {    
-                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, greedy, pair);
+                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
                 --terminado;
             } while ((costeVecina >= costeActual) && terminado != 0 && maxIteraciones < 10000); //Objetivo mejor vecino ¿?
             //solucionAnterior = solucionActual.clone();
@@ -47,7 +47,7 @@ public class LocalSearch {
         return solucionActual;
     }
 
-    public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, Greedy greedy, Pair pair[]) {
+    public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, Pair pair[]) {
         
         int costeVecina = 0;
         int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
