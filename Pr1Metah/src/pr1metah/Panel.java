@@ -724,6 +724,9 @@ public class Panel extends javax.swing.JFrame {
                 double rangoT;
                 double varianzaT = 0.0;
                 double desviacionT = 0.0;
+                
+                int intAux;
+                double auxDouble;
 
                 for (int i = 0; i < 5; i++) {
                     if (mayorZ < (int) modelos[z].getValueAt(i, j)) {
@@ -759,10 +762,14 @@ public class Panel extends javax.swing.JFrame {
                 }
                 varianzaZ = varianzaZ / 5f;
                 desviacionZ = Math.sqrt(varianzaZ);
+                intAux=(int) (desviacionZ*10000);
+                desviacionZ=(double)intAux/10000;
                 modelos[z].setValueAt(desviacionZ, 8, j);
 
                 varianzaT = varianzaT / 5f;
                 desviacionT = Math.sqrt(varianzaT);
+                intAux=(int) (desviacionT*10000);
+                desviacionT=(double)intAux/10000;
                 modelos[z].setValueAt(desviacionT, 8, j + 1);
             }
         }

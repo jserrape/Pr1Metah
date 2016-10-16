@@ -120,6 +120,12 @@ public class Pr1Metah {
         pa.setVisible(true);
 
         int solGreedy[], solLocal[], solTabu[], solGrasp[];
+        int semillas[]=new int[5];
+        semillas[0]=SEMILLA1;
+        semillas[1]=SEMILLA2;
+        semillas[2]=SEMILLA3;
+        semillas[3]=SEMILLA4;
+        semillas[4]=SEMILLA5;
 
         Greedy greedy = new Greedy();
         Tabu tabu = new Tabu();
@@ -137,7 +143,7 @@ public class Pr1Metah {
             //Thread.sleep(1000);
             //BUSQUEDA LOCAL
             Pair pair[] = greedy.copiaVector();
-            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, SEMILLA5, pa, ficheros[i], ejecucion);
+            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[i], pa, ficheros[i], ejecucion);
 
             //TABU
             
