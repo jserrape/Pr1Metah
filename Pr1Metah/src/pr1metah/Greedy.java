@@ -5,6 +5,8 @@
  */
 package pr1metah;
 
+import java.util.Random;
+
 /**
  *
  * @author alumno
@@ -21,17 +23,27 @@ public class Greedy {
 
     public void buscarMayorRatio(int x, int y, float ratio[], int cubre[], int solucion[], int matriz[][]) {
         int mayor = 1;
+        int aux[]=new int[x];
+        int n=1;
+        aux[0]=1;
         for (int i = 2; i < x; i++) {
             if (ratio[i] >= ratio[mayor]) {
-                if (ratio[i] == ratio[mayor]) {
-                    if (cubre[i] < cubre[mayor]) {
-                        break;
-                    }
-                } else {
+                if (ratio[i] == ratio[mayor]) { //Añado a la lista
+                    aux[n]=i;
+                    ++n;
+                    mayor=i;
+                }else{ //reinicio la lista
+                    aux[0]=i;
+                    n=1;
                     mayor = i;
                 }
             }
         }
+
+        Random rand = new Random();
+        int nRand = (int) (rand.nextDouble() * n);
+        mayor = aux[nRand];
+        
         solucion[mayor] = 1; //Establezco el que tiene mas ratio como solucion
         for (int i = 1; i < y; i++) {
             if (matriz[i][mayor] == 1 && matriz[i][0] == 0) {
