@@ -32,64 +32,32 @@ public class Panel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Estadisticas");
 
-        //String[] Datos = new String[10];
         String[] Datos = {"Ejec 1", "Ejec 2", "Ejec 3", "Ejec 4", "Ejec 5", "Mejor", "Peor", "Media", "Desv."};
         String[] d = new String[3];
         d[1] = d[2] = "";
+
         modelo1 = new DefaultTableModel();
-        modelo1.addColumn("");
-        modelo1.addColumn("Z");
-        modelo1.addColumn("Tiempo");
-        modelo1.addColumn("Z");
-        modelo1.addColumn("Tiempo");
-        modelo1.addColumn("Z");
-        modelo1.addColumn("Tiempo");
-        modelo1.addColumn("Z");
-        modelo1.addColumn("Tiempo");
-        modelo1.addColumn("Z");
-        modelo1.addColumn("Tiempo");
-        this.tabla1.setModel(modelo1);
-
         modelo2 = new DefaultTableModel();
-        modelo2.addColumn("");
-        modelo2.addColumn("Z");
-        modelo2.addColumn("Tiempo");
-        modelo2.addColumn("Z");
-        modelo2.addColumn("Tiempo");
-        modelo2.addColumn("Z");
-        modelo2.addColumn("Tiempo");
-        modelo2.addColumn("Z");
-        modelo2.addColumn("Tiempo");
-        modelo2.addColumn("Z");
-        modelo2.addColumn("Tiempo");
-        this.tabla2.setModel(modelo2);
-
         modelo3 = new DefaultTableModel();
-        modelo3.addColumn("");
-        modelo3.addColumn("Z");
-        modelo3.addColumn("Tiempo");
-        modelo3.addColumn("Z");
-        modelo3.addColumn("Tiempo");
-        modelo3.addColumn("Z");
-        modelo3.addColumn("Tiempo");
-        modelo3.addColumn("Z");
-        modelo3.addColumn("Tiempo");
-        modelo3.addColumn("Z");
-        modelo3.addColumn("Tiempo");
-        this.tabla3.setModel(modelo3);
-
         modelo4 = new DefaultTableModel();
-        modelo4.addColumn("");
-        modelo4.addColumn("Z");
-        modelo4.addColumn("Tiempo");
-        modelo4.addColumn("Z");
-        modelo4.addColumn("Tiempo");
-        modelo4.addColumn("Z");
-        modelo4.addColumn("Tiempo");
-        modelo4.addColumn("Z");
-        modelo4.addColumn("Tiempo");
-        modelo4.addColumn("Z");
-        modelo4.addColumn("Tiempo");
+
+        DefaultTableModel[] modelos = new DefaultTableModel[4];
+        modelos[0] = modelo1;
+        modelos[1] = modelo2;
+        modelos[2] = modelo3;
+        modelos[3] = modelo4;
+
+        for (int i = 0; i < 4; i++) {
+            modelos[i].addColumn("");
+            for (int j = 0; j < 5; j++) {
+                modelos[i].addColumn("Z");
+                modelos[i].addColumn("Tiempo");
+            }
+        }
+
+        this.tabla1.setModel(modelo1);
+        this.tabla2.setModel(modelo2);
+        this.tabla3.setModel(modelo3);
         this.tabla4.setModel(modelo4);
 
         for (int i = 0; i < 9; i++) {
@@ -703,106 +671,31 @@ public class Panel extends javax.swing.JFrame {
     }
 
     public void insertaDatos(String fich, int coste, long tiempo, int i, int alg) {
+        DefaultTableModel[] modelos = new DefaultTableModel[4];
+        modelos[0] = modelo1;
+        modelos[1] = modelo2;
+        modelos[2] = modelo3;
+        modelos[3] = modelo4;
         switch (fich) {
             case "scpe1.txt":
-                switch (alg) {
-                    case 1:
-                        modelo1.setValueAt(coste, i, 1);
-                        modelo1.setValueAt(tiempo, i, 2);
-                        break;
-                    case 2:
-                        modelo2.setValueAt(coste, i, 1);
-                        modelo2.setValueAt(tiempo, i, 2);
-                        break;
-                    case 3:
-                        modelo3.setValueAt(coste, i, 1);
-                        modelo3.setValueAt(tiempo, i, 2);
-                        break;
-                    case 4:
-                        modelo4.setValueAt(coste, i, 1);
-                        modelo4.setValueAt(tiempo, i, 2);
-                        break;
-                }
+                modelos[alg - 1].setValueAt(coste, i, 1);
+                modelos[alg - 1].setValueAt(tiempo, i, 2);
                 break;
             case "scp41.txt":
-                switch (alg) {
-                    case 1:
-                        modelo1.setValueAt(coste, i, 3);
-                        modelo1.setValueAt(tiempo, i, 4);
-                        break;
-                    case 2:
-                        modelo2.setValueAt(coste, i, 3);
-                        modelo2.setValueAt(tiempo, i, 4);
-                        break;
-                    case 3:
-                        modelo3.setValueAt(coste, i, 3);
-                        modelo3.setValueAt(tiempo, i, 4);
-                        break;
-                    case 4:
-                        modelo4.setValueAt(coste, i, 3);
-                        modelo4.setValueAt(tiempo, i, 4);
-                        break;
-                }
+                modelos[alg - 1].setValueAt(coste, i, 3);
+                modelos[alg - 1].setValueAt(tiempo, i, 4);
                 break;
             case "scpd1.txt":
-                switch (alg) {
-                    case 1:
-                        modelo1.setValueAt(coste, i, 5);
-                        modelo1.setValueAt(tiempo, i, 6);
-                        break;
-                    case 2:
-                        modelo2.setValueAt(coste, i, 5);
-                        modelo2.setValueAt(tiempo, i, 6);
-                        break;
-                    case 3:
-                        modelo3.setValueAt(coste, i, 5);
-                        modelo3.setValueAt(tiempo, i, 6);
-                        break;
-                    case 4:
-                        modelo4.setValueAt(coste, i, 5);
-                        modelo4.setValueAt(tiempo, i, 6);
-                        break;
-                }
+                modelos[alg - 1].setValueAt(coste, i, 5);
+                modelos[alg - 1].setValueAt(tiempo, i, 6);
                 break;
             case "scpnrf1.txt":
-                switch (alg) {
-                    case 1:
-                        modelo1.setValueAt(coste, i, 7);
-                        modelo1.setValueAt(tiempo, i, 8);
-                        break;
-                    case 2:
-                        modelo2.setValueAt(coste, i, 7);
-                        modelo2.setValueAt(tiempo, i, 8);
-                        break;
-                    case 3:
-                        modelo3.setValueAt(coste, i, 7);
-                        modelo3.setValueAt(tiempo, i, 8);
-                        break;
-                    case 4:
-                        modelo4.setValueAt(coste, i, 7);
-                        modelo4.setValueAt(tiempo, i, 8);
-                        break;
-                }
+                modelos[alg - 1].setValueAt(coste, i, 7);
+                modelos[alg - 1].setValueAt(tiempo, i, 8);
                 break;
             case "scpa1.txt":
-                switch (alg) {
-                    case 1:
-                        modelo1.setValueAt(coste, i, 9);
-                        modelo1.setValueAt(tiempo, i, 10);
-                        break;
-                    case 2:
-                        modelo2.setValueAt(coste, i, 9);
-                        modelo2.setValueAt(tiempo, i, 10);
-                        break;
-                    case 3:
-                        modelo3.setValueAt(coste, i, 9);
-                        modelo3.setValueAt(tiempo, i, 10);
-                        break;
-                    case 4:
-                        modelo4.setValueAt(coste, i, 9);
-                        modelo4.setValueAt(tiempo, i, 10);
-                        break;
-                }
+                modelos[alg - 1].setValueAt(coste, i, 9);
+                modelos[alg - 1].setValueAt(tiempo, i, 10);
                 break;
         }
     }
@@ -816,11 +709,11 @@ public class Panel extends javax.swing.JFrame {
         modelos[2] = modelo4; //<-------- CHAPUZA PARA LA TABU
 
         for (int z = 0; z < 3; z++) { ////<-------- CHAPUZA PARA LA TABU
-            for (int j = 1; j < 11; j=j+2) {
+            for (int j = 1; j < 11; j = j + 2) {
                 int mayorZ = (int) modelos[z].getValueAt(0, j);
-                long mayorT = (long) modelos[z].getValueAt(0, j+1);
+                long mayorT = (long) modelos[z].getValueAt(0, j + 1);
                 int menorZ = (int) modelos[z].getValueAt(0, j);
-                long menorT = (long) modelos[z].getValueAt(0, j+1);
+                long menorT = (long) modelos[z].getValueAt(0, j + 1);
                 float mediaZ = 0;
                 float auxM = 0;
                 long mediaT = 0, longAux;
@@ -836,32 +729,32 @@ public class Panel extends javax.swing.JFrame {
                     if (mayorZ < (int) modelos[z].getValueAt(i, j)) {
                         mayorZ = (int) modelos[z].getValueAt(i, j);
                     }
-                    if (mayorT < (long) modelos[z].getValueAt(i, j+1)) {
-                        mayorT = (long) modelos[z].getValueAt(i, j+1);
+                    if (mayorT < (long) modelos[z].getValueAt(i, j + 1)) {
+                        mayorT = (long) modelos[z].getValueAt(i, j + 1);
                     }
                     if (mayorZ > (int) modelos[z].getValueAt(i, j)) {
                         mayorZ = (int) modelos[z].getValueAt(i, j);
                     }
-                    if (mayorT > (long) modelos[z].getValueAt(i, j+1)) {
-                        mayorT = (long) modelos[z].getValueAt(i, j+1);
+                    if (mayorT > (long) modelos[z].getValueAt(i, j + 1)) {
+                        mayorT = (long) modelos[z].getValueAt(i, j + 1);
                     }
                     mediaZ = mediaZ + (int) modelos[z].getValueAt(i, j);
-                    mediaT = mediaT + (long) modelos[z].getValueAt(i, j+1);
+                    mediaT = mediaT + (long) modelos[z].getValueAt(i, j + 1);
                 }
                 mediaZ = (float) mediaZ / 5;
                 auxM = (float) ((int) mediaT) / 5;
                 modelos[z].setValueAt(mayorZ, 5, j);
-                modelos[z].setValueAt(mayorT, 5, j+1);
+                modelos[z].setValueAt(mayorT, 5, j + 1);
                 modelos[z].setValueAt(menorZ, 6, j);
-                modelos[z].setValueAt(menorT, 6, j+1);
+                modelos[z].setValueAt(menorT, 6, j + 1);
                 modelos[z].setValueAt(mediaZ, 7, j);
-                modelos[z].setValueAt(auxM, 7, j+1);
+                modelos[z].setValueAt(auxM, 7, j + 1);
 
                 for (int i = 0; i < 5; i++) {
                     rangoZ = Math.pow((int) modelos[z].getValueAt(i, j) - mediaZ, 2f);
                     varianzaZ = varianzaZ + rangoZ;
 
-                    rangoT = Math.pow(((int) ((long) modelos[z].getValueAt(i, j+1))) - auxM, 2f);
+                    rangoT = Math.pow(((int) ((long) modelos[z].getValueAt(i, j + 1))) - auxM, 2f);
                     varianzaT = varianzaT + rangoT;
                 }
                 varianzaZ = varianzaZ / 5f;
@@ -870,7 +763,7 @@ public class Panel extends javax.swing.JFrame {
 
                 varianzaT = varianzaT / 5f;
                 desviacionT = Math.sqrt(varianzaT);
-                modelos[z].setValueAt(desviacionT, 8, j+1);
+                modelos[z].setValueAt(desviacionT, 8, j + 1);
             }
         }
     }
