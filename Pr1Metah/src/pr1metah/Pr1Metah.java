@@ -145,8 +145,10 @@ public class Pr1Metah {
             //GRASP
             solGrasp = grasp.graspSearch(x, y, matriz, SEMILLA5, pa, ficheros[i], ejecucion);
             //solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
+           
             }
         }
+        pa.insertarEstadisticas();
     }
 
 }
