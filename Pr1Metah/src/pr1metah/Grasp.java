@@ -15,7 +15,7 @@ public class Grasp {
 
     float alpha;
 
-    public int[] graspSearch(int x, int y, int mat[][], int SEMILLA5, Panel pa, String fich, int ej) {
+    public int[] graspSearch(int x, int y, int mat[][], int semilla, Panel pa, String fich, int ej) {
         int solAux[], mejorSol[] = new int[x];
         int matcopia[][] = new int[y][x];
         int mejorCoste = 99999999, cosAux;
@@ -42,9 +42,9 @@ public class Grasp {
         int z = 0;
         while (z < 1000) {
             copiaMatriz(x, y, mat, matcopia);
-            solAux = greedyRandomized(x, y, matcopia);
+            solAux = greedyRandomized(x, y, matcopia,semilla);
             localSearch = new LocalSearch();
-            solAux = localSearch.busquedaLocalGrasp(solAux, mat, y, x, cubreOrdenado, 400, SEMILLA5);
+            solAux = localSearch.busquedaLocalGrasp(solAux, mat, y, x, cubreOrdenado, 400, semilla);
             z += localSearch.getIteracionesGrasp();
             cosAux = costeSol(x, solAux, mat);
             if (cosAux < mejorCoste) {
@@ -142,13 +142,14 @@ public class Grasp {
         return false;
     }
 
-    public int[] greedyRandomized(int x, int y, int mat[][]) {
+    public int[] greedyRandomized(int x, int y, int mat[][],int semilla) {
         int cubre[] = new int[x];
         int sol[] = new int[x];
         int lrc[] = new int[x];
         int NObjNoCub, tam = 0, nRand, aux;
         float umbral;
         Random rand = new Random();
+        rand.setSeed(semilla);
         for (int i = 1; i < x; i++) {
             sol[i] = 0;
         }
