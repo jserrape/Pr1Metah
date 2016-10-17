@@ -708,7 +708,7 @@ public class Panel extends javax.swing.JFrame {
         //modelos[2] = modelo3;
         modelos[2] = modelo4; //<-------- CHAPUZA PARA LA TABU
 
-        for (int z = 0; z < 3; z++) { ////<-------- CHAPUZA PARA LA TABU
+        for (int z = 0; z < 2; z++) { ////<-------- CHAPUZA PARA LA TABU
             for (int j = 1; j < 11; j = j + 2) {
                 int mayorZ = (int) modelos[z].getValueAt(0, j);
                 long mayorT = (long) modelos[z].getValueAt(0, j + 1);
