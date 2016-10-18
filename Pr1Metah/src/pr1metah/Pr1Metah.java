@@ -139,7 +139,7 @@ public class Pr1Metah {
             for(int ejecucion=0;ejecucion<5;ejecucion++){
             leerFichero(ficheros[i]);
             //GREEDY
-            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], ejecucion,semillas[ejecucion]);
+            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], ejecucion);
             //Thread.sleep(1000);
             //BUSQUEDA LOCAL
             Pair pair[] = greedy.copiaVector();
@@ -149,7 +149,7 @@ public class Pr1Metah {
             
             
             //GRASP
-            //solGrasp = grasp.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
+            solGrasp = grasp.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
             //solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
            
             }

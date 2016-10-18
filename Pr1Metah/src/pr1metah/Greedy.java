@@ -21,7 +21,7 @@ public class Greedy {
         }
     }
 
-    public void buscarMayorRatio(int x, int y, float ratio[], int cubre[], int solucion[], int matriz[][],int semilla) {
+    public void buscarMayorRatio(int x, int y, float ratio[], int cubre[], int solucion[], int matriz[][]) {
         int mayor = 1;
         int aux[]=new int[x];
         int n=1;
@@ -41,7 +41,6 @@ public class Greedy {
         }
 
         Random rand = new Random();
-        rand.setSeed(semilla);
         int nRand = (int) (rand.nextDouble() * n);
         mayor = aux[nRand];
         
@@ -109,7 +108,7 @@ public class Greedy {
         return coste;
     }
 
-    public int[] greedySearch(int x, int y, int mat[][], int cubre[], Panel pa, String fich, int ej,int semilla) {
+    public int[] greedySearch(int x, int y, int mat[][], int cubre[], Panel pa, String fich, int ej) {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
         int solucion[] = new int[x];
@@ -125,10 +124,10 @@ public class Greedy {
         }
 
         rellenarRatio(x, mat, cubre, ratio);
-        buscarMayorRatio(x, y, ratio, cubre, solucion, mat,semilla);
+        buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
 
         while (faltanPorCubrir(x, cubre)) {
-            buscarMayorRatio(x, y, ratio, cubre, solucion, mat,semilla);
+            buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
             rellenarRatio(x, mat, cubre, ratio);
         }
         eliminaRedundancias(x, y, solucion, mat, 0);
