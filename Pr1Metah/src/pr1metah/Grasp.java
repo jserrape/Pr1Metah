@@ -15,38 +15,61 @@ public class Grasp {
 
     float alpha;
 
-    public void graspSearch(int x, int y, int mat[][]) {
+    public int[] graspSearch(int x, int y, int mat[][], int semilla, Panel pa, String fich, int ej) {
         int solAux[], mejorSol[] = new int[x];
         int matcopia[][] = new int[y][x];
-        int mejorCoste = 9999999, cosAux;
-        System.out.println("\n\nComienzo la busqueda Grasp:");
-        System.out.println("   x=" + x);
-        System.out.println("   y=" + y);
+        int mejorCoste = 99999999, cosAux;
+        LocalSearch localSearch;
         alpha = (float) 0.7;
-        System.out.println("   alpha=" + alpha);
 
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        
-        //mostrarMatriz(x, y, mat);
-        for (int z = 1; z < 1000; z++) {
-            copiaMatriz(x,y,mat,matcopia);
-            solAux = greedyRandomized(x, y, matcopia);
-            //Busqueda local a solAux aqui
+
+        Pair cubreOrdenado[] = new Pair[x - 1];
+        for (int i = 0; i < x - 1; i++) {
+            cubreOrdenado[i] = new Pair(i + 1, 0);
+        }
+        for (int j = 1; j < x; j++) {
+            for (int i = 1; i < y; i++) {
+                if (mat[i][j] == 1) {
+                    cubreOrdenado[j - 1].incrementaCubre();
+                }
+            }
+        }
+        MyQuickSort sorter = new MyQuickSort();
+        sorter.sort(cubreOrdenado);
+
+        int z = 0;
+        while (z < 1000) {
+            copiaMatriz(x, y, mat, matcopia);
+            solAux = greedyRandomized(x, y, matcopia,semilla);
+            localSearch = new LocalSearch();
+            solAux = localSearch.busquedaLocalGrasp(solAux, mat, y, x, cubreOrdenado, 400, semilla);
+            z += localSearch.getIteracionesGrasp();
             cosAux = costeSol(x, solAux, mat);
-            //System.out.println("Coste vuelta " + z + ": " + cosAux);
-            //System.out.println(cosAux + " < " + mejorCoste);
             if (cosAux < mejorCoste) {
-                //System.out.println("¡MEJORA!");
                 mejorCoste = cosAux;
                 mejorSol = solAux.clone();
             }
         }
-        System.out.println("Grasp, resultado de coste: " + mejorCoste);
-        time_end = System.currentTimeMillis();
-        long t=( time_end - time_start );
-        System.out.println("the task has taken "+ t +" milliseconds");
 
+        time_end = System.currentTimeMillis();
+
+        int coste = calculaSolucion(x, mejorSol, mat);
+
+        pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 4);
+
+        return mejorSol;
+    }
+
+    public static int calculaSolucion(int x, int solucion[], int mat[][]) {
+        int coste = 0;
+        for (int i = 1; i < x; i++) {
+            if (solucion[i] == 1) {
+                coste += mat[0][i];
+            }
+        }
+        return coste;
     }
 
     public void copiaMatriz(int x, int y, int origen[][], int destino[][]) {
@@ -92,15 +115,11 @@ public class Grasp {
             }
         }
         int mayor = cubre[1];
-        //System.out.println("   cubre:");
         for (int i = 1; i < x; i++) {
-            //System.out.print(cubre[i] + " ");
             if (mayor < cubre[i]) {
                 mayor = cubre[i];
             }
         }
-        //System.out.print("\n");
-        //System.out.print("   NObjNoCub=" + mayor + "\n");
         return mayor;
     }
 
@@ -123,22 +142,20 @@ public class Grasp {
         return false;
     }
 
-    public int[] greedyRandomized(int x, int y, int mat[][]) {
-        //mostrarMatriz(x, y, mat);
+    public int[] greedyRandomized(int x, int y, int mat[][],int semilla) {
         int cubre[] = new int[x];
         int sol[] = new int[x];
         int lrc[] = new int[x];
         int NObjNoCub, tam = 0, nRand, aux;
         float umbral;
         Random rand = new Random();
+        rand.setSeed(semilla);
         for (int i = 1; i < x; i++) {
             sol[i] = 0;
         }
-
         NObjNoCub = actualizaCubre(x, y, mat, cubre);
         while (faltaPorCubir(x, cubre)) {
             umbral = (float) alpha * NObjNoCub;
-            //System.out.println("   umbral:" + umbral);
             tam = 0;
             for (int i = 1; i < x; i++) {
                 if (cubre[i] >= umbral) {
@@ -146,27 +163,14 @@ public class Grasp {
                     ++tam;
                 }
             }
-            //System.out.println("   lrc:");
-            for (int i = 0; i < tam; i++) {
-                //System.out.print(lrc[i] + " ");
-            }
 
-            //System.out.print("\n");
             nRand = (int) (rand.nextDouble() * tam);
             aux = lrc[nRand];
-            //System.out.print("   nRand:\n" + nRand + "\n");
-            //System.out.print("   lrc[nRand]:\n" + lrc[nRand] + "\n");
-            ++sol[aux]; //Lo pongo como solucion
+            ++sol[aux];
             cubrir(x, y, mat, aux);
-            //System.out.println("Fin de la vuelta \n\n\n\n");
             NObjNoCub = actualizaCubre(x, y, mat, cubre);
         }
 
-        //System.out.println("   solucion final:");
-        for (int i = 1; i < x; i++) {
-            //System.out.print(sol[i] + " ");
-        }
-        //System.out.println();
         return sol;
     }
 }

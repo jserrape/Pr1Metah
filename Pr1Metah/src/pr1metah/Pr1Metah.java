@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  * @author Xenahort
  *
- * ------- Errores pendientes ------
+ * ------- Errores pendientes ------ HAY QUE PONERLE EL RANDOM AL GREEDY
  *
  */
 public class Pr1Metah {
@@ -22,6 +22,12 @@ public class Pr1Metah {
     static int cubre[];
     static int matriz[][];
     static int x, y;
+
+    public static final int SEMILLA1 = 77383426;
+    public static final int SEMILLA2 = 77368737;
+    public static final int SEMILLA3 = 34267738;
+    public static final int SEMILLA4 = 87377736;
+    public static final int SEMILLA5 = 34268737;
 
     public static void leerFichero(String fich) throws FicheroNoEncontrado {
         if (!(new File(fich)).exists()) {
@@ -90,36 +96,65 @@ public class Pr1Metah {
         }
     }
 
-    public static void main(String[] args) throws FicheroNoEncontrado {
+    public static int calculaCoste(int x, int sol[], int mat[][]) {
+        int coste = 0;
+        for (int i = 1; i < x; i++) {
+            if (sol[i] == 1) {
+                coste += mat[0][i];
+            }
+        }
+        return coste;
+    }
+
+    public static void solucionesConsola(int fich, int x, int solGreedy[], int solLocal[], int solGrasp[], int mat[][]) {
+        System.out.println("------------------------");
+        System.out.println("      FICHERO Nº" + fich);
+        System.out.println("------------------------");
+        System.out.println("Coste greedy:   " + calculaCoste(x, solGreedy, mat));
+        System.out.println("Coste B. Local: " + calculaCoste(x, solLocal, mat));
+        System.out.println("Coste grasp:    " + calculaCoste(x, solGrasp, mat));
+    }
+
+    public static void main(String[] args) throws FicheroNoEncontrado, InterruptedException {
         Panel pa = new Panel();
         pa.setVisible(true);
 
+        int solGreedy[], solLocal[], solTabu[], solGrasp[];
+        int semillas[]=new int[5];
+        semillas[0]=SEMILLA1;
+        semillas[1]=SEMILLA2;
+        semillas[2]=SEMILLA3;
+        semillas[3]=SEMILLA4;
+        semillas[4]=SEMILLA5;
+
         Greedy greedy = new Greedy();
+        Tabu tabu = new Tabu();
         LocalSearch localSearch = new LocalSearch();
-        
-        
         Grasp grasp = new Grasp();
 
         String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"};
         int n = 5;
 
-        greedy = new Greedy();
         for (int i = 0; i < n; i++) {
+            for(int ejecucion=0;ejecucion<5;ejecucion++){
             leerFichero(ficheros[i]);
-                int solucion[] = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], 0);
-                Pair pair[] = greedy.copiaPair();
-                int solucionBL[] = localSearch.busquedaLocal(solucion, matriz, y, x, pair, 77383426);
-                grasp.graspSearch(x, y, matriz);
-                System.out.println("\n\n\n");
+            //GREEDY
+            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], ejecucion,semillas[ejecucion]);
+            //Thread.sleep(1000);
+            //BUSQUEDA LOCAL
+            Pair pair[] = greedy.copiaVector();
+            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[ejecucion], pa, ficheros[i], ejecucion);
+
+            //TABU
+            
+            
+            //GRASP
+            //solGrasp = grasp.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
+            //solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
+           
+            }
         }
-        
-
-
-        //grasp.graspSearch(x, y, matriz);
-
-        //x=11;
-        //y=21;
-        //grasp.graspSearch(x, y, matriz);
+        pa.insertarEstadisticas();
     }
 
 }

@@ -5,12 +5,14 @@
  */
 package pr1metah;
 
+import java.util.Random;
+
 /**
  *
  * @author alumno
  */
 public class Greedy {
-    
+
     public Pair cubreOrdenado[];
 
     public void rellenarRatio(int x, int matriz[][], int cubre[], float ratio[]) {
@@ -19,19 +21,30 @@ public class Greedy {
         }
     }
 
-    public void buscarMayorRatio(int x, int y, float ratio[], int cubre[], int solucion[], int matriz[][]) {
+    public void buscarMayorRatio(int x, int y, float ratio[], int cubre[], int solucion[], int matriz[][],int semilla) {
         int mayor = 1;
+        int aux[]=new int[x];
+        int n=1;
+        aux[0]=1;
         for (int i = 2; i < x; i++) {
             if (ratio[i] >= ratio[mayor]) {
-                if (ratio[i] == ratio[mayor]) {
-                    if (cubre[i] < cubre[mayor]) {
-                        break;
-                    }
-                } else {
+                if (ratio[i] == ratio[mayor]) { //Añado a la lista
+                    aux[n]=i;
+                    ++n;
+                    mayor=i;
+                }else{ //reinicio la lista
+                    aux[0]=i;
+                    n=1;
                     mayor = i;
                 }
             }
         }
+
+        Random rand = new Random();
+        rand.setSeed(semilla);
+        int nRand = (int) (rand.nextDouble() * n);
+        mayor = aux[nRand];
+        
         solucion[mayor] = 1; //Establezco el que tiene mas ratio como solucion
         for (int i = 1; i < y; i++) {
             if (matriz[i][mayor] == 1 && matriz[i][0] == 0) {
@@ -86,28 +99,19 @@ public class Greedy {
         }
     }
 
-    public static int mostrarSolucion(int x, int solucion[], int mat[][]) {
-        System.out.println("Solucion:");
+    public static int calculaSolucion(int x, int solucion[], int mat[][]) {
         int coste = 0;
         for (int i = 1; i < x; i++) {
             if (solucion[i] == 1) {
-                System.out.print(i + ":" + solucion[i] + " ");
                 coste += mat[0][i];
             }
         }
-        System.out.print("\nCoste: " + coste + "\n");
-
         return coste;
     }
 
-    public int[] greedySearch(int x, int y, int mat[][], int cubre[], Panel pa, String fich, int ej) {
-        System.out.println("\n\nComienzo la busqueda greedy:");
-        System.out.println("   x=" + x);
-        System.out.println("   y=" + y);
-
+    public int[] greedySearch(int x, int y, int mat[][], int cubre[], Panel pa, String fich, int ej,int semilla) {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
-        
         int solucion[] = new int[x];
         for (int i = 0; i < x; i++) {
             solucion[i] = 0;
@@ -115,28 +119,29 @@ public class Greedy {
         float ratio[] = new float[x];
         cubre[0] = 0;
         cubreOrdenado = new Pair[x - 1];
+
         for (int i = 0; i < x - 1; i++) {
             cubreOrdenado[i] = new Pair(i + 1, cubre[i + 1]);
         }
 
         rellenarRatio(x, mat, cubre, ratio);
-        buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
+        buscarMayorRatio(x, y, ratio, cubre, solucion, mat,semilla);
 
         while (faltanPorCubrir(x, cubre)) {
-            buscarMayorRatio(x, y, ratio, cubre, solucion, mat);
+            buscarMayorRatio(x, y, ratio, cubre, solucion, mat,semilla);
             rellenarRatio(x, mat, cubre, ratio);
         }
         eliminaRedundancias(x, y, solucion, mat, 0);
-        int coste = mostrarSolucion(x, solucion, mat);
-
+        
         time_end = System.currentTimeMillis();
-        long t=( time_end - time_start );
-        System.out.println("the task has taken "+ t +" milliseconds");
-        pa.insertaDatos(fich, coste, t, ej,1);
+        
+        int coste = calculaSolucion(x, solucion, mat);
+
+        pa.insertaDatos(fich, coste, (int)( time_end - time_start ), ej, 1);
         return solucion;
     }
-    
-    public Pair[] copiaPair() {
+
+    public Pair[] copiaVector() {
         return cubreOrdenado;
     }
 
