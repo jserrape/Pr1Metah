@@ -50,7 +50,7 @@ public class Panel extends javax.swing.JFrame {
         for (int i = 0; i < 4; i++) {
             modelos[i].addColumn("");
             for (int j = 0; j < 5; j++) {
-                modelos[i].addColumn("Z");
+                modelos[i].addColumn("Coste");
                 modelos[i].addColumn("Tiempo");
             }
         }
@@ -708,7 +708,7 @@ public class Panel extends javax.swing.JFrame {
         //modelos[2] = modelo3;
         modelos[2] = modelo4; //<-------- CHAPUZA PARA LA TABU
 
-        for (int z = 0; z < 2; z++) { ////<-------- CHAPUZA PARA LA TABU
+        for (int z = 0; z < 3; z++) { ////<-------- CHAPUZA PARA LA TABU
             for (int j = 1; j < 11; j = j + 2) {
                 int mayorZ = (int) modelos[z].getValueAt(0, j);
                 long mayorT = (long) modelos[z].getValueAt(0, j + 1);
@@ -735,21 +735,21 @@ public class Panel extends javax.swing.JFrame {
                     if (mayorT < (long) modelos[z].getValueAt(i, j + 1)) {
                         mayorT = (long) modelos[z].getValueAt(i, j + 1);
                     }
-                    if (mayorZ > (int) modelos[z].getValueAt(i, j)) {
-                        mayorZ = (int) modelos[z].getValueAt(i, j);
+                    if (menorZ > (int) modelos[z].getValueAt(i, j)) {
+                        menorZ = (int) modelos[z].getValueAt(i, j);
                     }
-                    if (mayorT > (long) modelos[z].getValueAt(i, j + 1)) {
-                        mayorT = (long) modelos[z].getValueAt(i, j + 1);
+                    if (menorT > (long) modelos[z].getValueAt(i, j + 1)) {
+                        menorT = (long) modelos[z].getValueAt(i, j + 1);
                     }
                     mediaZ = mediaZ + (int) modelos[z].getValueAt(i, j);
                     mediaT = mediaT + (long) modelos[z].getValueAt(i, j + 1);
                 }
                 mediaZ = (float) mediaZ / 5;
                 auxM = (float) ((int) mediaT) / 5;
-                modelos[z].setValueAt(mayorZ, 5, j);
-                modelos[z].setValueAt(mayorT, 5, j + 1);
-                modelos[z].setValueAt(menorZ, 6, j);
-                modelos[z].setValueAt(menorT, 6, j + 1);
+                modelos[z].setValueAt(mayorZ, 6, j);
+                modelos[z].setValueAt(mayorT, 6, j + 1);
+                modelos[z].setValueAt(menorZ, 5, j);
+                modelos[z].setValueAt(menorT, 5, j + 1);
                 modelos[z].setValueAt(mediaZ, 7, j);
                 modelos[z].setValueAt(auxM, 7, j + 1);
 
