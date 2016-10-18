@@ -131,30 +131,35 @@ public class Pr1Metah {
         Tabu tabu = new Tabu();
         LocalSearch localSearch = new LocalSearch();
         Grasp grasp = new Grasp();
-
+        nuevoGrasp grasp2 = new nuevoGrasp();
+        
         String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"};
         int n = 5;
 
-        for (int i = 0; i < n; i++) {
-            for(int ejecucion=0;ejecucion<5;ejecucion++){
-            leerFichero(ficheros[i]);
+        //for (int i = 0; i < n; i++) {
+            //for(int ejecucion=0;ejecucion<5;ejecucion++){
+            //leerFichero(ficheros[i]);
+            leerFichero(ficheros[0]);
             //GREEDY
-            solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], ejecucion);
+            //solGreedy = greedy.greedySearch(x, y, matriz, cubre, pa, ficheros[i], ejecucion);
             //Thread.sleep(1000);
             //BUSQUEDA LOCAL
-            Pair pair[] = greedy.copiaVector();
-            solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[ejecucion], pa, ficheros[i], ejecucion);
+            //Pair pair[] = greedy.copiaVector();
+            //solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[ejecucion], pa, ficheros[i], ejecucion);
 
             //TABU
             
             
             //GRASP
-            solGrasp = grasp.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
+            //solGrasp = grasp.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
             //solucionesConsola(i + 1, x, solGreedy, solLocal, solGrasp, matriz);
+            x=11;
+            y=21;
+            solGrasp = grasp2.graspSearch(x, y, matriz, semillas[0], pa, ficheros[0], 0);
            
-            }
-        }
-        pa.insertarEstadisticas();
+            //}
+        //}
+        //pa.insertarEstadisticas();
     }
 
 }
