@@ -14,29 +14,29 @@ package pr1metah;
         private int lugar;
         private int cubre;
 
-        public Pair(int lugarr, int cubree) {
+        public Pair(int lugar, int cubre) {
             super();
-            this.lugar = lugarr;
-            this.cubre = cubree;
+            this.lugar = lugar;
+            this.cubre = cubre;
         }
 
         public int getLugar() {
             return lugar;
         }
 
-        public void setLugar(int first) {
-            this.lugar = first;
+        public void setLugar(int lugar) {
+            this.lugar = lugar;
         }
 
         public int getCubre() {
             return cubre;
         }
 
-        public void setCubre(int second) {
-            this.cubre = second;
+        public void setCubre(int cubre) {
+            this.cubre = cubre;
         }
         
-        public void incrementaCubre(){
-            cubre=cubre+1;
+        public void aumentaCubre(){
+            ++cubre;
         }
     }

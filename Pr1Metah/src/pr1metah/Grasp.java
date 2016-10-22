@@ -33,7 +33,7 @@ public class Grasp {
         for (int j = 1; j < x; j++) {
             for (int i = 1; i < y; i++) {
                 if (mat[i][j] == 1) {
-                    cubreOrdenado[j - 1].incrementaCubre();
+                    cubreOrdenado[j - 1].aumentaCubre();
                 }
             }
         }

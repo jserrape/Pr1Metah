@@ -123,6 +123,7 @@ public class Pr1Metah {
         Greedy greedy = new Greedy();
         Tabu tabu = new Tabu();
         LocalSearch localSearch = new LocalSearch();
+        LocalSearch localSearchTabu = new LocalSearch();
         Grasp grasp2 = new Grasp();
 
         String ficheros[] = {"scpe1.txt", "scp41.txt", "scpd1.txt", "scpnrf1.txt", "scpa1.txt"};
@@ -140,7 +141,7 @@ public class Pr1Metah {
                 solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[ejecucion], pa, ficheros[i], ejecucion);
 
                 //TABU
-                
+                solTabu = tabu.tabuSearch(y, x, matriz, solGreedy, pair, localSearchTabu, semillas[ejecucion]);
                 //GRASP
                 solGrasp = grasp2.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
 
