@@ -141,7 +141,7 @@ public class Pr1Metah {
                 solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[ejecucion], pa, ficheros[i], ejecucion);
 
                 //TABU
-                solTabu = tabu.tabuSearch(y, x, matriz, solGreedy, pair, localSearchTabu, semillas[ejecucion]);
+                solTabu = tabu.tabuSearch(y, x, matriz, solGreedy, pair, localSearch, semillas[ejecucion]);
                 //GRASP
                 solGrasp = grasp2.graspSearch(x, y, matriz, semillas[ejecucion], pa, ficheros[i], ejecucion);
 

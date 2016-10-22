@@ -6,6 +6,7 @@
 package pr1metah;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -34,7 +35,11 @@ public class Tabu {
         do {
             TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, semilla);
             TabuComponent candidato = escogeVecino(vecindario, y);
+            if (candidato == null){
+                return mejorSolucion;
+            }
             if(candidato.getCoste() < mejor) {
+                System.out.printf("Mejora! %s - %s \n", candidato.getCoste(), mejor);
                 mejorSolucion = calculaVecino(solucion, candidato.getEliminado(), candidato.getNuevas()).clone();
                 mejor = candidato.getCoste();
             }
@@ -44,6 +49,7 @@ public class Tabu {
         System.out.printf("Coste: %s \n", mejor);
         return mejorSolucion;
     }
+    
     
     public TabuComponent escogeVecino(TabuList vecindario, int y) {
         vecindario.bubble();
@@ -66,8 +72,10 @@ public class Tabu {
                     return vecindario.getComponent(i);
                 }
             }
-        }               
-        return vecindario.getComponent(0);
+        }
+        //int pos = Math.abs(new Random().nextInt() % vecindario.getTaml());
+        //return vecindario.getComponent(pos);
+        return null;
     }
     
     public int calculaTam(int solucion[], int tam) {
