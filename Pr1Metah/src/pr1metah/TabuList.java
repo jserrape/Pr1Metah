@@ -17,7 +17,7 @@ public class TabuList {
     private int tam, taml, pos;
     
     public TabuList(int greedyTam) { 
-        tam = (int) ((0.2 * (greedyTam + 1)) + 1 ); //Para evitar que la lista sea solo de 1 posicion
+        tam = (int) ((0.2 * greedyTam) + 1 );
         lista = new TabuComponent[tam];
         taml = pos = 0;
     }
@@ -67,27 +67,15 @@ public class TabuList {
     }
     
     public void updatePos(int pos) {
-        TabuComponent tabuComponent = lista[pos].getCopy();
+        TabuComponent tabuComponent = lista[pos];
         for (int i = pos; i < taml - 1; i++) {
             lista[i] = lista[i + 1];
         }
         lista[taml - 1] = tabuComponent;
     }
     
-    public void bubble() {
-        TabuComponent aux;
-        for (int i = 0; i < taml; i++) {
-            for (int j = 0; j < taml - i - 1; j++) {
-                if (lista[j].getCoste() > lista[j + 1].getCoste()) {
-                    aux = lista[j].getCopy();
-                    lista[j] = lista[j + 1].getCopy();
-                    lista[j + 1] = aux.getCopy();
-                }
-            }
-        }
-    }
-    
     public TabuComponent[] getLista() {return lista;}
     public int getTaml() {return taml;}
+    public int getTam() {return tam;}
     public TabuComponent getComponent(int pos) {return lista[pos];}
 }

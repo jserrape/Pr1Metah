@@ -6,7 +6,6 @@
 package pr1metah;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -31,9 +30,9 @@ public class Tabu {
         int tamGreedy = calculaTam(solucion, y);
         mejor = objetivo(solucion, y, mat);
         tabulist = new TabuList(tamGreedy);
-        int cont = 0;
         do {
             TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, semilla);
+            //System.out.printf("Lista tabu: %s / %s, interacion: %s \n", tabulist.getTaml(), tabulist.getTam());
             TabuComponent candidato = escogeVecino(vecindario, y);
             if (candidato == null){
                 return mejorSolucion;
@@ -44,15 +43,15 @@ public class Tabu {
                 mejor = candidato.getCoste();
             }
             solucion = calculaVecino(solucion, candidato.getEliminado(), candidato.getNuevas());
-            ++cont;
-        } while (cont <= 10000);
+        } while (local.getContTabu() <= 10000);
         System.out.printf("Coste: %s \n", mejor);
         return mejorSolucion;
     }
     
     
     public TabuComponent escogeVecino(TabuList vecindario, int y) {
-        vecindario.bubble();
+        QuickSort sorter = new QuickSort();
+        sorter.sort(vecindario.getLista());
         int coste;
         for (int i = 0; i < vecindario.getTaml(); i++) {
             coste = vecindario.getLista()[i].getCoste();
@@ -73,15 +72,13 @@ public class Tabu {
                 }
             }
         }
-        //int pos = Math.abs(new Random().nextInt() % vecindario.getTaml());
-        //return vecindario.getComponent(pos);
         return null;
     }
     
     public int calculaTam(int solucion[], int tam) {
         int cont = 0;
         for (int i = 1; i < tam; i++) {
-            if (solucion[1] == 1) {
+            if (solucion[i] == 1) {
                 ++cont;
             }
         }
