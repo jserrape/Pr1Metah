@@ -156,9 +156,9 @@ public class LocalSearch {
                 }
             }
         }
-        costeVecina = eliminaRedundancias(y, x, matriz, pair, costeVecina);
+        int coste = eliminaRedundancias(y, x, matriz, pair, costeVecina);
         ArrayList<Integer> nuevos = calculaNuevos(solucionActual, solucionVecina, y);
-        TabuComponent pairTabu = new TabuComponent(pos, costeVecina, nuevos);
+        TabuComponent pairTabu = new TabuComponent(pos, coste, solucionVecina, nuevos);
         return pairTabu;
     }
 

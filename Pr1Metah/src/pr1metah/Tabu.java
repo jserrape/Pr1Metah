@@ -35,27 +35,22 @@ public class Tabu {
 
         do {
             TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, semilla);
-            //System.out.printf("Lista tabu: %s / %s, interacion: %s \n", tabulist.getTaml(), tabulist.getTam());
             TabuComponent candidato = escogeVecino(vecindario, y);
             if (candidato == null) {
                 time_end = System.currentTimeMillis();
+                pa.insertaDatos(fich, mejor, (int) (time_end - time_start), ej, 3);
                 int coste = objetivo(mejorSolucion, y, mat);
-                pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 3);
                 return mejorSolucion;
             }
+            solucion = candidato.getVecino();
             if (candidato.getCoste() < mejor) {
-                //System.out.printf("Mejora! %s - %s \n", candidato.getCoste(), mejor);
-                mejorSolucion = calculaVecino(solucion, candidato.getEliminado(), candidato.getNuevas()).clone();
+                mejorSolucion = solucion.clone();
                 mejor = candidato.getCoste();
             }
-            solucion = calculaVecino(solucion, candidato.getEliminado(), candidato.getNuevas());
         } while (local.getContTabu() <= 10000);
-        //System.out.printf("Coste: %s \n", mejor);
-
         time_end = System.currentTimeMillis();
+        pa.insertaDatos(fich, mejor, (int) (time_end - time_start), ej, 3);
         int coste = objetivo(mejorSolucion, y, mat);
-        pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 3);
-
         return mejorSolucion;
     }
 
@@ -66,17 +61,18 @@ public class Tabu {
         for (int i = 0; i < vecindario.getTaml(); i++) {
             coste = vecindario.getLista()[i].getCoste();
             int eliminado = vecindario.getLista()[i].getEliminado();
+            int vecino[] = vecindario.getLista()[i].getVecino();
             ArrayList<Integer> array = vecindario.getLista()[i].getNuevas();
             if (coste < mejor) {
                 if (!tabulist.find(eliminado, array)) {
-                    tabulist.addSet(eliminado, coste, array);
+                    tabulist.addSet(eliminado, coste, vecino, array);
                     return vecindario.getComponent(i);
                 } else {
                     tabulist.updatePos(i);
                     return vecindario.getComponent(i);
                 }
             } else if (!tabulist.find(eliminado, array)) {
-                tabulist.addSet(eliminado, coste, array);
+                tabulist.addSet(eliminado, coste, vecino, array);
                 return vecindario.getComponent(i);
             }
         }

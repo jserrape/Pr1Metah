@@ -17,7 +17,7 @@ public class TabuList {
     private int tam, taml, pos;
     
     public TabuList(int greedyTam) { 
-        tam = (int) ((0.2 * greedyTam) + 1 );
+        tam = (int) ((0.5 * greedyTam) + 1 );
         lista = new TabuComponent[tam];
         taml = pos = 0;
     }
@@ -28,8 +28,8 @@ public class TabuList {
         taml = pos = 0;
     }
     
-    public void addSet(int eliminado, int coste, ArrayList<Integer> nuevas) {
-        lista[pos] = new TabuComponent(eliminado, coste, nuevas);
+    public void addSet(int eliminado, int coste, int vecino[], ArrayList<Integer> nuevas) {
+        lista[pos] = new TabuComponent(eliminado, coste, vecino, nuevas);
         pos = (pos + 1) % tam;
         if (taml < tam) {
             ++taml;

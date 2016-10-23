@@ -13,13 +13,14 @@ import java.util.ArrayList;
  */
 public class TabuComponent {
     
-    private int eliminado, coste;
+    private int eliminado, coste, vecino[];
     private ArrayList<Integer> nuevas;
     
-    public TabuComponent(int eliminado, int coste, ArrayList<Integer> nuevas) {
+    public TabuComponent(int eliminado, int coste, int vecino[], ArrayList<Integer> nuevas) {
         this.eliminado = eliminado;
         this.coste = coste;
         this.nuevas = nuevas;
+        this.vecino = vecino.clone();
     }
     
     public TabuComponent() {}
@@ -56,4 +57,6 @@ public class TabuComponent {
         copy.nuevas = array;
         return copy;
     }
+    
+    public int[] getVecino() {return vecino;}
 }
