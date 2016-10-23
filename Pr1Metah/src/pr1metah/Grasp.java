@@ -9,10 +9,21 @@ import java.util.Random;
 
 /**
  *
- * @author Xenahort
+ * @author Juan Carlos
  */
 public class Grasp {
 
+    /**
+     * Funcion principal para la ejecucion del algoritmo grasp
+     * @param x Numero de comisarias +1 
+     * @param y Numero de territorios +1 
+     * @param mat Matriz con la informacion del problema
+     * @param semilla Valor para obtener una misma secuencia
+     * @param pa objeto de la interfaz grafica
+     * @param fich Fichero que ese esta ejecutando en el problema
+     * @param ej Numero de ejecucion
+     * @return Vector solucion
+     */
     public int[] graspSearch(int x, int y, int mat[][], int semilla, Panel pa, String fich, int ej) {
         int solAux[], mejorSol[] = new int[x];
         int matcopia[][] = new int[y][x];
@@ -62,6 +73,15 @@ public class Grasp {
     }
 
 
+    /**
+     * Funcion para obtener una solucion greedy aleatorizada 
+     * @param x Numero de comisarias +1 
+     * @param y Numero de territorios +1 
+     * @param mat Matriz con la informacion del problema
+     * @param alpha Constante del umbral
+     * @param cubre Array con el numero de territorios a los que cubre cada comisaria 
+     * @return Array solucion al problema
+     */
     public int[] greedyRandomized(int x, int y, int mat[][], float alpha, int cubre[]) {
         int sol[] = new int[x];
         int lrc[] = new int[x];
@@ -96,42 +116,11 @@ public class Grasp {
         return sol;
     }
 
-    public void mostrarSol(int x, int sol[]) {
-        System.out.println("Solucion:");
-        for (int i = 1; i < x; i++) {
-            System.out.print(sol[i] + " ");
-        }
-        System.out.println("\n");
-    }
-
-    public void mostrarUmbral(int tam, int lrc[], float umbral) {
-        System.out.println("Elementos del umbral:");
-        for (int i = 0; i < tam; i++) {
-            System.out.print(lrc[i] + " ");
-        }
-        System.out.println("");
-    }
-
-    public void mostrarCosas(int x, int y, int mat[][], int cubre[]) {
-        for (int i = 1; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                System.out.print(mat[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
-        for (int i = 0; i < x; i++) {
-            System.out.print(cubre[i] + " ");
-        }
-        System.out.print("\n");
-    }
-
     /**
      * Busca en el array si faltan territorios por cubrir
-     *
-     * @param x
-     * @param cubre
-     * @return
+     * @param x Numero de comisarias +1 
+     * @param cubre Array con el numero de territorios a los que cubre cada comisaria 
+     * @return Devuelve true si faltan territorios sin cubrir, false en caso contrario
      */
     public boolean faltaPorCubir(int x, int cubre[]) {
         for (int i = 1; i < x; i++) {
@@ -144,10 +133,9 @@ public class Grasp {
 
     /**
      * Busca el mayor de un array
-     *
-     * @param x
-     * @param cubre
-     * @return
+     * @param x Numero de comisarias +1 
+     * @param cubre Array con el numero de territorios a los que cubre cada comisaria 
+     * @return Mayor de un vector
      */
     public int buscaMayor(int x, int cubre[]) {
         int mayor = cubre[1];
@@ -160,13 +148,11 @@ public class Grasp {
     }
 
     /**
-     * Rellena el array cubre con en numero de territorios que cubre cada
-     * comisaria
-     *
-     * @param x
-     * @param y
-     * @param mat
-     * @param cubre
+     * Rellena el array cubre con en numero de territorios que cubre cada comisaria
+     * @param x Numero de comisarias +1 
+     * @param y Numero de territorios +1 
+     * @param mat Matriz con la informacion del problema
+     * @param cubre Array con el numero de territorios a los que cubre cada comisaria 
      */
     public void cubrirArray(int x, int y, int mat[][], int cubre[]) {
         int aux;
@@ -181,6 +167,14 @@ public class Grasp {
         }
     }
 
+    /**
+     * Marca los territorios que cubre una comisaria como cubiertos
+     * @param x Numero de comisarias +1 
+     * @param y Numero de territorios +1 
+     * @param mat Matriz con la informacion del problema
+     * @param n Territorio a cubir
+     * @param cubre Array con el numero de territorios a los que cubre cada comisaria 
+     */
     public void marcarCubierto(int x, int y, int mat[][], int n, int cubre[]) {
         for (int i = 1; i < y; i++) {
             if (mat[i][0] == 0 && mat[i][n] == 1) {
@@ -194,6 +188,13 @@ public class Grasp {
         }
     }
 
+    /**
+     * Calcula el coste de un vector solucion
+     * @param x Numero de comisarias +1 
+     * @param solucion Array solucion
+     * @param mat Matriz con la informacion del problema
+     * @return Coste de la solucion
+     */
     public static int calculaSolucion(int x, int solucion[], int mat[][]) {
         int coste = 0;
         for (int i = 1; i < x; i++) {
@@ -204,6 +205,14 @@ public class Grasp {
         return coste;
     }
 
+    /**
+     * Funcion para eliminar redundancias en una solucion
+     * @param x Numero de comisarias +1 
+     * @param y Numero de territorios +1 
+     * @param solucion Array solucion
+     * @param matriz Matriz con la informacion del problema
+     * @param cubreOrdenado Array ordenado de mayor a menor de cuantos territorios son cubiertos por cada comisaria
+     */
     public void eliminaRedundancias(int x, int y, int solucion[], int matriz[][],Pair cubreOrdenado[]) {
         int quito;
         int i;

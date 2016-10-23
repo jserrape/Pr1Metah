@@ -11,11 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- *
+ * 
  * @author Xenahort
- *
- * ------- Errores pendientes ------ HAY QUE PONERLE EL RANDOM AL GREEDY
- *
  */
 public class Pr1Metah {
 
@@ -29,6 +26,11 @@ public class Pr1Metah {
     public static final int SEMILLA4 = 87377736;
     public static final int SEMILLA5 = 34268737;
 
+    /**
+     * Funcion para leer n fichero
+     * @param fich Ruta del fichero a leer
+     * @throws FicheroNoEncontrado Excepcion en caso de no encontrar el fichero
+     */
     public static void leerFichero(String fich) throws FicheroNoEncontrado {
         if (!(new File(fich)).exists()) {
             throw new FicheroNoEncontrado("Fichero no encontrado \n");
@@ -42,7 +44,6 @@ public class Pr1Metah {
             br = new BufferedReader(fr);
             String texto;
             String[] datos;
-            //System.out.print("Fichero abierto correctamente\n");
             texto = br.readLine();
             datos = texto.split(" ");
             y = Integer.parseInt(datos[1]) + 1;
@@ -89,7 +90,6 @@ public class Pr1Metah {
             try {
                 if (null != fr) {
                     fr.close();
-                    //System.out.print("Fichero cerrado correctamente\n");
                 }
             } catch (Exception e2) {
             }

@@ -5,16 +5,11 @@
  */
 package pr1metah;
 
-import java.awt.Image;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author alumno
+ * @author Juan Carlos
  */
 public class Panel extends javax.swing.JFrame {
 
@@ -795,6 +790,14 @@ public class Panel extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Funcion para insertar los datos en la interfaz
+     * @param fich Fichero al que le corresponde la ejecucion
+     * @param coste Coste de la solucion
+     * @param tiempo Tiempo que ha tardado la ejecucion
+     * @param i Numero de ejecucion
+     * @param alg Algoritmo al que le corresponde la ejecucion
+     */
     public void insertaDatos(String fich, int coste, long tiempo, int i, int alg) {
         DefaultTableModel[] modelos = new DefaultTableModel[4];
         modelos[0] = modelo1;
@@ -825,8 +828,10 @@ public class Panel extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Funcion para hacer las estadistias de los resultados
+     */
     public void insertarEstadisticas() {
-
         DefaultTableModel[] modelos = new DefaultTableModel[4];
         modelos[0] = modelo1;
         modelos[1] = modelo2;
@@ -900,6 +905,9 @@ public class Panel extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Funcion para establecer los resultados globales
+     */
     public void estadisticasFinales() {
         DefaultTableModel[] modelos = new DefaultTableModel[4];
         modelos[0] = modelo1;
