@@ -11,8 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * 
- * @author Xenahort
+ *
+ * @author Juan Carlos
  */
 public class Pr1Metah {
 
@@ -138,7 +138,7 @@ public class Pr1Metah {
 
                 //BUSQUEDA LOCAL
                 Pair pair[] = greedy.copiaVector();
-                solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, 10000, semillas[ejecucion], pa, ficheros[i], ejecucion);
+                solLocal = localSearch.busquedaLocal(solGreedy, matriz, y, x, pair, semillas[ejecucion], pa, ficheros[i], ejecucion);
 
                 //TABU
                 solTabu = tabu.tabuSearch(y, x, matriz, solGreedy, pair, localSearch, semillas[ejecucion], pa, ficheros[i], ejecucion);

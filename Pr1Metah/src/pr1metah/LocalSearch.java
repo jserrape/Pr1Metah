@@ -4,21 +4,35 @@
  * and open the template in the editor.
  */
 package pr1metah;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  *
- * @author Juanca
+ * @author Juan Carlos
  */
 public class LocalSearch {
 
     private int terminado, numIteraciones;
     private Random aleatorio;
     private int solucionVecina[];
-    private int  contTabu = 0;
+    private int contTabu;
 
-    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla, Panel pa, String fich, int ej) {
+    /**
+     * Calcula una solución vecina intentando mejorar el coste de la solución Greedy
+     * @param solucion vector solucion
+     * @param matriz matriz con los datos del problema
+     * @param x Numero de territorios +1
+     * @param y Numero de comisarias +1
+     * @param semilla semilla para aleatorizar los vecinos generados
+     * @param pair vector de Pair para eliminar la s redundancias
+     * @param pa ventana para los resultados
+     * @param fich ventana para los resultados
+     * @param ej ventana para los resultados
+     * @return Devuelve una solución vecina
+     */
+    public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla, Panel pa, String fich, int ej) {
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         costeActual = objetivo(solucionActual, y, matriz);
@@ -34,23 +48,31 @@ public class LocalSearch {
             do {
                 costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
                 --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones); //Objetivo mejor vecino ¿?
+            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < 10000); //Objetivo mejor vecino ¿?
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
                 costeActual = costeVecina;
             }
-        } while (costeVecina < anterior && numIteraciones < maxIteraciones);
+        } while (costeVecina < anterior && numIteraciones < 10000);
 
         time_end = System.currentTimeMillis();
-
-        int coste = calculaSolucion(y, solucionActual, matriz);
-
-        pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 2);
+        pa.insertaDatos(fich, costeActual, (int) (time_end - time_start), ej, 2);
 
         return solucionActual;
     }
 
+    /**
+     * Calcula una solución vecina necesaria para el GRASP
+     * @param solucion vector solucion
+     * @param matriz matriz con los datos del problema
+     * @param x Numero de territorios +1
+     * @param y Numero de comisarias +1
+     * @param semilla semilla para aleatorizar los vecinos generados
+     * @param maxIteraciones
+     * @param pair vector de Pair para eliminar la s redundancias
+     * @return Devuelve una solución vecina
+     */
     public int[] busquedaLocalGrasp(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
         int anterior, costeVecina, costeActual;
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
@@ -74,9 +96,19 @@ public class LocalSearch {
 
         return solucionActual;
     }
-    
+
+    /**
+     * Calcula un vecindario necesiario para la búsqueda tabú
+     * @param solucion vector solucion
+     * @param matriz matriz con los datos del problema
+     * @param x Numero de territorios +1
+     * @param y Numero de comisarias +1
+     * @param semilla semilla para aleatorizar los vecinos generados
+     * @param pair vector de Pair para eliminar la s redundancias
+     * @return Devuelve el vecindario de una solución dada
+     */
     public TabuList busquedaLocalTabu(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla) {
-        
+
         int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
         int costeActual = objetivo(solucionActual, y, matriz);
         aleatorio = new Random();
@@ -84,16 +116,26 @@ public class LocalSearch {
         terminado = calculaIteraciones(solucionActual, y);
         int tam = (terminado <= 50) ? (terminado) : (50);
         TabuList vecindario = new TabuList(tam, 0);
-        
+
         while (terminado > 0) {
             ++contTabu;
             --terminado;
             TabuComponent tabuComponent = generaSolucionVecinaTabu(solucionActual, matriz, x, y, costeActual, pair); // devuelvo el coste;
             vecindario.addSet(tabuComponent);
-        } 
+        }
         return vecindario;
     }
-    
+
+    /**
+     * Calcula una solucion vecina para el entorno
+     * @param solucionActual la solucion original (Antes de aplicar el operador vecino)
+     * @param matriz matriz con los datos del problema
+     * @param x Numero de territorios +1
+     * @param y Numero de comisarias +1
+     * @param costeActual el coste actual de la solucion
+     * @param pair vector de Pair para eliminar la s redundancias
+     * @return Devuelve una componente tabú con los datos necesarios sobre el vecino generado
+     */
     public TabuComponent generaSolucionVecinaTabu(int solucionActual[], int matriz[][], int x, int y, int costeActual, Pair pair[]) {
 
         int costeVecina = 0;
@@ -162,6 +204,16 @@ public class LocalSearch {
         return pairTabu;
     }
 
+     /**
+     * Calcula una solucion vecina para el entorno
+     * @param solucionActual la solucion original (Antes de aplicar el operador vecino)
+     * @param matriz matriz con los datos del problema
+     * @param x Numero de territorios +1
+     * @param y Numero de comisarias +1
+     * @param costeActual el coste actual de la solucion
+     * @param pair vector de Pair para eliminar la s redundancias
+     * @return Devuelve el coste del vecino generado
+     */
     public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, Pair pair[]) {
 
         int costeVecina = 0;
@@ -229,6 +281,15 @@ public class LocalSearch {
         return costeVecina;
     }
 
+     /**
+     * Elimina las columnas redundantes de una solucioón
+     * @param x Numero de territorios +1
+     * @param y Numero de comisarias +1
+     * @param matriz Matriz con la informacion del problema
+     * @param cubreOrdenado vector de Pair para eliminar las redundancias
+     * @param costeVecina el coste del vecino
+     * @return el coste factorizado de una solución vecina
+     */
     public int eliminaRedundancias(int x, int y, int matriz[][], Pair cubreOrdenado[], int costeVecina) {
         int factorizacion = costeVecina;
         MyQuickSort sorter = new MyQuickSort();
@@ -263,6 +324,11 @@ public class LocalSearch {
         return factorizacion;
     }
 
+    /**
+     * @param solucionVecina vector solucion
+     * @param tam el tamaño del vector solucion
+     * @return Devuelve el número de conjuntos que tiene una solucion
+     */
     public static int calculaIteraciones(int solucionVecina[], int tam) {
         int cont = 0;
         for (int i = 1; i < tam; i++) {
@@ -273,6 +339,13 @@ public class LocalSearch {
         return cont;
     }
 
+    /**
+     * Calcula el coste de un vector solucion
+     * @param solucionVecina vector solucion
+     * @param tam tamaño del vector solucion
+     * @param matriz matriz con los datos del problema
+     * @return Devuelve el coste de una solucion
+     */
     public static int objetivo(int solucionVecina[], int tam, int matriz[][]) {
         int suma = 0;
         for (int i = 1; i < tam; i++) {
@@ -281,27 +354,33 @@ public class LocalSearch {
         return suma;
     }
 
+    /**
+     * @return Devuelve el número de iteraciones dadas
+     */
     public int getIteraciones() {
         return numIteraciones;
     }
+    
 
+    /**
+     * @return Devuelve el número de iteraciones dadas (GRASP)
+     */
     public int getIteracionesGrasp() {
         return numIteraciones - 1;
     }
 
-    public static int calculaSolucion(int x, int solucion[], int mat[][]) {
-        int coste = 0;
-        for (int i = 1; i < x; i++) {
-            if (solucion[i] == 1) {
-                coste += mat[0][i];
-            }
-        }
-        return coste;
-    }
-    
+
+    /**
+     * Calcula los subconjuntos nuevos que se han añadido a una soluion dspués
+     * de generar una solución vecina
+     * @param solucionOriginal la solucion original
+     * @param solucionVecina la solucion vecina generada
+     * @param tam el tamaño del vector solucion
+     * @return Devuelve un vector con las columnas necesarias
+     */
     public ArrayList<Integer> calculaNuevos(int solucionOriginal[], int solucionVecina[], int tam) {
         ArrayList<Integer> nuevos = new ArrayList<>();
-        for (int i = 0; i < tam; i++){
+        for (int i = 0; i < tam; i++) {
             if (solucionOriginal[i] == 0 && solucionVecina[i] == 1) {
                 nuevos.add(i);
             }
@@ -309,5 +388,17 @@ public class LocalSearch {
         return nuevos;
     }
 
-    public int getContTabu() {return contTabu;}
+    /**
+     * @return Devuelve el número de iteraciones dadas en una búsqueda tabú
+     */
+    public int getContTabu() {
+        return contTabu;
+    }
+
+    /**
+     * Reinicia el contador de iteraciones para la búsqueda Tabú
+     */
+    public void reiniciaTabuCont() {
+        contTabu = 0;
+    }
 }

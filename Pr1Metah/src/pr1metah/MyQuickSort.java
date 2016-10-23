@@ -7,7 +7,7 @@ package pr1metah;
 
 /**
  *
- * @author Xenahort
+ * @author Juan Carlos
  */
     public class MyQuickSort {
 

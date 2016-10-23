@@ -9,54 +9,57 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Juanca
+ * @author Juan Carlos
  */
 public class TabuComponent {
-    
+
     private int eliminado, coste, vecino[];
     private ArrayList<Integer> nuevas;
-    
+
+    /**
+     * Constructor parametrizado
+     *
+     * @param eliminado columna que se elimina para generar el vecino
+     * @param coste coste del vecino
+     * @param vecino vector solución del vecino
+     * @param nuevas columnas que se añaden para llegar a ese vecino
+     */
     public TabuComponent(int eliminado, int coste, int vecino[], ArrayList<Integer> nuevas) {
         this.eliminado = eliminado;
         this.coste = coste;
         this.nuevas = nuevas;
-        this.vecino = vecino.clone();
+        this.vecino = vecino;
     }
-    
-    public TabuComponent() {}
+
+    public TabuComponent() {
+    }
 
     /**
-     * @return the eliminado
+     * @return Devuelve la columna que se ha elinado para generar un vecino
      */
     public int getEliminado() {
         return eliminado;
     }
 
     /**
-     * @return the coste
+     * @return Devuelve el coste de un vecino
      */
     public int getCoste() {
         return coste;
     }
 
     /**
-     * @return the nuevas
+     * @return Devuelve la lista de las columnas nuevas que se han añadido para
+     * generar un vecino
      */
     public ArrayList<Integer> getNuevas() {
         return nuevas;
     }
-    
-    public TabuComponent getCopy(){
-        TabuComponent copy = new TabuComponent();
-        ArrayList<Integer> array = new ArrayList<>();
-        for (int i : nuevas) {
-            array.add(i);
-        }
-        copy.eliminado = this.eliminado;
-        copy.coste = this.coste;
-        copy.nuevas = array;
-        return copy;
+
+    /**
+     * @return Devuelve el vector solución de un vecino
+     */
+    public int[] getVecino() {
+        return vecino;
     }
-    
-    public int[] getVecino() {return vecino;}
 }
