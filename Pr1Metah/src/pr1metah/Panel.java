@@ -22,6 +22,7 @@ public class Panel extends javax.swing.JFrame {
     DefaultTableModel modelo2;
     DefaultTableModel modelo3;
     DefaultTableModel modelo4;
+    DefaultTableModel modelo5;
 
     /**
      * Creates new form Panel
@@ -33,6 +34,7 @@ public class Panel extends javax.swing.JFrame {
         setTitle("Estadisticas");
 
         String[] Datos = {"Ejec 1", "Ejec 2", "Ejec 3", "Ejec 4", "Ejec 5", "Mejor", "Peor", "Media", "Desv."};
+        String[] Datos2 = {"Greedy", "BL", "BT", "GRASP"};
         String[] d = new String[3];
         d[1] = d[2] = "";
 
@@ -40,14 +42,16 @@ public class Panel extends javax.swing.JFrame {
         modelo2 = new DefaultTableModel();
         modelo3 = new DefaultTableModel();
         modelo4 = new DefaultTableModel();
+        modelo5 = new DefaultTableModel();
 
-        DefaultTableModel[] modelos = new DefaultTableModel[4];
+        DefaultTableModel[] modelos = new DefaultTableModel[5];
         modelos[0] = modelo1;
         modelos[1] = modelo2;
         modelos[2] = modelo3;
         modelos[3] = modelo4;
+        modelos[4] = modelo5;
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             modelos[i].addColumn("");
             for (int j = 0; j < 5; j++) {
                 modelos[i].addColumn("Coste");
@@ -59,6 +63,7 @@ public class Panel extends javax.swing.JFrame {
         this.tabla2.setModel(modelo2);
         this.tabla3.setModel(modelo3);
         this.tabla4.setModel(modelo4);
+        this.tabla5.setModel(modelo5);
 
         for (int i = 0; i < 9; i++) {
             d[0] = Datos[i];
@@ -66,6 +71,10 @@ public class Panel extends javax.swing.JFrame {
             modelo2.addRow(d);
             modelo3.addRow(d);
             modelo4.addRow(d);
+        }
+        for (int i = 0; i < 4; i++) {
+            d[0] = Datos2[i];
+            modelo5.addRow(d);
         }
 
     }
@@ -143,6 +152,21 @@ public class Panel extends javax.swing.JFrame {
         jSeparator26 = new javax.swing.JSeparator();
         jSeparator27 = new javax.swing.JSeparator();
         jSeparator28 = new javax.swing.JSeparator();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jSeparator29 = new javax.swing.JSeparator();
+        jSeparator30 = new javax.swing.JSeparator();
+        jSeparator31 = new javax.swing.JSeparator();
+        jSeparator32 = new javax.swing.JSeparator();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tabla5 = new javax.swing.JTable();
+        jSeparator33 = new javax.swing.JSeparator();
+        jSeparator34 = new javax.swing.JSeparator();
+        jLabel25 = new javax.swing.JLabel();
+        jSeparator35 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -615,6 +639,107 @@ public class Panel extends javax.swing.JFrame {
 
         PanelPrincipal.addTab("Grasp", jPanel4);
 
+        jLabel21.setText("scp41.txt");
+
+        jLabel22.setText("scpd1.txt");
+
+        jLabel23.setText("scpnrf1.txt");
+
+        jLabel24.setText("scpa1.txt");
+
+        jSeparator29.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jSeparator31.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jSeparator32.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        tabla5.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane5.setViewportView(tabla5);
+
+        jSeparator33.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jSeparator34.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel25.setText("scpe1.txt");
+
+        jSeparator35.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jSeparator29, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSeparator31, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel21)
+                                .addGap(43, 43, 43)
+                                .addComponent(jSeparator32, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel22)
+                                .addGap(47, 47, 47)
+                                .addComponent(jSeparator33, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel23)
+                                .addGap(54, 54, 54)
+                                .addComponent(jSeparator35, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel24)
+                                .addGap(41, 41, 41)
+                                .addComponent(jSeparator34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator30, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator29, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator31, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel24)
+                                .addComponent(jLabel23)
+                                .addComponent(jLabel22)
+                                .addComponent(jLabel21)
+                                .addComponent(jLabel25))
+                            .addComponent(jSeparator32, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator33, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator34, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator35, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+
+        PanelPrincipal.addTab("Global", jPanel8);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -705,10 +830,10 @@ public class Panel extends javax.swing.JFrame {
         DefaultTableModel[] modelos = new DefaultTableModel[4];
         modelos[0] = modelo1;
         modelos[1] = modelo2;
-        //modelos[2] = modelo3;
-        modelos[2] = modelo4; //<-------- CHAPUZA PARA LA TABU
+        modelos[2] = modelo3;
+        modelos[3] = modelo4;
 
-        for (int z = 0; z < 3; z++) { ////<-------- CHAPUZA PARA LA TABU
+        for (int z = 0; z < 4; z++) {
             for (int j = 1; j < 11; j = j + 2) {
                 int mayorZ = (int) modelos[z].getValueAt(0, j);
                 long mayorT = (long) modelos[z].getValueAt(0, j + 1);
@@ -724,7 +849,7 @@ public class Panel extends javax.swing.JFrame {
                 double rangoT;
                 double varianzaT = 0.0;
                 double desviacionT = 0.0;
-                
+
                 int intAux;
                 double auxDouble;
 
@@ -762,17 +887,32 @@ public class Panel extends javax.swing.JFrame {
                 }
                 varianzaZ = varianzaZ / 5f;
                 desviacionZ = Math.sqrt(varianzaZ);
-                intAux=(int) (desviacionZ*10000);
-                desviacionZ=(double)intAux/10000;
+                intAux = (int) (desviacionZ * 10000);
+                desviacionZ = (double) intAux / 10000;
                 modelos[z].setValueAt(desviacionZ, 8, j);
 
                 varianzaT = varianzaT / 5f;
                 desviacionT = Math.sqrt(varianzaT);
-                intAux=(int) (desviacionT*10000);
-                desviacionT=(double)intAux/10000;
+                intAux = (int) (desviacionT * 10000);
+                desviacionT = (double) intAux / 10000;
                 modelos[z].setValueAt(desviacionT, 8, j + 1);
             }
         }
+    }
+
+    public void estadisticasFinales() {
+        DefaultTableModel[] modelos = new DefaultTableModel[4];
+        modelos[0] = modelo1;
+        modelos[1] = modelo2;
+        modelos[2] = modelo3;
+        modelos[3] = modelo4;
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 10; j++) {
+                modelo5.setValueAt(modelos[i].getValueAt(7, j+1), i, j+1);
+            }
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -790,6 +930,11 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -804,10 +949,12 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
@@ -829,7 +976,14 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator26;
     private javax.swing.JSeparator jSeparator27;
     private javax.swing.JSeparator jSeparator28;
+    private javax.swing.JSeparator jSeparator29;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator30;
+    private javax.swing.JSeparator jSeparator31;
+    private javax.swing.JSeparator jSeparator32;
+    private javax.swing.JSeparator jSeparator33;
+    private javax.swing.JSeparator jSeparator34;
+    private javax.swing.JSeparator jSeparator35;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
@@ -840,5 +994,6 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JTable tabla2;
     private javax.swing.JTable tabla3;
     private javax.swing.JTable tabla4;
+    private javax.swing.JTable tabla5;
     // End of variables declaration//GEN-END:variables
 }

@@ -55,9 +55,7 @@ public class Grasp {
         }
 
         time_end = System.currentTimeMillis();
-
         int coste = calculaSolucion(x, mejorSol, mat);
-
         pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 4);
 
         return mejorSol;

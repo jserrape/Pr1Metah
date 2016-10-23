@@ -16,39 +16,49 @@ import java.util.ArrayList;
 - Posibles fallos:
 - Hacer copia del arraylist en tabucomponent
 
-*/
-
+ */
 public class Tabu {
-    
+
     private int solucion[], mejorSolucion[];
     private TabuList tabulist;
     private int mejor;
-    
+
     //El vector solucion empieza en 1
-    public int[] tabuSearch(int x, int y, int mat[][], int greedySol[], Pair pair[], LocalSearch local, int semilla) {
+    public int[] tabuSearch(int x, int y, int mat[][], int greedySol[], Pair pair[], LocalSearch local, int semilla, Panel pa, String fich, int ej) {
         mejorSolucion = solucion = greedySol.clone();
         int tamGreedy = calculaTam(solucion, y);
         mejor = objetivo(solucion, y, mat);
         tabulist = new TabuList(tamGreedy);
+
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+
         do {
             TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, semilla);
             //System.out.printf("Lista tabu: %s / %s, interacion: %s \n", tabulist.getTaml(), tabulist.getTam());
             TabuComponent candidato = escogeVecino(vecindario, y);
-            if (candidato == null){
+            if (candidato == null) {
+                time_end = System.currentTimeMillis();
+                int coste = objetivo(mejorSolucion, y, mat);
+                pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 3);
                 return mejorSolucion;
             }
-            if(candidato.getCoste() < mejor) {
-                System.out.printf("Mejora! %s - %s \n", candidato.getCoste(), mejor);
+            if (candidato.getCoste() < mejor) {
+                //System.out.printf("Mejora! %s - %s \n", candidato.getCoste(), mejor);
                 mejorSolucion = calculaVecino(solucion, candidato.getEliminado(), candidato.getNuevas()).clone();
                 mejor = candidato.getCoste();
             }
             solucion = calculaVecino(solucion, candidato.getEliminado(), candidato.getNuevas());
         } while (local.getContTabu() <= 10000);
-        System.out.printf("Coste: %s \n", mejor);
+        //System.out.printf("Coste: %s \n", mejor);
+
+        time_end = System.currentTimeMillis();
+        int coste = objetivo(mejorSolucion, y, mat);
+        pa.insertaDatos(fich, coste, (int) (time_end - time_start), ej, 3);
+
         return mejorSolucion;
     }
-    
-    
+
     public TabuComponent escogeVecino(TabuList vecindario, int y) {
         QuickSort sorter = new QuickSort();
         sorter.sort(vecindario.getLista());
@@ -63,18 +73,16 @@ public class Tabu {
                     return vecindario.getComponent(i);
                 } else {
                     tabulist.updatePos(i);
-                    return vecindario.getComponent(i); 
-                }
-            } else {
-                if (!tabulist.find(eliminado, array)){
-                    tabulist.addSet(eliminado, coste, array);
                     return vecindario.getComponent(i);
                 }
+            } else if (!tabulist.find(eliminado, array)) {
+                tabulist.addSet(eliminado, coste, array);
+                return vecindario.getComponent(i);
             }
         }
         return null;
     }
-    
+
     public int calculaTam(int solucion[], int tam) {
         int cont = 0;
         for (int i = 1; i < tam; i++) {
@@ -84,7 +92,7 @@ public class Tabu {
         }
         return cont;
     }
-    
+
     public static int objetivo(int solucionVecina[], int tam, int matriz[][]) {
         int suma = 0;
         for (int i = 1; i < tam; i++) {
@@ -92,7 +100,7 @@ public class Tabu {
         }
         return suma;
     }
-    
+
     public int[] calculaVecino(int solucion[], int eliminado, ArrayList<Integer> nuevos) {
         solucion[eliminado] = 0;
         for (int i = 0; i < nuevos.size(); i++) {
