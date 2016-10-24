@@ -17,7 +17,7 @@ public class LocalSearch {
     private int terminado, numIteraciones;
     private Random aleatorio;
     private int solucionVecina[];
-    private int contTabu;
+    private int contTabu, costeTabu;
 
     /**
      * Calcula una solución vecina intentando mejorar el coste de la solución Greedy
@@ -34,7 +34,7 @@ public class LocalSearch {
      */
     public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla, Panel pa, String fich, int ej) {
         int anterior, costeVecina, costeActual;
-        int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
+        int solucionActual[] = solucion; // Inicializacion del Greedy
         costeActual = objetivo(solucionActual, y, matriz);
         numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
@@ -48,7 +48,7 @@ public class LocalSearch {
             do {
                 costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
                 --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < 10000); //Objetivo mejor vecino ¿?
+            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < 10000);   
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
@@ -75,7 +75,7 @@ public class LocalSearch {
      */
     public int[] busquedaLocalGrasp(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
         int anterior, costeVecina, costeActual;
-        int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
+        int solucionActual[] = solucion; // Inicializacion del Greedy
         costeActual = objetivo(solucionActual, y, matriz);
         numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
@@ -86,7 +86,7 @@ public class LocalSearch {
             do {
                 costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
                 --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones); //Objetivo mejor vecino ¿?
+            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones);
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
@@ -104,13 +104,14 @@ public class LocalSearch {
      * @param x Numero de territorios +1
      * @param y Numero de comisarias +1
      * @param semilla semilla para aleatorizar los vecinos generados
+     * @param coste coste de la solución base
      * @param pair vector de Pair para eliminar la s redundancias
      * @return Devuelve el vecindario de una solución dada
      */
-    public TabuList busquedaLocalTabu(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla) {
+    public TabuList busquedaLocalTabu(int solucion[], int matriz[][], int x, int y, Pair pair[], int coste, int semilla) {
 
-        int solucionActual[] = solucion.clone(); // Inicializacion del Greedy
-        int costeActual = objetivo(solucionActual, y, matriz);
+        int solucionActual[] = solucion; // Inicializacion del Greedy
+        int costeActual = coste;
         aleatorio = new Random();
         aleatorio.setSeed(semilla);
         terminado = calculaIteraciones(solucionActual, y);

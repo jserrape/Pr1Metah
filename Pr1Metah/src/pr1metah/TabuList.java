@@ -24,7 +24,7 @@ public class TabuList {
      * @param greedyTam el numero de conjuntos de la solucion Greedy
      */
     public TabuList(int greedyTam) {
-        tam = (int) ((0.2 * greedyTam) + 1);
+        tam = (int) ((0.8 * greedyTam) + 1);
         lista = new TabuComponent[tam];
         taml = pos = 0;
     }

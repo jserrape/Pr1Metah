@@ -24,7 +24,7 @@ public class Pr1Metah {
     public static final int SEMILLA2 = 77368737;
     public static final int SEMILLA3 = 34267738;
     public static final int SEMILLA4 = 87377736;
-    public static final int SEMILLA5 = 34268737;
+    public static final int SEMILLA5 = 12482498;
 
     /**
      * Funcion para leer n fichero

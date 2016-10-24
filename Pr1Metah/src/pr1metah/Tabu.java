@@ -16,7 +16,7 @@ public class Tabu {
 
     private int solucion[], mejorSolucion[];
     private TabuList tabulist;
-    private int mejor;
+    private int mejor, coste;
 
     /**
      * Calcula una solución a nuestro problema usando la búsqueda Tabú partiendo
@@ -37,22 +37,22 @@ public class Tabu {
     public int[] tabuSearch(int x, int y, int mat[][], int greedySol[], Pair pair[], LocalSearch local, int semilla, Panel pa, String fich, int ej) {
         mejorSolucion = solucion = greedySol.clone();
         int tamGreedy = calcGreedySets(solucion, y);
-        mejor = objetivo(solucion, y, mat);
+        coste = mejor = objetivo(solucion, y, mat);
         tabulist = new TabuList(tamGreedy);
 
         long time_start, time_end;
         time_start = System.currentTimeMillis();
         local.reiniciaTabuCont();
         do {
-            TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, semilla); //Vecindario del entorno actual
+            TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, coste, semilla); //Vecindario del entorno actual
             TabuComponent candidato = escogeVecino(vecindario);
-            System.out.printf("Rolling: %s, %s - %s \n", local.getContTabu(), tabulist.getTaml(), tabulist.getTam());
             if (candidato == null) {
                 time_end = System.currentTimeMillis();
                 pa.insertaDatos(fich, mejor, (int) (time_end - time_start), ej, 3);
                 return mejorSolucion;
             }
             solucion = candidato.getVecino();
+            coste = candidato.getCoste();
             if (candidato.getCoste() < mejor) {
                 mejorSolucion = solucion.clone();
                 mejor = candidato.getCoste();
