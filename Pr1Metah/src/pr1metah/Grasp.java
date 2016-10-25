@@ -105,9 +105,8 @@ public class Grasp {
                     ++tam;
                 }
             }
-
-            nRand = (int) (rand.nextDouble() * tam);
-            aux = lrc[nRand];
+            
+            aux = lrc[Math.abs(rand.nextInt() * tam) % (x - 1)];
 
             ++sol[aux];
             marcarCubierto(x, y, mat, aux, cubre);
