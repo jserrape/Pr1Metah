@@ -111,7 +111,7 @@ public class LocalSearch {
     public TabuList busquedaLocalTabu(int solucion[], int matriz[][], int x, int y, Pair pair[], int coste, int semilla) {
 
         int solucionActual[] = solucion; // Inicializacion del Greedy
-        int costeActual = coste;
+        costeTabu = coste;
         aleatorio = new Random();
         aleatorio.setSeed(semilla);
         terminado = calculaIteraciones(solucionActual, y);
@@ -121,7 +121,7 @@ public class LocalSearch {
         while (terminado > 0) {
             ++contTabu;
             --terminado;
-            TabuComponent tabuComponent = generaSolucionVecinaTabu(solucionActual, matriz, x, y, costeActual, pair); // devuelvo el coste;
+            TabuComponent tabuComponent = generaSolucionVecinaTabu(solucionActual, matriz, x, y, costeTabu, pair); // devuelvo el coste;
             vecindario.addSet(tabuComponent);
         }
         return vecindario;
