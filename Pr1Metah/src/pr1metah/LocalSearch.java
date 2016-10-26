@@ -201,7 +201,7 @@ public class LocalSearch {
         }
         int coste = eliminaRedundancias(y, x, matriz, pair, costeVecina);
         ArrayList<Integer> nuevos = calculaNuevos(solucionActual, solucionVecina, y);
-        TabuComponent pairTabu = new TabuComponent(pos, coste, solucionVecina, nuevos);
+        TabuComponent pairTabu = new TabuComponent(pos, coste, solucionVecina.clone(), nuevos);
         return pairTabu;
     }
 
