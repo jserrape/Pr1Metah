@@ -33,22 +33,24 @@ public class LocalSearch {
      * @return Devuelve una solución vecina
      */
     public int[] busquedaLocal(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla, Panel pa, String fich, int ej) {
-        int anterior, costeVecina, costeActual;
+        int anterior, costeVecina, costeActual, posicion;
         int solucionActual[] = solucion; // Inicializacion del Greedy
         costeActual = objetivo(solucionActual, y, matriz);
         numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
         aleatorio.setSeed(semilla);
+        ArrayList<Integer> comisarias;
 
         long time_start, time_end;
         time_start = System.currentTimeMillis();
 
         do {
-            terminado = calculaIteraciones(solucionActual, y);
+            comisarias = calculaComisarias(solucionActual, y);
             do {
-                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
-                --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < 10000);   
+                posicion = Math.abs(aleatorio.nextInt() % comisarias.size());
+                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, comisarias.get(posicion), pair);
+                comisarias.remove(posicion);
+            } while ((costeVecina >= costeActual) &&  comisarias.size() > 0 && numIteraciones < 10000); 
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
@@ -69,30 +71,31 @@ public class LocalSearch {
      * @param x Numero de territorios +1
      * @param y Numero de comisarias +1
      * @param semilla semilla para aleatorizar los vecinos generados
-     * @param maxIteraciones
      * @param pair vector de Pair para eliminar la s redundancias
      * @return Devuelve una solución vecina
      */
-    public int[] busquedaLocalGrasp(int solucion[], int matriz[][], int x, int y, Pair pair[], int maxIteraciones, int semilla) {
-        int anterior, costeVecina, costeActual;
+    public int[] busquedaLocalGrasp(int solucion[], int matriz[][], int x, int y, Pair pair[], int semilla) {
+        int anterior, costeVecina, costeActual, posicion;
         int solucionActual[] = solucion; // Inicializacion del Greedy
         costeActual = objetivo(solucionActual, y, matriz);
         numIteraciones = 1; //Empieza en uno ya que he llamado ya una vez a la funcion objetivo
         aleatorio = new Random();
         aleatorio.setSeed(semilla);
+        ArrayList<Integer> comisarias;
 
         do {
-            terminado = calculaIteraciones(solucionActual, y);
+            comisarias = calculaComisarias(solucionActual, y);
             do {
-                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, pair);
-                --terminado;
-            } while ((costeVecina >= costeActual) && terminado != 0 && numIteraciones < maxIteraciones);
+                posicion = Math.abs(aleatorio.nextInt() % comisarias.size());
+                costeVecina = generaSolucionVecina(solucionActual, matriz, x, y, costeActual, comisarias.get(posicion), pair);
+                comisarias.remove(posicion);
+            } while ((costeVecina >= costeActual) &&  comisarias.size() > 0 && numIteraciones < 400); 
             anterior = costeActual;
             if (costeVecina < costeActual) {
                 solucionActual = solucionVecina.clone();
                 costeActual = costeVecina;
             }
-        } while (costeVecina < anterior && numIteraciones < maxIteraciones);
+        } while (costeVecina < anterior && numIteraciones < 400);
 
         return solucionActual;
     }
@@ -215,26 +218,15 @@ public class LocalSearch {
      * @param pair vector de Pair para eliminar la s redundancias
      * @return Devuelve el coste del vecino generado
      */
-    public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, Pair pair[]) {
+    public int generaSolucionVecina(int solucionActual[], int matriz[][], int x, int y, int costeActual, int pos, Pair pair[]) {
 
-        int costeVecina = 0;
-        int pos = Math.abs((aleatorio.nextInt() % (y - 1)));
+        int costeVecina;
         solucionVecina = solucionActual.clone();
         ++numIteraciones; //1 factorizacion, por lo que se incrementa el contador
-        boolean parada = true;
-        while (parada) {
-            if (pos == 0) {
-                ++pos;
-            }
-            if (solucionVecina[pos] == 0) {
-                ++pos;
-                pos = (pos % (y - 1));
-            } else {
-                solucionVecina[pos] = 0;
-                costeVecina = costeActual - matriz[0][pos];
-                parada = false;
-            }
-        }
+        solucionVecina[pos] = 0;
+        costeVecina = costeActual - matriz[0][pos];
+            
+       
 
         //Se genera un vector con todos los candidatos que cubren alguna zona de las que me quedan por cubrir al eliminar esa ( sin incluirla )
         int vecino[] = new int[y];
@@ -401,5 +393,16 @@ public class LocalSearch {
      */
     public void reiniciaTabuCont() {
         contTabu = 0;
+    }
+    
+    public ArrayList<Integer> calculaComisarias(int solucion[], int y){
+        ArrayList<Integer> array;
+        array = new ArrayList<>();
+        for(int i = 1; i < y; i++){
+            if(solucion[i] == 1){
+                array.add(i);
+            }
+        }
+        return array;
     }
 }

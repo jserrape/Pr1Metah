@@ -56,7 +56,7 @@ public class Grasp {
             solAux = greedyRandomized(x, y, mat, alpha, cubre.clone());
             eliminaRedundancias(x,y,solAux,mat,cubreOrdenado);
             localSearch = new LocalSearch();
-            solAux = localSearch.busquedaLocalGrasp(solAux, mat, y, x, cubreOrdenado, 400, semilla);
+            solAux = localSearch.busquedaLocalGrasp(solAux, mat, y, x, cubreOrdenado, semilla);
             z += localSearch.getIteracionesGrasp();
             cosAux = calculaSolucion(x, solAux, mat);
             if (cosAux < mejorCoste) {
