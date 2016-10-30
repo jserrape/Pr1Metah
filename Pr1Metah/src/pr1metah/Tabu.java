@@ -44,7 +44,7 @@ public class Tabu {
         time_start = System.currentTimeMillis();
         local.reiniciaTabuCont();
         while (local.getContTabu() <= 10000) {
-            ArrayList<TabuComponent> vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, tabulist, mejor, coste, semilla); //Vecindario del entorno actual
+            ArrayList<TabuComponent> vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, tabulist, mejor, coste); //Vecindario del entorno actual
             TabuComponent candidato = escogeVecino(vecindario);
             if (candidato == null) {
                 time_end = System.currentTimeMillis();
@@ -71,17 +71,16 @@ public class Tabu {
      * @param vecindario el vecindario que se esta evaluando
      * @return Devuelve el mejor vecino
      */
-    public TabuComponent escogeVecino(ArrayList<TabuComponent> vecindario) {
-        QuickSort sorter = new QuickSort();
-        sorter.sort(vecindario);
-        int cost;
-        for (int i = 0; i < vecindario.size(); i++) {
-            if (!tabulist.find(vecindario.get(i).getEliminado(), vecindario.get(i).getNuevas())) {
-                tabulist.addSet(vecindario.get(i).getEliminado(), vecindario.get(i).getCoste(), vecindario.get(i).getVecino(), vecindario.get(i).getNuevas());
-                return vecindario.get(i);
+    public TabuComponent escogeVecino(ArrayList<TabuComponent> vecindario) {   
+        if (!vecindario.isEmpty()) {
+            QuickSort sorter = new QuickSort();
+            sorter.sort(vecindario);
+            if (!tabulist.find(vecindario.get(0).getEliminado(), vecindario.get(0).getNuevas())) {
+                tabulist.addSet(vecindario.get(0).getEliminado(), vecindario.get(0).getCoste(), vecindario.get(0).getVecino(), vecindario.get(0).getNuevas());
+                return vecindario.get(0);
             } else {
-                tabulist.updatePos(i);
-                return vecindario.get(i);               
+                tabulist.updatePos(0);
+                return vecindario.get(0);               
             }
         }
         return null;

@@ -106,22 +106,21 @@ public class LocalSearch {
      * @param matriz matriz con los datos del problema
      * @param x Numero de territorios +1
      * @param y Numero de comisarias +1
-     * @param semilla semilla para aleatorizar los vecinos generados
      * @param tabulist lista de los movimientos tabu
      * @param mejor mejor coste encontrado
      * @param coste coste de la solución base
      * @param pair vector de Pair para eliminar la s redundancias
      * @return Devuelve el vecindario de una solución dada
      */
-    public ArrayList<TabuComponent> busquedaLocalTabu(int solucion[], int matriz[][], int x, int y, Pair pair[], TabuList tabulist, int mejor, int coste, int semilla) {
+    public ArrayList<TabuComponent> busquedaLocalTabu(int solucion[], int matriz[][], int x, int y, Pair pair[], TabuList tabulist, int mejor, int coste) {
 
-        int solucionActual[] = solucion, posicion; // Inicializacion del Greedy
+        int solucionActual[] = solucion, posicion, cont = 0; // Inicializacion del Greedy
         costeTabu = coste;
         ArrayList<Integer> comisarias;
         comisarias = calculaComisarias(solucionActual, y);
         ArrayList<TabuComponent> vecindario = new ArrayList<>();
         
-        while (!comisarias.isEmpty()) {
+        while (!comisarias.isEmpty() && cont < 50) {
             posicion = Math.abs(aleatorio.nextInt() % comisarias.size());
             TabuComponent tabuComponent = generaVecinoTabu(solucionActual, matriz, x, y, costeTabu, comisarias.get(posicion), pair); // devuelvo el coste;
             if (!tabulist.find(tabuComponent.getEliminado(), tabuComponent.getNuevas())) {
@@ -132,6 +131,7 @@ public class LocalSearch {
                 }
             }
             comisarias.remove(posicion);
+            ++cont;
         }
         return vecindario;
     }
