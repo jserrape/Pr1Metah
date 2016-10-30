@@ -1,12 +1,14 @@
 package pr1metah;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Juan Carlos
  */
 public class QuickSort {
 
-    private TabuComponent array[];
+    private ArrayList<TabuComponent> array;
     private int length;
 
     /**
@@ -15,24 +17,24 @@ public class QuickSort {
      *
      * @param inputArr Array de TabuComponent
      */
-    public void sort(TabuComponent[] inputArr) {
-        if (inputArr == null || inputArr.length == 0) {
+    public void sort(ArrayList<TabuComponent> inputArr) {
+        if (inputArr == null || inputArr.isEmpty()) {
             return;
         }
         this.array = inputArr;
-        length = inputArr.length;
+        length = inputArr.size();
         quickSort(0, length - 1);
     }
 
     private void quickSort(int lowerIndex, int higherIndex) {
         int i = lowerIndex;
         int j = higherIndex;
-        TabuComponent pivot = array[lowerIndex + (higherIndex - lowerIndex) / 2];
+        TabuComponent pivot = array.get(lowerIndex + (higherIndex - lowerIndex) / 2);
         while (i <= j) {
-            while (array[i].getCoste() < pivot.getCoste()) {
+            while (array.get(i).getCoste() < pivot.getCoste()) {
                 ++i;
             }
-            while (array[j].getCoste() > pivot.getCoste()) {
+            while (array.get(j).getCoste() > pivot.getCoste()) {
                 --j;
             }
             if (i <= j) {
@@ -50,8 +52,8 @@ public class QuickSort {
     }
 
     private void exchangeNumbers(int i, int j) {
-        TabuComponent temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        TabuComponent temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
     }
 }

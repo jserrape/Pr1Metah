@@ -37,7 +37,7 @@ public class TabuList {
      * constructor
      */
     public TabuList(int tama, int idef) {
-        tam = tama;
+        tam = (tama < 50) ? (tama) : (50);
         lista = new TabuComponent[tam];
         taml = pos = 0;
     }

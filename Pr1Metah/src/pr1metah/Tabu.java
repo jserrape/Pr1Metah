@@ -43,8 +43,8 @@ public class Tabu {
         long time_start, time_end;
         time_start = System.currentTimeMillis();
         local.reiniciaTabuCont();
-        do {
-            TabuList vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, coste, semilla); //Vecindario del entorno actual
+        while (local.getContTabu() <= 10000) {
+            ArrayList<TabuComponent> vecindario = local.busquedaLocalTabu(solucion, mat, x, y, pair, tabulist, mejor, coste, semilla); //Vecindario del entorno actual
             TabuComponent candidato = escogeVecino(vecindario);
             if (candidato == null) {
                 time_end = System.currentTimeMillis();
@@ -57,7 +57,7 @@ public class Tabu {
                 mejorSolucion = solucion.clone();
                 mejor = candidato.getCoste();
             }
-        } while (local.getContTabu() <= 10000);
+        } 
         time_end = System.currentTimeMillis();
         pa.insertaDatos(fich, mejor, (int) (time_end - time_start), ej, 3);
         return mejorSolucion;
@@ -68,34 +68,25 @@ public class Tabu {
      * de menor coste que no esté incluido en la lista tabú o si se da el caso
      * el vecino que mejore la mejor solución encontrada aún siendo tabú
      * 
-     * @param vecindario el vecindario que se quiere evaluar
+     * @param vecindario el vecindario que se esta evaluando
      * @return Devuelve el mejor vecino
      */
-    public TabuComponent escogeVecino(TabuList vecindario) {
+    public TabuComponent escogeVecino(ArrayList<TabuComponent> vecindario) {
         QuickSort sorter = new QuickSort();
-        sorter.sort(vecindario.getLista());
-        int coste;
-        for (int i = 0; i < vecindario.getTaml(); i++) {
-            coste = vecindario.getLista()[i].getCoste();
-            int eliminado = vecindario.getLista()[i].getEliminado();
-            int vecino[] = vecindario.getLista()[i].getVecino();
-            ArrayList<Integer> array = vecindario.getLista()[i].getNuevas();
-            if (coste < mejor) {
-                if (!tabulist.find(eliminado, array)) {
-                    tabulist.addSet(eliminado, coste, vecino, array);
-                    return vecindario.getComponent(i);
-                } else {
-                    tabulist.updatePos(i);
-                    return vecindario.getComponent(i);
-                }
-            } else if (!tabulist.find(eliminado, array)) {
-                tabulist.addSet(eliminado, coste, vecino, array);
-                return vecindario.getComponent(i);
+        sorter.sort(vecindario);
+        int cost;
+        for (int i = 0; i < vecindario.size(); i++) {
+            if (!tabulist.find(vecindario.get(i).getEliminado(), vecindario.get(i).getNuevas())) {
+                tabulist.addSet(vecindario.get(i).getEliminado(), vecindario.get(i).getCoste(), vecindario.get(i).getVecino(), vecindario.get(i).getNuevas());
+                return vecindario.get(i);
+            } else {
+                tabulist.updatePos(i);
+                return vecindario.get(i);               
             }
         }
         return null;
     }
-
+    
     /**
      * Calcula el numero de conjuntos que tiene una solucion Greedy
      * @param solucion el vector de la solucion greedy
